@@ -12,6 +12,7 @@ public class Court {
     private double racketB; // m
     private double ballX, ballY; // m
     private double ballSpeedX, ballSpeedY; // m
+    private int scoreA, scoreB;
 
     public Court(RacketController playerA, RacketController playerB, double width, double height) {
         this.playerA = playerA;
@@ -47,6 +48,14 @@ public class Court {
 
     public double getBallY() {
         return ballY;
+    }
+
+    public int getScoreA() {
+        return scoreA;
+    }
+
+    public int getScoreB() {
+        return scoreB;
     }
 
     public void update(double deltaT) {
@@ -87,18 +96,19 @@ public class Court {
         double nextBallX = ballX + deltaT * ballSpeedX;
         double nextBallY = ballY + deltaT * ballSpeedY;
         // next, see if the ball would meet some obstacle
-        if (nextBallY < 0 || nextBallY > height) {
+        if (nextBallY < 0 || nextBallY > height) { // Rebonds plafond / sol
             ballSpeedY = -ballSpeedY;
             nextBallY = ballY + deltaT * ballSpeedY;
         }
-        if ((nextBallX < 0 && nextBallY > racketA && nextBallY < racketA + racketSize)
-                || (nextBallX > width && nextBallY > racketB && nextBallY < racketB + racketSize)) {
-            ballSpeedX = -ballSpeedX;
+        if ((nextBallX < 10 && nextBallY > racketA && nextBallY < racketA + racketSize)           // Rebond raquette gauche
+        || (nextBallX > width && nextBallY > racketB && nextBallY < racketB + racketSize)) {    // Rebond raquette droite
+        ballSpeedX = -ballSpeedX;
             nextBallX = ballX + deltaT * ballSpeedX;
-        } else if (nextBallX < 0) {
-            return true;
+        }
+        else if (nextBallX < 0) {
+            scoreB++; return true; // Quand la balle sort du jeu du côté droit, on donne un point au joueur B
         } else if (nextBallX > width) {
-            return true;
+            scoreA++; return true; // Quand la balle sort du jeu du côté gauche, on donne un point au joueur A
         }
         ballX = nextBallX;
         ballY = nextBallY;

@@ -5,6 +5,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.*;
 import model.Court;
 
 public class GameView {
@@ -17,6 +18,7 @@ public class GameView {
     // children of the game main node
     private final Rectangle racketA, racketB;
     private final Circle ball;
+    private final Text score;
 
     /**
      * @param court le "modèle" de cette vue (le terrain de jeu de raquettes et tout ce qu'il y a dessus)
@@ -30,6 +32,13 @@ public class GameView {
 
         root.setMinWidth(court.getWidth() * scale + 2 * xMargin);
         root.setMinHeight(court.getHeight() * scale);
+
+        score = new Text();     // On créer l'objet Text pour pouvoir l'afficher
+        score.setX(500);
+        score.setY(35);
+        score.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
+        score.setFill(Color.BLACK);
+        score.setText(this.court.getScoreA() + " - " + this.court.getScoreB());
 
         racketA = new Rectangle();
         racketA.setHeight(court.getRacketSize() * scale);
@@ -54,7 +63,7 @@ public class GameView {
         ball.setCenterX(court.getBallX() * scale + xMargin);
         ball.setCenterY(court.getBallY() * scale);
 
-        gameRoot.getChildren().addAll(racketA, racketB, ball);
+        gameRoot.getChildren().addAll(racketA, racketB, ball, score); // On ajoute le score aux éléments du Pane
 
 
     }
@@ -75,6 +84,7 @@ public class GameView {
                 racketB.setY(court.getRacketB() * scale);
                 ball.setCenterX(court.getBallX() * scale + xMargin);
                 ball.setCenterY(court.getBallY() * scale);
+                score.setText(court.getScoreA() + " - " + court.getScoreB()); // On ajoute le score à animate() pour que le texte s'actualise quand un des joueurs marque
             }
         }.start();
     }
