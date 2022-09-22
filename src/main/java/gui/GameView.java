@@ -34,7 +34,7 @@ public class GameView {
         root.setMinHeight(court.getHeight() * scale);
 
         score = new Text();     // On créer l'objet Text pour pouvoir l'afficher
-        score.setX(500);
+        score.setX((court.getWidth() / 2) *scale + xMargin/2); // Petite modification pour mieux placer le score.
         score.setY(35);
         score.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
         score.setFill(Color.BLACK);

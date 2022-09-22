@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Random;
+
 public class Court {
     // instance parameters
     private final RacketController playerA, playerB;
@@ -56,6 +58,17 @@ public class Court {
 
     public int getScoreB() {
         return scoreB;
+    }
+
+    private double eitherInt(double a, double b) { // Fonction permettant de tirer au hasard entre 2 doubles donnés en argument
+        Random rd = new Random();
+        int c = rd.nextInt(1,3);
+        if (c == 1) {
+            return a;
+        }
+        else {
+            return b;
+        }
     }
 
     public void update(double deltaT) {
@@ -123,7 +136,7 @@ public class Court {
         this.racketA = height / 2;
         this.racketB = height / 2;
         this.ballSpeedX = 200.0;
-        this.ballSpeedY = 200.0;
+        this.ballSpeedY = eitherInt(-200.0, 200.0); // A chaque reset de la balle, on détermine aléatoirement sa trajectoire entre vers le haut ou vers le bas.
         this.ballX = width / 2;
         this.ballY = height / 2;
     }

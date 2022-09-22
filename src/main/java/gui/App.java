@@ -11,19 +11,13 @@ import model.RacketController;
 public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
-        var root = new Pane();
-        var gameScene = new Scene(root);
-        class Player implements RacketController {
-            State state = State.IDLE;
-
-            @Override
-            public State getState() {
-                return state;
-            }
-        }
         var playerA = new Player();
         var playerB = new Player();
-        gameScene.setOnKeyPressed(ev -> {
+        // var root = new Pane(); -> Devient sceneHandler.getRoot();
+        // var gameScene = new Scene(root); -> Devient sceneHandler.getScene()
+        SceneHandler sceneHandler = new SceneHandler(primaryStage, playerA, playerB);
+
+        sceneHandler.getScene().setOnKeyPressed(ev -> {
             switch (ev.getCode()) {
                 case CONTROL:
                     playerA.state = RacketController.State.GOING_UP;
@@ -39,7 +33,7 @@ public class App extends Application {
                     break;
             }
         });
-        gameScene.setOnKeyReleased(ev -> {
+        sceneHandler.getScene().setOnKeyReleased(ev -> {
             switch (ev.getCode()) {
                 case CONTROL:
                     if (playerA.state == RacketController.State.GOING_UP) playerA.state = RacketController.State.IDLE;
@@ -55,10 +49,6 @@ public class App extends Application {
                     break;
             }
         });
-        var court = new Court(playerA, playerB, 1000, 600);
-        var gameView = new GameView(court, root, 1.0);
-        primaryStage.setScene(gameScene);
-        primaryStage.show();
-        gameView.animate();
+        sceneHandler.setMenuScene();
     }
 }
