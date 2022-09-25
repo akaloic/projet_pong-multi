@@ -19,11 +19,17 @@ public class App extends Application {
 
         sceneHandler.getScene().setOnKeyPressed(ev -> {
             switch (ev.getCode()) {
-                case CONTROL:
+                case Z:
                     playerA.state = RacketController.State.GOING_UP;
                     break;
-                case ALT:
+                case S:
                     playerA.state = RacketController.State.GOING_DOWN;
+                    break;
+                case Q:
+                    playerA.state = RacketController.State.GOING_LEFT;
+                    break;
+                case D:
+                    playerA.state = RacketController.State.GOING_RIGHT;
                     break;
                 case UP:
                     playerB.state = RacketController.State.GOING_UP;
@@ -31,15 +37,27 @@ public class App extends Application {
                 case DOWN:
                     playerB.state = RacketController.State.GOING_DOWN;
                     break;
+                case RIGHT:
+                	playerB.state=RacketController.State.GOING_RIGHT;
+                	break;
+                case LEFT:
+                	playerB.state=RacketController.State.GOING_LEFT;
+                	
             }
         });
         sceneHandler.getScene().setOnKeyReleased(ev -> {
             switch (ev.getCode()) {
-                case CONTROL:
+                case Z:
                     if (playerA.state == RacketController.State.GOING_UP) playerA.state = RacketController.State.IDLE;
                     break;
-                case ALT:
+                case S:
                     if (playerA.state == RacketController.State.GOING_DOWN) playerA.state = RacketController.State.IDLE;
+                    break;
+                case Q:
+                    if (playerA.state == RacketController.State.GOING_LEFT) playerA.state = RacketController.State.IDLE;
+                    break;
+                case D:
+                    if (playerA.state == RacketController.State.GOING_RIGHT) playerA.state = RacketController.State.IDLE;
                     break;
                 case UP:
                     if (playerB.state == RacketController.State.GOING_UP) playerB.state = RacketController.State.IDLE;
@@ -47,6 +65,13 @@ public class App extends Application {
                 case DOWN:
                     if (playerB.state == RacketController.State.GOING_DOWN) playerB.state = RacketController.State.IDLE;
                     break;
+                case LEFT:
+                    if (playerB.state == RacketController.State.GOING_LEFT) playerB.state = RacketController.State.IDLE;
+                    break;
+                case RIGHT:
+                    if (playerB.state == RacketController.State.GOING_RIGHT) playerB.state = RacketController.State.IDLE;
+                    break;
+                	
             }
         });
         sceneHandler.setMenuScene();
