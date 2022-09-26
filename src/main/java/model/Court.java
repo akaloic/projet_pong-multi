@@ -122,7 +122,10 @@ public class Court {
                 racketB += racketSpeed * deltaT;
                 if (racketB + racketSize > height)
                     racketB = height - racketSize;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8bc368b768091ccde3643c5b8508c26c91e27a7c
                 break;
             case GOING_LEFT:
                 racketXB -= racketSpeed * deltaT;
@@ -135,7 +138,10 @@ public class Court {
                 if (racketXB > 0.0) {
                     racketXB = 0.0;
                 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8bc368b768091ccde3643c5b8508c26c91e27a7c
                 break;
         }
         if (updateBall(deltaT))
@@ -166,6 +172,8 @@ public class Court {
         } else if (nextBallX > width) {
         	agetscore=true;
             scoreA++; return true; // Quand la balle sort du jeu du côté gauche, on donne un point au joueur A
+
+
         }
         ballX = nextBallX;
         ballY = nextBallY;
@@ -179,8 +187,14 @@ public class Court {
     void reset() {
         this.racketA = height / 2;
         this.racketB = height / 2;
+<<<<<<< HEAD
         this.ballSpeedX = (agetscore)?-200.0:200; // la balle va dirigé vers celui qui a marqué le point
         this.ballSpeedY = eitherInt(-200.0, 200.0); // A chaque reset de la balle, on détermine aléatoirement sa trajectoire entre vers le haut ou vers le bas.
+=======
+        this.ballSpeedX = eitherInt(-200, 200.0);
+        this.ballSpeedY = eitherInt(-200.0, 200.0); // A chaque reset de la balle, on détermine aléatoirement sa
+                                                    // trajectoire entre vers le haut ou vers le bas.
+>>>>>>> 8bc368b768091ccde3643c5b8508c26c91e27a7c
         this.ballX = width / 2;
         this.ballY = height / 2;
     }
