@@ -12,6 +12,8 @@ public class Court {
     // instance state
     private double racketA; // m
     private double racketB; // m
+    private double racketXB; // m ajouter pour Varier l'echelle X
+    private double racketXA; //m ajouter pour Varier l'echelle X
     private double ballX, ballY; // m
     private double ballSpeedX, ballSpeedY; // m
     private int scoreA, scoreB;
@@ -23,6 +25,7 @@ public class Court {
         this.height = height;
         reset();
     }
+    
 
     public double getWidth() {
         return width;
@@ -43,6 +46,14 @@ public class Court {
     public double getRacketB() {
         return racketB;
     }
+
+    public double getRacketXB() {
+        return racketXB;
+    }
+    public double getRacketXA() {
+        return racketXA;
+    }
+
 
     public double getBallX() {
         return ballX;
@@ -84,7 +95,17 @@ public class Court {
                 racketA += racketSpeed * deltaT;
                 if (racketA + racketSize > height) racketA = height - racketSize;
                 break;
+            case GOING_LEFT:
+                racketXA -= racketSpeed * deltaT;
+                if(racketXA<0.0) racketXA=0.0;
+                break;
+            case GOING_RIGHT:
+                racketXA += racketSpeed * deltaT;
+                if(racketXA>width/2) racketXA=width/2;
+                break;   
+            	
         }
+
         switch (playerB.getState()) {
             case GOING_UP:
                 racketB -= racketSpeed * deltaT;
@@ -94,7 +115,19 @@ public class Court {
                 break;
             case GOING_DOWN:
                 racketB += racketSpeed * deltaT;
-                if (racketB + racketSize > height) racketB = height - racketSize;
+                if (racketB + racketSize > height) racketB = height-racketSize;
+                break;
+            case GOING_LEFT:
+            	racketXB -= racketSpeed * deltaT ;
+            	if(racketXB<-(width/2)) {
+            		racketXB=-(width/2);
+            	}
+                break;
+            case GOING_RIGHT:
+            	racketXB += racketSpeed * deltaT ;
+            	if(racketXB>0.0) {
+            		racketXB=0.0;
+            	}
                 break;
         }
         if (updateBall(deltaT)) reset();
@@ -113,9 +146,10 @@ public class Court {
             ballSpeedY = -ballSpeedY;
             nextBallY = ballY + deltaT * ballSpeedY;
         }
-        if ((nextBallX < 10 && nextBallY > racketA && nextBallY < racketA + racketSize)           // Rebond raquette gauche
-        || (nextBallX > width && nextBallY > racketB && nextBallY < racketB + racketSize)) {    // Rebond raquette droite
-        ballSpeedX = -ballSpeedX;
+        if (((nextBallX <0 ||nextBallX<racketXA) && nextBallY > racketA && nextBallY < racketA + racketSize)           // Rebond raquette gauche
+        || ((nextBallX >width || nextBallX>width+racketXB) && nextBallY > racketB && nextBallY < racketB + racketSize)) {    // Rebond raquette droite
+        	
+        	ballSpeedX = -ballSpeedX;
             nextBallX = ballX + deltaT * ballSpeedX;
         }
         else if (nextBallX < 0) {
