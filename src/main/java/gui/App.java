@@ -1,11 +1,7 @@
 package gui;
 
-
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import model.Court;
 import model.RacketController;
 
 public class App extends Application {
