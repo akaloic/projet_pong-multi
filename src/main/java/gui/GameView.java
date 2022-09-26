@@ -43,20 +43,21 @@ public class GameView {
         score.setFill(Color.BLACK);
         score.setText(this.court.getScoreA() + " - " + this.court.getScoreB());
 
+
         racketA = new Rectangle();
         racketA.setHeight(court.getRacketSize() * scale);
         racketA.setWidth(racketThickness);
         racketA.setFill(Color.BLACK);
-
-        racketA.setX(xMargin - racketThickness);
+        
+        racketA.setX(xMargin - racketThickness+court.getRacketXA());
         racketA.setY(court.getRacketA() * scale);
-
+        
         racketB = new Rectangle();
         racketB.setHeight(court.getRacketSize() * scale);
         racketB.setWidth(racketThickness);
         racketB.setFill(Color.BLACK);
 
-        racketB.setX(court.getWidth() * scale + xMargin);
+        racketB.setX(court.getWidth() * scale + xMargin + court.getRacketXB());
         racketB.setY(court.getRacketB() * scale);
 
         ball = new Circle();
@@ -83,7 +84,10 @@ public class GameView {
                 court.update((now - last) * 1.0e-9); // convert nanoseconds to seconds
                 last = now;
                 racketA.setY(court.getRacketA() * scale);
+                racketA.setX(xMargin - racketThickness+court.getRacketXA());
                 racketB.setY(court.getRacketB() * scale);
+                racketB.setX(court.getWidth() * scale + xMargin + court.getRacketXB());
+               
                 ball.setCenterX(court.getBallX() * scale + xMargin);
                 ball.setCenterY(court.getBallY() * scale);
                 score.setText(court.getScoreA() + " - " + court.getScoreB()); // On ajoute le score à animate() pour que
