@@ -13,7 +13,7 @@ public class Court {
     private double racketA; // m
     private double racketB; // m
     private double racketXB; // m ajouter pour Varier l'echelle X
-    private double racketXA; //m ajouter pour Varier l'echelle X
+    private double racketXA; // m ajouter pour Varier l'echelle X
     private double ballX, ballY; // m
     private double ballSpeedX, ballSpeedY; // m
     private int scoreA, scoreB;
@@ -26,7 +26,6 @@ public class Court {
         this.height = height;
         reset();
     }
-    
 
     public double getWidth() {
         return width;
@@ -51,10 +50,10 @@ public class Court {
     public double getRacketXB() {
         return racketXB;
     }
+
     public double getRacketXA() {
         return racketXA;
     }
-
 
     public double getBallX() {
         return ballX;
@@ -100,13 +99,15 @@ public class Court {
                 break;
             case GOING_LEFT:
                 racketXA -= racketSpeed * deltaT;
-                if(racketXA<0.0) racketXA=0.0;
+                if (racketXA < 0.0)
+                    racketXA = 0.0;
                 break;
             case GOING_RIGHT:
                 racketXA += racketSpeed * deltaT;
-                if(racketXA>width/2) racketXA=width/2;
-                break;   
-            	
+                if (racketXA > width / 2)
+                    racketXA = width / 2;
+                break;
+
         }
 
         switch (playerB.getState()) {
@@ -119,22 +120,22 @@ public class Court {
                 break;
             case GOING_DOWN:
                 racketB += racketSpeed * deltaT;
-
-                if (racketB + racketSize > height) racketB = height-racketSize;
-                break;
-            case GOING_LEFT:
-            	racketXB -= racketSpeed * deltaT ;
-            	if(racketXB<-(width/2)) {
-            		racketXB=-(width/2);
-            	}
-                break;
-            case GOING_RIGHT:
-            	racketXB += racketSpeed * deltaT ;
-            	if(racketXB>0.0) {
-            		racketXB=0.0;
-            	}
                 if (racketB + racketSize > height)
                     racketB = height - racketSize;
+
+                break;
+            case GOING_LEFT:
+                racketXB -= racketSpeed * deltaT;
+                if (racketXB < -(width / 2)) {
+                    racketXB = -(width / 2);
+                }
+                break;
+            case GOING_RIGHT:
+                racketXB += racketSpeed * deltaT;
+                if (racketXB > 0.0) {
+                    racketXB = 0.0;
+                }
+
                 break;
         }
         if (updateBall(deltaT))
