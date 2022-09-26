@@ -20,6 +20,7 @@ public class MenuView { // Classe similaire à GameView.java avec des éléments
     // children of the game main node
     private final Text title;
     private final Button start;
+    private final Button settings;
 
     /**
      * @param court le "modèle" de cette vue (le titre et le bouton)
@@ -35,32 +36,35 @@ public class MenuView { // Classe similaire à GameView.java avec des éléments
         this.scale = scale;
         this.court = court;
 
-
         root.setMinWidth(court.getWidth() * scale + 2 * xMargin);
         root.setMinHeight(court.getHeight() * scale);
 
-        
         title = new Text(); // On créer l'objet Text pour pouvoir l'afficher
         title.setX(((court.getWidth() / 2) * scale) - 20);
         title.setY((court.getHeight() / 2) * scale);
         title.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 50));
         title.setFill(Color.BLACK);
         title.setText("Pong!");
-        
-        
+
         start = new Button("Start");
         start.setLayoutX(((court.getWidth() / 2) * scale) - 5);
         start.setLayoutY(((court.getHeight() / 2) * scale) + 60);
         start.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
-        start.setOnAction(event -> sceneHandler.switchToGame(menuRoot)); // Lorsqu'on appuie sur le bouton, cela enclanche la méthode switchToGame()
+        start.setOnAction(event -> sceneHandler.switchToGame(menuRoot)); // Lorsqu'on appuie sur le bouton, cela
+                                                                         // enclanche la méthode switchToGame()
 
-        
+        settings = new Button("Settings");
+        settings.setLayoutX(((court.getWidth() / 2) * scale) - 33);
+        settings.setLayoutY(((court.getHeight() / 2) * scale) + 150);
+        settings.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
+        settings.setOnAction(event -> sceneHandler.switchToSettings(menuRoot)); // Lorsqu'on appuie sur le bouton, cela
+        // enclanche la méthode switchToGame()
 
-        
-
-        menuRoot.getChildren().addAll(title, start); // On ajoute le title et le bouton aux éléments du Pane
+        menuRoot.getChildren().addAll(title, start, settings); // On ajoute le title
+        // et les boutons aux éléments du Pane
 
     }
+    // Test
 
     public void animate() {
         new AnimationTimer() {

@@ -21,9 +21,12 @@ public class GameView {
     private final Text score;
 
     /**
-     * @param court le "modèle" de cette vue (le terrain de jeu de raquettes et tout ce qu'il y a dessus)
-     * @param root  le nœud racine dans la scène JavaFX dans lequel le jeu sera affiché
-     * @param scale le facteur d'échelle entre les distances du modèle et le nombre de pixels correspondants dans la vue
+     * @param court le "modèle" de cette vue (le terrain de jeu de raquettes et tout
+     *              ce qu'il y a dessus)
+     * @param root  le nœud racine dans la scène JavaFX dans lequel le jeu sera
+     *              affiché
+     * @param scale le facteur d'échelle entre les distances du modèle et le nombre
+     *              de pixels correspondants dans la vue
      */
     public GameView(Court court, Pane root, double scale) {
         this.court = court;
@@ -33,8 +36,8 @@ public class GameView {
         root.setMinWidth(court.getWidth() * scale + 2 * xMargin);
         root.setMinHeight(court.getHeight() * scale);
 
-        score = new Text();     // On créer l'objet Text pour pouvoir l'afficher
-        score.setX((court.getWidth() / 2) *scale + xMargin/2); // Petite modification pour mieux placer le score.
+        score = new Text(); // On créer l'objet Text pour pouvoir l'afficher
+        score.setX((court.getWidth() / 2) * scale + xMargin / 2); // Petite modification pour mieux placer le score.
         score.setY(35);
         score.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
         score.setFill(Color.BLACK);
@@ -65,7 +68,6 @@ public class GameView {
 
         gameRoot.getChildren().addAll(racketA, racketB, ball, score); // On ajoute le score aux éléments du Pane
 
-
     }
 
     public void animate() {
@@ -84,7 +86,9 @@ public class GameView {
                 racketB.setY(court.getRacketB() * scale);
                 ball.setCenterX(court.getBallX() * scale + xMargin);
                 ball.setCenterY(court.getBallY() * scale);
-                score.setText(court.getScoreA() + " - " + court.getScoreB()); // On ajoute le score à animate() pour que le texte s'actualise quand un des joueurs marque
+                score.setText(court.getScoreA() + " - " + court.getScoreB()); // On ajoute le score à animate() pour que
+                                                                              // le texte s'actualise quand un des
+                                                                              // joueurs marque
             }
         }.start();
     }

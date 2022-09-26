@@ -1,6 +1,5 @@
 package gui;
 
-
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -36,16 +35,20 @@ public class App extends Application {
         sceneHandler.getScene().setOnKeyReleased(ev -> {
             switch (ev.getCode()) {
                 case CONTROL:
-                    if (playerA.state == RacketController.State.GOING_UP) playerA.state = RacketController.State.IDLE;
+                    if (playerA.state == RacketController.State.GOING_UP)
+                        playerA.state = RacketController.State.IDLE;
                     break;
                 case ALT:
-                    if (playerA.state == RacketController.State.GOING_DOWN) playerA.state = RacketController.State.IDLE;
+                    if (playerA.state == RacketController.State.GOING_DOWN)
+                        playerA.state = RacketController.State.IDLE;
                     break;
                 case UP:
-                    if (playerB.state == RacketController.State.GOING_UP) playerB.state = RacketController.State.IDLE;
+                    if (playerB.state == RacketController.State.GOING_UP)
+                        playerB.state = RacketController.State.IDLE;
                     break;
                 case DOWN:
-                    if (playerB.state == RacketController.State.GOING_DOWN) playerB.state = RacketController.State.IDLE;
+                    if (playerB.state == RacketController.State.GOING_DOWN)
+                        playerB.state = RacketController.State.IDLE;
                     break;
             }
         });

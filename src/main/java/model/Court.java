@@ -60,13 +60,13 @@ public class Court {
         return scoreB;
     }
 
-    private double eitherInt(double a, double b) { // Fonction permettant de tirer au hasard entre 2 doubles donnés en argument
+    private double eitherInt(double a, double b) { // Fonction permettant de tirer au hasard entre 2 doubles donnés en
+                                                   // argument
         Random rd = new Random();
-        int c = rd.nextInt(1,3);
+        int c = rd.nextInt(2);
         if (c == 1) {
             return a;
-        }
-        else {
+        } else {
             return b;
         }
     }
@@ -76,30 +76,34 @@ public class Court {
         switch (playerA.getState()) {
             case GOING_UP:
                 racketA -= racketSpeed * deltaT;
-                if (racketA < 0.0) racketA = 0.0;
+                if (racketA < 0.0)
+                    racketA = 0.0;
                 break;
             case IDLE:
                 break;
             case GOING_DOWN:
                 racketA += racketSpeed * deltaT;
-                if (racketA + racketSize > height) racketA = height - racketSize;
+                if (racketA + racketSize > height)
+                    racketA = height - racketSize;
                 break;
         }
         switch (playerB.getState()) {
             case GOING_UP:
                 racketB -= racketSpeed * deltaT;
-                if (racketB < 0.0) racketB = 0.0;
+                if (racketB < 0.0)
+                    racketB = 0.0;
                 break;
             case IDLE:
                 break;
             case GOING_DOWN:
                 racketB += racketSpeed * deltaT;
-                if (racketB + racketSize > height) racketB = height - racketSize;
+                if (racketB + racketSize > height)
+                    racketB = height - racketSize;
                 break;
         }
-        if (updateBall(deltaT)) reset();
+        if (updateBall(deltaT))
+            reset();
     }
-
 
     /**
      * @return true if a player lost
@@ -113,15 +117,17 @@ public class Court {
             ballSpeedY = -ballSpeedY;
             nextBallY = ballY + deltaT * ballSpeedY;
         }
-        if ((nextBallX < 10 && nextBallY > racketA && nextBallY < racketA + racketSize)           // Rebond raquette gauche
-        || (nextBallX > width && nextBallY > racketB && nextBallY < racketB + racketSize)) {    // Rebond raquette droite
-        ballSpeedX = -ballSpeedX;
+        if ((nextBallX < 10 && nextBallY > racketA && nextBallY < racketA + racketSize) // Rebond raquette gauche
+                || (nextBallX > width && nextBallY > racketB && nextBallY < racketB + racketSize)) { // Rebond raquette
+                                                                                                     // droite
+            ballSpeedX = -ballSpeedX;
             nextBallX = ballX + deltaT * ballSpeedX;
-        }
-        else if (nextBallX < 0) {
-            scoreB++; return true; // Quand la balle sort du jeu du côté droit, on donne un point au joueur B
+        } else if (nextBallX < 0) {
+            scoreB++;
+            return true; // Quand la balle sort du jeu du côté droit, on donne un point au joueur B
         } else if (nextBallX > width) {
-            scoreA++; return true; // Quand la balle sort du jeu du côté gauche, on donne un point au joueur A
+            scoreA++;
+            return true; // Quand la balle sort du jeu du côté gauche, on donne un point au joueur A
         }
         ballX = nextBallX;
         ballY = nextBallY;
@@ -135,8 +141,9 @@ public class Court {
     void reset() {
         this.racketA = height / 2;
         this.racketB = height / 2;
-        this.ballSpeedX = 200.0;
-        this.ballSpeedY = eitherInt(-200.0, 200.0); // A chaque reset de la balle, on détermine aléatoirement sa trajectoire entre vers le haut ou vers le bas.
+        this.ballSpeedX = eitherInt(-200, 200.0);
+        this.ballSpeedY = eitherInt(-200.0, 200.0); // A chaque reset de la balle, on détermine aléatoirement sa
+                                                    // trajectoire entre vers le haut ou vers le bas.
         this.ballX = width / 2;
         this.ballY = height / 2;
     }
