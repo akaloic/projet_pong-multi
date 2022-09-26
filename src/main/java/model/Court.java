@@ -17,6 +17,7 @@ public class Court {
     private double ballX, ballY; // m
     private double ballSpeedX, ballSpeedY; // m
     private int scoreA, scoreB;
+    private boolean agetscore=true;//true pour playerA a marqué le point sinon false pour PlayerB a marqué le point;
 
     public Court(RacketController playerA, RacketController playerB, double width, double height) {
         this.playerA = playerA;
@@ -146,15 +147,16 @@ public class Court {
             ballSpeedY = -ballSpeedY;
             nextBallY = ballY + deltaT * ballSpeedY;
         }
-        if (((nextBallX <0 ||nextBallX<racketXA) && nextBallY > racketA && nextBallY < racketA + racketSize)           // Rebond raquette gauche
-        || ((nextBallX >width || nextBallX>width+racketXB) && nextBallY > racketB && nextBallY < racketB + racketSize)) {    // Rebond raquette droite
-        	
+        if ((nextBallX>racketXA && nextBallX<racketXA+10.0 && nextBallY > racketA && nextBallY < racketA + racketSize)           // Rebond raquette gauche
+        || (nextBallX >width+racketXB && nextBallX<width+racketXB+10.0 && nextBallY > racketB && nextBallY < racketB + racketSize)) {    // Rebond raquette droite
         	ballSpeedX = -ballSpeedX;
             nextBallX = ballX + deltaT * ballSpeedX;
         }
         else if (nextBallX < 0) {
+        	agetscore=false;
             scoreB++; return true; // Quand la balle sort du jeu du côté droit, on donne un point au joueur B
         } else if (nextBallX > width) {
+        	agetscore=true;
             scoreA++; return true; // Quand la balle sort du jeu du côté gauche, on donne un point au joueur A
         }
         ballX = nextBallX;
@@ -169,7 +171,7 @@ public class Court {
     void reset() {
         this.racketA = height / 2;
         this.racketB = height / 2;
-        this.ballSpeedX = 200.0;
+        this.ballSpeedX = (agetscore)?-200.0:200; // la balle va dirigé vers celui qui a marqué le point
         this.ballSpeedY = eitherInt(-200.0, 200.0); // A chaque reset de la balle, on détermine aléatoirement sa trajectoire entre vers le haut ou vers le bas.
         this.ballX = width / 2;
         this.ballY = height / 2;

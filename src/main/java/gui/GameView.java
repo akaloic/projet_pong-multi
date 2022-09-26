@@ -19,6 +19,7 @@ public class GameView {
     private final Rectangle racketA, racketB;
     private final Circle ball;
     private final Text score;
+   
 
     /**
      * @param court le "modèle" de cette vue (le terrain de jeu de raquettes et tout ce qu'il y a dessus)
