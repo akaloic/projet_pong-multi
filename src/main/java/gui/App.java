@@ -43,12 +43,12 @@ public class App extends Application {
         });
         sceneHandler.getScene().setOnKeyReleased(ev -> {
             switch (ev.getCode()) {
+
                 case Z:
                     if (playerA.state == RacketController.State.GOING_UP) playerA.state = RacketController.State.IDLE;
                     break;
                 case S:
                     if (playerA.state == RacketController.State.GOING_DOWN) playerA.state = RacketController.State.IDLE;
-                    break;
                 case Q:
                     if (playerA.state == RacketController.State.GOING_LEFT) playerA.state = RacketController.State.IDLE;
                     break;
@@ -56,10 +56,12 @@ public class App extends Application {
                     if (playerA.state == RacketController.State.GOING_RIGHT) playerA.state = RacketController.State.IDLE;
                     break;
                 case UP:
-                    if (playerB.state == RacketController.State.GOING_UP) playerB.state = RacketController.State.IDLE;
+                    if (playerB.state == RacketController.State.GOING_UP)
+                        playerB.state = RacketController.State.IDLE;
                     break;
                 case DOWN:
-                    if (playerB.state == RacketController.State.GOING_DOWN) playerB.state = RacketController.State.IDLE;
+                    if (playerB.state == RacketController.State.GOING_DOWN)
+                        playerB.state = RacketController.State.IDLE;
                     break;
                 case LEFT:
                     if (playerB.state == RacketController.State.GOING_LEFT) playerB.state = RacketController.State.IDLE;

@@ -72,13 +72,13 @@ public class Court {
         return scoreB;
     }
 
-    private double eitherInt(double a, double b) { // Fonction permettant de tirer au hasard entre 2 doubles donnés en argument
+    private double eitherInt(double a, double b) { // Fonction permettant de tirer au hasard entre 2 doubles donnés en
+                                                   // argument
         Random rd = new Random();
-        int c = rd.nextInt(1,3);
+        int c = rd.nextInt(2);
         if (c == 1) {
             return a;
-        }
-        else {
+        } else {
             return b;
         }
     }
@@ -88,13 +88,15 @@ public class Court {
         switch (playerA.getState()) {
             case GOING_UP:
                 racketA -= racketSpeed * deltaT;
-                if (racketA < 0.0) racketA = 0.0;
+                if (racketA < 0.0)
+                    racketA = 0.0;
                 break;
             case IDLE:
                 break;
             case GOING_DOWN:
                 racketA += racketSpeed * deltaT;
-                if (racketA + racketSize > height) racketA = height - racketSize;
+                if (racketA + racketSize > height)
+                    racketA = height - racketSize;
                 break;
             case GOING_LEFT:
                 racketXA -= racketSpeed * deltaT;
@@ -110,12 +112,14 @@ public class Court {
         switch (playerB.getState()) {
             case GOING_UP:
                 racketB -= racketSpeed * deltaT;
-                if (racketB < 0.0) racketB = 0.0;
+                if (racketB < 0.0)
+                    racketB = 0.0;
                 break;
             case IDLE:
                 break;
             case GOING_DOWN:
                 racketB += racketSpeed * deltaT;
+
                 if (racketB + racketSize > height) racketB = height-racketSize;
                 break;
             case GOING_LEFT:
@@ -129,11 +133,13 @@ public class Court {
             	if(racketXB>0.0) {
             		racketXB=0.0;
             	}
+                if (racketB + racketSize > height)
+                    racketB = height - racketSize;
                 break;
         }
-        if (updateBall(deltaT)) reset();
+        if (updateBall(deltaT))
+            reset();
     }
-
 
     /**
      * @return true if a player lost
@@ -147,6 +153,7 @@ public class Court {
             ballSpeedY = -ballSpeedY;
             nextBallY = ballY + deltaT * ballSpeedY;
         }
+
         if ((nextBallX>racketXA && nextBallX<racketXA+10.0 && nextBallY > racketA && nextBallY < racketA + racketSize)           // Rebond raquette gauche
         || (nextBallX >width+racketXB && nextBallX<width+racketXB+10.0 && nextBallY > racketB && nextBallY < racketB + racketSize)) {    // Rebond raquette droite
         	ballSpeedX = -ballSpeedX;
