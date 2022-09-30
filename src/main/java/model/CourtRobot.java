@@ -122,6 +122,7 @@ public class CourtRobot {
         // first, compute possible next position if nothing stands in the way
         double nextBallX = ballX + deltaT * ballSpeedX;
         double nextBallY = ballY + deltaT * ballSpeedY;
+        racketB= nextBallY;
         // next, see if the ball would meet some obstacle
         if (nextBallY < 0 || nextBallY > height) { // Rebonds plafond / sol
             ballSpeedY = -ballSpeedY;
@@ -129,9 +130,9 @@ public class CourtRobot {
         }
 
 
-        if ((nextBallX<racketXA+10.0 && nextBallY > racketA && nextBallY < racketA + racketSize)           // Rebond raquette gauche
-        || (nextBallX >width+racketXB && nextBallY > racketB && nextBallY < racketB + racketSize)) {    // Rebond raquette droite
-        	ballSpeedX = -ballSpeedX;
+        if ((nextBallX<racketXA && nextBallX>racketXA-10.0 && nextBallY > racketA && nextBallY < racketA + racketSize)           // Rebond raquette gauche
+        || (nextBallX >width && nextBallY >=racketB && nextBallY <=racketB + racketSize)) { // Rebond raquette droite
+            ballSpeedX = -ballSpeedX;
             nextBallX = ballX + deltaT * ballSpeedX;
         }
         else if (nextBallX < 0) {
