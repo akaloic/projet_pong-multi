@@ -39,26 +39,33 @@ public class MenuView { // Classe similaire à GameView.java avec des éléments
 
         title = new Text(); // On créer l'objet Text pour pouvoir l'afficher
         title.setX(((court.getWidth() / 2) * scale) - 20);
-        title.setY((court.getHeight() / 2) * scale);
+        title.setY(60);
         title.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 50));
         title.setFill(Color.BLACK);
         title.setText("Pong!");
 
         start = new Button("Start");
         start.setLayoutX(((court.getWidth() / 2) * scale) - 5);
-        start.setLayoutY(((court.getHeight() / 2) * scale) + 60);
+        start.setLayoutY(((court.getHeight() / 2) * scale) - 60);
         start.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
         start.setOnAction(event -> sceneHandler.switchToGame(menuRoot)); // Lorsqu'on appuie sur le bouton, cela
                                                                          // enclanche la méthode switchToGame()
 
+        Button startRobot = new Button("Player vs Bot");
+        startRobot.setLayoutX(((court.getWidth() / 2) * scale) - 80);
+        startRobot.setLayoutY(((court.getHeight() / 2) * scale) + 30);
+        startRobot.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
+        startRobot.setOnAction(event -> sceneHandler.switchToGameRobot(menuRoot)); // Lorsqu'on appuie sur le bouton, cela
+                                                                         // enclanche la méthode switchToGame()
+
         settings = new Button("Settings");
         settings.setLayoutX(((court.getWidth() / 2) * scale) - 33);
-        settings.setLayoutY(((court.getHeight() / 2) * scale) + 150);
+        settings.setLayoutY(((court.getHeight() - 80)));
         settings.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
         settings.setOnAction(event -> sceneHandler.switchToSettings(menuRoot)); // Lorsqu'on appuie sur le bouton, cela
         // enclanche la méthode switchToGame()
 
-        menuRoot.getChildren().addAll(title, start, settings); // On ajoute le title
+        menuRoot.getChildren().addAll(title, start, settings, startRobot); // On ajoute le title
         // et les boutons aux éléments du Pane
 
     }

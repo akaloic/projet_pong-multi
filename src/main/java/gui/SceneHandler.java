@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Court;
+import model.CourtRobot;
 
 public class SceneHandler { // Cette classe permet de manipuler les scènes courrantes sans à avoir besoin de
                             // réecrire tout le code à chaque fois
@@ -49,7 +50,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
 
     public void setMenuScene() {
         var court = new Court(playerA, playerB, 1000, 600);
-        // root.setStyle("-fx-background-color: #FF0000"); //Changement couleure bg
+        //root.setStyle("-fx-background-color: #FF0000"); //Changement couleure bg
         var menuView = new MenuView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
@@ -65,6 +66,16 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         stage.show();
         gameView.animate();
     }
+
+    public void switchToGameRobot(Pane menuRoot) {
+        menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
+                                        // afficher le jeu sans problèmes.
+        var court = new CourtRobot (playerA, 1000, 600);
+        var gameView = new GameRobotView(court, root, 1.0);
+        stage.setScene(scene);
+        stage.show();
+        gameView.animate();
+    }    
 
     public void switchToSettings(Pane menuRoot) { // Méthode permettant de passer de menu à Settings
         menuRoot.getChildren().clear();

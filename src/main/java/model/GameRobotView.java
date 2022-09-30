@@ -6,11 +6,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.*;
-import model.Court;
+import model.CourtRobot;
 
-public class GameView {
+public class GameRobotView {
     // class parameters
-    private final Court court;
+    private final CourtRobot courtRobot;
     private final Pane gameRoot; // main node of the game
     private final double scale;
     private final double xMargin = 50.0, racketThickness = 10.0; // pixels
@@ -22,51 +22,51 @@ public class GameView {
    
 
     /**
-     * @param court le "modèle" de cette vue (le terrain de jeu de raquettes et tout
+     * @param courtRobot le "modèle" de cette vue (le terrain de jeu de raquettes et tout
      *              ce qu'il y a dessus)
      * @param root  le nœud racine dans la scène JavaFX dans lequel le jeu sera
      *              affiché
      * @param scale le facteur d'échelle entre les distances du modèle et le nombre
      *              de pixels correspondants dans la vue
      */
-    public GameView(Court court, Pane root, double scale) {
-        this.court = court;
+    public GameRobotView(CourtRobot courtRobot, Pane root, double scale) {
+        this.courtRobot = courtRobot;
         this.gameRoot = root;
         this.scale = scale;
 
-        root.setMinWidth(court.getWidth() * scale + 2 * xMargin);
-        root.setMinHeight(court.getHeight() * scale);
+        root.setMinWidth(courtRobot.getWidth() * scale + 2 * xMargin);
+        root.setMinHeight(courtRobot.getHeight() * scale);
 
         score = new Text(); // On créer l'objet Text pour pouvoir l'afficher
-        score.setX((court.getWidth() / 2) * scale + xMargin / 2); // Petite modification pour mieux placer le score.
+        score.setX((courtRobot.getWidth() / 2) * scale + xMargin / 2); // Petite modification pour mieux placer le score.
         score.setY(35);
         score.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
         score.setFill(Color.BLACK);
-        score.setText(this.court.getScoreA() + " - " + this.court.getScoreB());
+        score.setText(this.courtRobot.getScoreA() + " - " + this.courtRobot.getScoreB());
        
 
         racketA = new Rectangle();
-        racketA.setHeight(court.getRacketSize() * scale);
+        racketA.setHeight(courtRobot.getRacketSize() * scale);
         racketA.setWidth(racketThickness);
-        racketA.setFill(Color.BLACK);
+        racketA.setFill(Color.RED); //joueur 
         
-        racketA.setX(xMargin - racketThickness+court.getRacketXA());
-        racketA.setY(court.getRacketA() * scale);
+        racketA.setX(xMargin - racketThickness+courtRobot.getRacketXA());
+        racketA.setY(courtRobot.getRacketA() * scale);
         
         racketB = new Rectangle();
-        racketB.setHeight(court.getRacketSize() * scale);
+        racketB.setHeight(courtRobot.getRacketSize() * scale);
         racketB.setWidth(racketThickness);
-        racketB.setFill(Color.BLACK);
+        racketB.setFill(Color.BLUE); //le robot
 
-        racketB.setX(court.getWidth() * scale + xMargin + court.getRacketXB());
-        racketB.setY(court.getRacketB() * scale);
+        racketB.setX(courtRobot.getWidth() * scale + xMargin);
+        racketB.setY(courtRobot.getBallY() * scale);
 
         ball = new Circle();
-        ball.setRadius(court.getBallRadius());
+        ball.setRadius(courtRobot.getBallRadius());
         ball.setFill(Color.BLACK);
 
-        ball.setCenterX(court.getBallX() * scale + xMargin);
-        ball.setCenterY(court.getBallY() * scale);
+        ball.setCenterX(courtRobot.getBallX() * scale + xMargin);
+        ball.setCenterY(courtRobot.getBallY() * scale);
 
         gameRoot.getChildren().addAll(racketA, racketB, ball, score); // On ajoute le score aux éléments du Pane
 
@@ -82,16 +82,23 @@ public class GameView {
                     last = now;
                     return;
                 }
-                court.update((now - last) * 1.0e-9); // convert nanoseconds to seconds
+                courtRobot.update((now - last) * 1.0e-9); // convert nanoseconds to seconds
                 last = now;
-                racketA.setY(court.getRacketA() * scale);
-                racketA.setX(xMargin - racketThickness+court.getRacketXA());
+                racketA.setY(courtRobot.getRacketA() * scale);
+                racketA.setX(xMargin - racketThickness+courtRobot.getRacketXA());
+                racketB.setY(courtRobot.getBallY() * scale + xMargin - 65);
+                racketB.setX(courtRobot.getWidth() * scale + xMargin);
+                /*
                 racketB.setY(court.getRacketB() * scale);
                 racketB.setX(court.getWidth() * scale + xMargin + court.getRacketXB());
                
                 ball.setCenterX(court.getBallX() * scale + xMargin);
                 ball.setCenterY(court.getBallY() * scale);
-                score.setText(court.getScoreA() + " - " + court.getScoreB()); // On ajoute le score à animate() pour que
+                */
+
+                ball.setCenterX(courtRobot.getBallX() * scale + xMargin);
+                ball.setCenterY(courtRobot.getBallY() * scale);
+                score.setText(courtRobot.getScoreA() + " - " + courtRobot.getScoreB()); // On ajoute le score à animate() pour que
                                                                               // le texte s'actualise quand un des
                                                                               // joueurs marque
             }
