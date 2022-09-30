@@ -18,6 +18,7 @@ public class CourtRobot {
     private double ballSpeedX, ballSpeedY; // m
     private int scoreA, scoreB;
     private boolean agetscore=true;//true pour playerA a marqué le point sinon false pour PlayerB a marqué le point;
+    private int coeff;
 
     public CourtRobot(RacketController playerA, double width, double height) {
         this.playerA = playerA;
@@ -114,6 +115,7 @@ public class CourtRobot {
         if (updateBall(deltaT))
             reset();
     }
+  
 
     /**
      * @return true if a player lost
@@ -122,15 +124,15 @@ public class CourtRobot {
         // first, compute possible next position if nothing stands in the way
         double nextBallX = ballX + deltaT * ballSpeedX;
         double nextBallY = ballY + deltaT * ballSpeedY;
+        racketB=nextBallY;
         // next, see if the ball would meet some obstacle
         if (nextBallY < 0 || nextBallY > height) { // Rebonds plafond / sol
             ballSpeedY = -ballSpeedY;
             nextBallY = ballY + deltaT * ballSpeedY;
         }
 
-
-        if ((nextBallX<racketXA+10.0 && nextBallY > racketA && nextBallY < racketA + racketSize)           // Rebond raquette gauche
-        || (nextBallX >width+racketXB && nextBallY > racketB && nextBallY < racketB + racketSize)) {    // Rebond raquette droite
+        if ((nextBallX<racketXA && nextBallX>racketXA-10.0 && nextBallY > racketA && nextBallY < racketA + racketSize)           // Rebond raquette gauche
+        || (nextBallX >width && nextBallY >=racketB && nextBallY <=racketB + racketSize)) {    // Rebond raquette droite
         	ballSpeedX = -ballSpeedX;
             nextBallX = ballX + deltaT * ballSpeedX;
         }

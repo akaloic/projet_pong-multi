@@ -19,6 +19,7 @@ public class GameRobotView {
     private final Rectangle racketA, racketB;
     private final Circle ball;
     private final Text score;
+
    
 
     /**
@@ -59,6 +60,7 @@ public class GameRobotView {
         racketB.setFill(Color.BLUE); //le robot
 
         racketB.setX(courtRobot.getWidth() * scale + xMargin);
+       
         racketB.setY(courtRobot.getBallY() * scale);
 
         ball = new Circle();
