@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Court;
 import model.CourtRobot;
+import javafx.scene.control.Button;
 
 public class SceneHandler { // Cette classe permet de manipuler les scènes courrantes sans à avoir besoin de
                             // réecrire tout le code à chaque fois
@@ -71,7 +72,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
                                         // afficher le jeu sans problèmes.
         var court = new CourtRobot (playerA, 1000, 600);
-        var gameView = new GameRobotView(court, root, 1.0);
+        var gameView = new GameRobotView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
         gameView.animate();
@@ -93,6 +94,11 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         stage.setScene(scene);
         stage.show();
         menuView.animate();
+    }
+
+    public String switchSonButton(Button b){
+        if (b.getText().equals("On")) return "Off";
+        return "On";
     }
 
 }
