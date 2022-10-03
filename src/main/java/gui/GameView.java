@@ -7,6 +7,7 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.*;
 import model.Court;
+import javafx.scene.media.AudioClip;
 
 public class GameView {
     // class parameters
@@ -19,7 +20,6 @@ public class GameView {
     private final Rectangle racketA, racketB;
     private final Circle ball;
     private final Text score;
-   
 
     /**
      * @param court le "modèle" de cette vue (le terrain de jeu de raquettes et tout
@@ -41,29 +41,28 @@ public class GameView {
         score.setX((court.getWidth() / 2) * scale + xMargin / 2); // Petite modification pour mieux placer le score.
         score.setY(35);
         score.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
-        score.setFill(Color.BLACK);
+        score.setFill(SceneHandler.itemcolor);
         score.setText(this.court.getScoreA() + " - " + this.court.getScoreB());
-       
 
         racketA = new Rectangle();
         racketA.setHeight(court.getRacketSize() * scale);
         racketA.setWidth(racketThickness);
-        racketA.setFill(Color.BLACK);
-        
-        racketA.setX(xMargin - racketThickness+court.getRacketXA());
+        racketA.setFill(SceneHandler.itemcolor);
+
+        racketA.setX(xMargin - racketThickness + court.getRacketXA());
         racketA.setY(court.getRacketA() * scale);
-        
+
         racketB = new Rectangle();
         racketB.setHeight(court.getRacketSize() * scale);
         racketB.setWidth(racketThickness);
-        racketB.setFill(Color.BLACK);
+        racketB.setFill(SceneHandler.itemcolor);
 
         racketB.setX(court.getWidth() * scale + xMargin + court.getRacketXB());
         racketB.setY(court.getRacketB() * scale);
 
         ball = new Circle();
         ball.setRadius(court.getBallRadius());
-        ball.setFill(Color.BLACK);
+        ball.setFill(SceneHandler.itemcolor);
 
         ball.setCenterX(court.getBallX() * scale + xMargin);
         ball.setCenterY(court.getBallY() * scale);
@@ -85,10 +84,10 @@ public class GameView {
                 court.update((now - last) * 1.0e-9); // convert nanoseconds to seconds
                 last = now;
                 racketA.setY(court.getRacketA() * scale);
-                racketA.setX(xMargin - racketThickness+court.getRacketXA());
+                racketA.setX(xMargin - racketThickness + court.getRacketXA());
                 racketB.setY(court.getRacketB() * scale);
                 racketB.setX(court.getWidth() * scale + xMargin + court.getRacketXB());
-               
+
                 ball.setCenterX(court.getBallX() * scale + xMargin);
                 ball.setCenterY(court.getBallY() * scale);
                 score.setText(court.getScoreA() + " - " + court.getScoreB()); // On ajoute le score à animate() pour que

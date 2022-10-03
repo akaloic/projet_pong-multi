@@ -17,6 +17,8 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
     private Scene scene;
     private Pane root;
     private Player playerA, playerB;
+    public static String bgcolor = "#FFFFFF"; // Couleur du background en hexadecimal en blanc par défaut
+    public static Color itemcolor = Color.BLACK;
 
     public SceneHandler(Stage stage, Player playerA, Player playerB) { // On prends les playerA et playerB en argument
                                                                        // pour pouvoir les redistribuer sur les menuView
@@ -51,17 +53,26 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
 
     public void setMenuScene() {
         var court = new Court(playerA, playerB, 1000, 600);
-        //root.setStyle("-fx-background-color: #FF0000"); //Changement couleure bg
         var menuView = new MenuView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
         menuView.animate();
     }
 
+    public void paneColor() {
+        if (SettingsView.darkthemetest) {
+            bgcolor = "#000000";
+        } else {
+            bgcolor = "#FFFFFF";
+        }
+        root.setStyle("-fx-background-color: " + bgcolor);
+    }
+
     public void switchToGame(Pane menuRoot) {
         menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
                                         // afficher le jeu sans problèmes.
         var court = new Court(playerA, playerB, 1000, 600);
+        this.paneColor();
         var gameView = new GameView(court, root, 1.0);
         stage.setScene(scene);
         stage.show();
@@ -71,16 +82,28 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
     public void switchToGameRobot(Pane menuRoot) {
         menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
                                         // afficher le jeu sans problèmes.
-        var court = new CourtRobot (playerA, 1000, 600);
+        var court = new CourtRobot(playerA, 1000, 600);
+        this.paneColor();
         var gameView = new GameRobotView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
         gameView.animate();
-    }    
+    }
 
     public void switchToSettings(Pane menuRoot) { // Méthode permettant de passer de menu à Settings
         menuRoot.getChildren().clear();
         var court = new Court(playerA, playerB, 1000, 600);
+        this.paneColor();
+        var settingsView = new SettingsView(court, root, 1.0, this);
+        stage.setScene(scene);
+        stage.show();
+        settingsView.animate();
+    }
+
+    public void refreshSettings(Pane settingsRoot) { // SettingsToSettings
+        settingsRoot.getChildren().clear();
+        var court = new Court(playerA, playerB, 1000, 600);
+        this.paneColor();
         var settingsView = new SettingsView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
@@ -90,16 +113,17 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
     public void switchToMenu(Pane settingsRoot) { // Méthode permettant de passer de Settings à menu
         settingsRoot.getChildren().clear();
         var court = new Court(playerA, playerB, 1000, 600);
+        this.paneColor();
         var menuView = new MenuView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
         menuView.animate();
     }
 
-    public String switchSonButton(Button b){
-        if (b.getText().equals("On")) return "Off";
+    public String switchSonButton(Button b) {
+        if (b.getText().equals("On"))
+            return "Off";
         return "On";
     }
 
 }
-

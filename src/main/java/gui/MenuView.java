@@ -41,28 +41,38 @@ public class MenuView { // Classe similaire à GameView.java avec des éléments
         title.setX(((court.getWidth() / 2) * scale) - 20);
         title.setY(60);
         title.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 50));
-        title.setFill(Color.BLACK);
+        title.setFill(SceneHandler.itemcolor);
         title.setText("Pong!");
 
         start = new Button("Start");
         start.setLayoutX(((court.getWidth() / 2) * scale) - 5);
         start.setLayoutY(((court.getHeight() / 2) * scale) - 60);
         start.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
-        start.setOnAction(event -> sceneHandler.switchToGame(menuRoot)); // Lorsqu'on appuie sur le bouton, cela
-                                                                         // enclanche la méthode switchToGame()
+        start.setOnAction(event -> {
+            AudioBankGui.buttonclick.play();
+            sceneHandler.switchToGame(menuRoot);
+        }); // Lorsqu'on appuie sur le bouton, cela
+            // enclanche la méthode switchToGame()
 
         Button startRobot = new Button("Player vs Bot");
         startRobot.setLayoutX(((court.getWidth() / 2) * scale) - 80);
         startRobot.setLayoutY(((court.getHeight() / 2) * scale) + 30);
         startRobot.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
-        startRobot.setOnAction(event -> sceneHandler.switchToGameRobot(menuRoot)); // Lorsqu'on appuie sur le bouton, cela
-                                                                         // enclanche la méthode switchToGame()
+        startRobot.setOnAction(event -> {
+            AudioBankGui.buttonclick.play();
+            sceneHandler.switchToGameRobot(menuRoot);
+        }); // Lorsqu'on appuie sur le bouton,
+            // cela
+        // enclanche la méthode switchToGame()
 
         settings = new Button("Settings");
         settings.setLayoutX(((court.getWidth() / 2) * scale) - 33);
         settings.setLayoutY(((court.getHeight() - 80)));
         settings.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
-        settings.setOnAction(event -> sceneHandler.switchToSettings(menuRoot)); // Lorsqu'on appuie sur le bouton, cela
+        settings.setOnAction(event -> {
+            AudioBankGui.buttonclick.play();
+            sceneHandler.switchToSettings(menuRoot);
+        }); // Lorsqu'on appuie sur le bouton, cela
         // enclanche la méthode switchToGame()
 
         menuRoot.getChildren().addAll(title, start, settings, startRobot); // On ajoute le title
