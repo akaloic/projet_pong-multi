@@ -24,6 +24,7 @@ public class GameRobotView {
     //bouton son
     private final Button son;
     private final SceneHandler sh;
+
    
 
     /**
@@ -65,6 +66,7 @@ public class GameRobotView {
         racketB.setFill(Color.BLUE); //le robot
 
         racketB.setX(courtRobot.getWidth() * scale + xMargin);
+       
         racketB.setY(courtRobot.getBallY() * scale);
 
         ball = new Circle();
