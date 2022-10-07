@@ -38,6 +38,10 @@ public class App extends Application {
                     break;
                 case LEFT:
                     playerB.state = RacketController.State.GOING_LEFT;
+                    break;
+                case SPACE:
+                	Player.pauseORcontinue();
+                	break;
 
             }
         });
@@ -76,6 +80,7 @@ public class App extends Application {
                     if (playerB.state == RacketController.State.GOING_RIGHT)
                         playerB.state = RacketController.State.IDLE;
                     break;
+                	
 
             }
         });

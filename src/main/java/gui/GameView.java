@@ -1,6 +1,9 @@
 package gui;
 
 import javafx.animation.AnimationTimer;
+import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -19,7 +22,41 @@ public class GameView {
     private final Rectangle racketA, racketB;
     private final Circle ball;
     private final Text score;
-   
+    private Button button;
+    private final AnimationTimer timer=new AnimationTimer() {
+        long last = 0;
+
+        @Override
+        public void handle(long now) {
+            if (last == 0) { // ignore the first tick, just compute the first deltaT
+                last = now;
+                return;
+            }
+            court.update((now - last) * 1.0e-9); // convert nanoseconds to seconds
+            last = now;
+            racketA.setY(court.getRacketA() * scale);
+            racketA.setX(xMargin - racketThickness+court.getRacketXA());
+            racketB.setY(court.getRacketB() * scale);
+            racketB.setX(court.getWidth() * scale + xMargin + court.getRacketXB());
+           
+            ball.setCenterX(court.getBallX() * scale + xMargin);
+            ball.setCenterY(court.getBallY() * scale);
+            score.setText(court.getScoreA() + " - " + court.getScoreB()); // On ajoute le score à animate() pour que
+                                                                    // le texte s'actualise quand un des
+                                                                          // joueurs marque
+            
+            if(Player.getPause()) {
+            	this.stop();
+            	this.last=0;
+            	gameRoot.getChildren().add(button);
+            	
+            }
+            
+                        
+        }
+        
+    };
+
 
     /**
      * @param court le "modèle" de cette vue (le terrain de jeu de raquettes et tout
@@ -67,34 +104,33 @@ public class GameView {
 
         ball.setCenterX(court.getBallX() * scale + xMargin);
         ball.setCenterY(court.getBallY() * scale);
+        button=new Button("Continue");
+        button.setLayoutX(((court.getWidth() / 2) * scale) - 80);
+        button.setLayoutY(((court.getHeight() / 2) * scale) - 60);
+        button.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
+        button.setOnAction(event->animate());
+      
 
         gameRoot.getChildren().addAll(racketA, racketB, ball, score); // On ajoute le score aux éléments du Pane
 
     }
+   
 
     public void animate() {
-        new AnimationTimer() {
-            long last = 0;
+       if(gameRoot.getChildren().contains(button)) {
+    	   gameRoot.getChildren().remove(button);
+       }
+       timer.start();
+       if(Player.getPause()) {
+    	   Player.pauseORcontinue();
+       }
 
-            @Override
-            public void handle(long now) {
-                if (last == 0) { // ignore the first tick, just compute the first deltaT
-                    last = now;
-                    return;
-                }
-                court.update((now - last) * 1.0e-9); // convert nanoseconds to seconds
-                last = now;
-                racketA.setY(court.getRacketA() * scale);
-                racketA.setX(xMargin - racketThickness+court.getRacketXA());
-                racketB.setY(court.getRacketB() * scale);
-                racketB.setX(court.getWidth() * scale + xMargin + court.getRacketXB());
-               
-                ball.setCenterX(court.getBallX() * scale + xMargin);
-                ball.setCenterY(court.getBallY() * scale);
-                score.setText(court.getScoreA() + " - " + court.getScoreB()); // On ajoute le score à animate() pour que
-                                                                              // le texte s'actualise quand un des
-                                                                              // joueurs marque
-            }
-        }.start();
+        
+        
     }
+    
+	
+
+	
+    
 }
