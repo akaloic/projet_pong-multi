@@ -45,10 +45,10 @@ public class GameView {
                                                                     // le texte s'actualise quand un des
                                                                           // joueurs marque
             
-            if(Player.getPause()) {
-            	this.stop();
-            	this.last=0;
-            	gameRoot.getChildren().add(button);
+            if(Player.getPause()) {     // si le champs boolean pause est vrai 
+            	this.stop();            //on arrete le timer pour faire une pause du scene
+            	this.last=0;            // comme le temps continue de s'avancer , il faut réunitialiser last en 0 pour qu'il soit réinitialisé par la valeur de now pour que le jeu repart au meme moment que là où on arrete
+            	gameRoot.getChildren().add(button); // une fois le jeu arreter on fait afficher sur la scene un bouton qui permet de relancer le jeu
             	
             }
             
@@ -117,17 +117,17 @@ public class GameView {
    
 
     public void animate() {
-       if(gameRoot.getChildren().contains(button)) {
-    	   gameRoot.getChildren().remove(button);
+       if(gameRoot.getChildren().contains(button)) {  // si on reprend / commence la partie il faut vérifier si le button continue existe
+    	   gameRoot.getChildren().remove(button); // si oui , on enleve le bouton 
+    	   Player.pauseORcontinue();  // et on met aussi le champs boolean pause en false
        }
-       timer.start();
-       if(Player.getPause()) {
-    	   Player.pauseORcontinue();
-       }
+       timer.start();  // on lance le timer 
+      
 
         
         
     }
+
     
 	
 
