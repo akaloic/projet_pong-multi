@@ -164,7 +164,12 @@ public class Court {
 
         if ((nextBallX>racketXA && nextBallX<racketXA+10.0 && nextBallY > racketA && nextBallY < racketA + racketSize)           // Rebond raquette gauche
         || (nextBallX >width+racketXB && nextBallX<width+racketXB+10.0 && nextBallY > racketB && nextBallY < racketB + racketSize)) {    // Rebond raquette droite
-        	ballSpeedX = -ballSpeedX;
+             if ((nextBallY <= racketA+racketSize+ 10.0 && nextBallY > racketA+racketSize-10.0) || (nextBallY <= racketB + racketSize+10.0 && nextBallY > racketB + racketSize-10.0)){ // Rebond sur les bords
+                ballSpeedX *=-1;
+                ballSpeedY *=-1;
+                ballSpeedX = ballSpeedX;
+             } else
+                 ballSpeedX = -ballSpeedX;
             nextBallX = ballX + deltaT * ballSpeedX;
         }
         else if (nextBallX < 0) {
