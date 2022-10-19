@@ -7,6 +7,7 @@ public class CourtMulti extends Court{
     // instance parameters
     private final RacketController playerB;
     
+    
     public CourtMulti(RacketController playerA, RacketController playerB, double width, double height) {
         super(playerA, width, height);
         this.playerB = playerB;
@@ -38,7 +39,7 @@ public class CourtMulti extends Court{
                     setRacketXA(0.0);
                 break;
             case GOING_RIGHT:
-                setRacketA(getRacketXA() + getRacketSpeed() * deltaT  * getCoefA());
+                setRacketXA(getRacketXA() + getRacketSpeed() * deltaT  * getCoefA());
                 if (getRacketXA() > getWidth() / 2)
                     setRacketXA(getWidth() / 2);
                 break;
@@ -75,5 +76,6 @@ public class CourtMulti extends Court{
         if (updateBall(deltaT))
             reset();
     }
+    
 
 }
