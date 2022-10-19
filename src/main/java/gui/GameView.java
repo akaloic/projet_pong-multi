@@ -22,7 +22,7 @@ public class GameView {
     private final Rectangle racketA, racketB;
     private final Circle ball;
     private final Text score;
-    private Button button;
+    private Button continu;
     private final AnimationTimer timer=new AnimationTimer() {
         long last = 0;
 
@@ -37,7 +37,7 @@ public class GameView {
             racketA.setY(court.getRacketA() * scale);
             racketA.setX(xMargin - racketThickness+court.getRacketXA());
             racketB.setY(court.getRacketB() * scale);
-            racketB.setX(court.getWidth() * scale + xMargin + court.getRacketXB());
+            racketB.setX(court.getWidth() * 	scale + xMargin + court.getRacketXB());
            
             ball.setCenterX(court.getBallX() * scale + xMargin);
             ball.setCenterY(court.getBallY() * scale);
@@ -48,7 +48,7 @@ public class GameView {
             if(Player.getPause()) {     // si le champs boolean pause est vrai 
             	this.stop();            //on arrete le timer pour faire une pause du scene
             	this.last=0;            // comme le temps continue de s'avancer , il faut réunitialiser last en 0 pour qu'il soit réinitialisé par la valeur de now pour que le jeu repart au meme moment que là où on arrete
-            	gameRoot.getChildren().add(button); // une fois le jeu arreter on fait afficher sur la scene un bouton qui permet de relancer le jeu
+            	gameRoot.getChildren().add(continu); // une fois le jeu arreter on fait afficher sur la scene un bouton qui permet de relancer le jeu
             	
             }
             
@@ -104,22 +104,20 @@ public class GameView {
 
         ball.setCenterX(court.getBallX() * scale + xMargin);
         ball.setCenterY(court.getBallY() * scale);
-        button=new Button("Continue");
-        button.setLayoutX(((court.getWidth() / 2) * scale) - 80);
-        button.setLayoutY(((court.getHeight() / 2) * scale) - 60);
-        button.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
-        button.setOnAction(event->animate());
-      
-
+        continu=new Button("Continue");
+        continu.setLayoutX(((court.getWidth() / 2) * scale) - 80);
+        continu.setLayoutY(((court.getHeight() / 2) * scale) - 60);
+        continu.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
+        continu.setOnAction(event->animate());
         gameRoot.getChildren().addAll(racketA, racketB, ball, score); // On ajoute le score aux éléments du Pane
 
     }
    
 
     public void animate() {
-       if(gameRoot.getChildren().contains(button)) {  // si on reprend / commence la partie il faut vérifier si le button continue existe
-    	   gameRoot.getChildren().remove(button); // si oui , on enleve le bouton 
-    	   Player.pauseORcontinue();  // et on met aussi le champs boolean pause en false
+       if(gameRoot.getChildren().contains(continu)) {  // si on reprend / commence la partie il faut vérifier si le button continue existe
+    	   gameRoot.getChildren().remove(continu); // si oui , on enleve le bouton 
+    	   Player.pauseORcontinue();  // et on met aussi le champs boolean pause en false pour préparer à la prochaine demande de pause
        }
        timer.start();  // on lance le timer 
       
