@@ -1,6 +1,9 @@
 package gui;
 
 import javafx.animation.AnimationTimer;
+import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -19,7 +22,41 @@ public class GameView {
     private final Rectangle racketA, racketB;
     private final Circle ball;
     private final Text score;
-   
+    private Button continu;
+    private final AnimationTimer timer=new AnimationTimer() {
+        long last = 0;
+
+        @Override
+        public void handle(long now) {
+            if (last == 0) { // ignore the first tick, just compute the first deltaT
+                last = now;
+                return;
+            }
+            court.update((now - last) * 1.0e-9); // convert nanoseconds to seconds
+            last = now;
+            racketA.setY(court.getRacketA() * scale);
+            racketA.setX(xMargin - racketThickness+court.getRacketXA());
+            racketB.setY(court.getRacketB() * scale);
+            racketB.setX(court.getWidth() * 	scale + xMargin + court.getRacketXB());
+           
+            ball.setCenterX(court.getBallX() * scale + xMargin);
+            ball.setCenterY(court.getBallY() * scale);
+            score.setText(court.getScoreA() + " - " + court.getScoreB()); // On ajoute le score à animate() pour que
+                                                                    // le texte s'actualise quand un des
+                                                                          // joueurs marque
+            
+            if(Player.getPause()) {     // si le champs boolean pause est vrai 
+            	this.stop();            //on arrete le timer pour faire une pause du scene
+            	this.last=0;            // comme le temps continue de s'avancer , il faut réunitialiser last en 0 pour qu'il soit réinitialisé par la valeur de now pour que le jeu repart au meme moment que là où on arrete
+            	gameRoot.getChildren().add(continu); // une fois le jeu arreter on fait afficher sur la scene un bouton qui permet de relancer le jeu
+            	
+            }
+            
+                        
+        }
+        
+    };
+
 
     /**
      * @param court le "modèle" de cette vue (le terrain de jeu de raquettes et tout
@@ -67,34 +104,31 @@ public class GameView {
 
         ball.setCenterX(court.getBallX() * scale + xMargin);
         ball.setCenterY(court.getBallY() * scale);
-
+        continu=new Button("Continue");
+        continu.setLayoutX(((court.getWidth() / 2) * scale) - 80);
+        continu.setLayoutY(((court.getHeight() / 2) * scale) - 60);
+        continu.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
+        continu.setOnAction(event->animate());
         gameRoot.getChildren().addAll(racketA, racketB, ball, score); // On ajoute le score aux éléments du Pane
 
     }
+   
 
     public void animate() {
-        new AnimationTimer() {
-            long last = 0;
+       if(gameRoot.getChildren().contains(continu)) {  // si on reprend / commence la partie il faut vérifier si le button continue existe
+    	   gameRoot.getChildren().remove(continu); // si oui , on enleve le bouton 
+    	   Player.pauseORcontinue();  // et on met aussi le champs boolean pause en false pour préparer à la prochaine demande de pause
+       }
+       timer.start();  // on lance le timer 
+      
 
-            @Override
-            public void handle(long now) {
-                if (last == 0) { // ignore the first tick, just compute the first deltaT
-                    last = now;
-                    return;
-                }
-                court.update((now - last) * 1.0e-9); // convert nanoseconds to seconds
-                last = now;
-                racketA.setY(court.getRacketA() * scale);
-                racketA.setX(xMargin - racketThickness+court.getRacketXA());
-                racketB.setY(court.getRacketB() * scale);
-                racketB.setX(court.getWidth() * scale + xMargin + court.getRacketXB());
-               
-                ball.setCenterX(court.getBallX() * scale + xMargin);
-                ball.setCenterY(court.getBallY() * scale);
-                score.setText(court.getScoreA() + " - " + court.getScoreB()); // On ajoute le score à animate() pour que
-                                                                              // le texte s'actualise quand un des
-                                                                              // joueurs marque
-            }
-        }.start();
+        
+        
     }
+
+    
+	
+
+	
+    
 }
