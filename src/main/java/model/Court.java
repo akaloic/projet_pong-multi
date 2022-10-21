@@ -162,7 +162,7 @@ public class Court {
         }
 
 
-        if ((nextBallX>racketXA && nextBallX<racketXA+10.0 && nextBallY > racketA && nextBallY < racketA + racketSize)           // Rebond raquette gauche
+        if ((nextBallX>racketXA-10.0 && nextBallX<racketXA && nextBallY > racketA && nextBallY < racketA + racketSize)           // Rebond raquette gauche
         || (nextBallX >width+racketXB && nextBallX<width+racketXB+10.0 && nextBallY > racketB && nextBallY < racketB + racketSize)) {    // Rebond raquette droite
         	ballSpeedX = -ballSpeedX;
             nextBallX = ballX + deltaT * ballSpeedX;

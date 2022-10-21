@@ -21,6 +21,8 @@ public class SettingsView { // Classe similaire à GameView.java & MenuView.java
     private final Text reglages;
     private final Button exit;
 
+    private final Button son;
+
     /**
      * @param court le "modèle" de cette vue (le titre et le bouton)
      * 
@@ -51,7 +53,14 @@ public class SettingsView { // Classe similaire à GameView.java & MenuView.java
         exit.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
         exit.setOnAction(event -> sceneHandler.switchToMenu(settingsRoot));
 
-        settingsRoot.getChildren().addAll(reglages, exit); // On ajoute le title et les boutons aux éléments
+        son = new Button();
+        son.setText("On");
+        son.setLayoutX(1050);
+        son.setLayoutY(10);
+        son.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
+        son.setOnAction(event -> son.setText(sceneHandler.switchSonButton(son)));
+
+        settingsRoot.getChildren().addAll(reglages, exit, son); // On ajoute le title et les boutons aux éléments
         // du Pane
 
     }

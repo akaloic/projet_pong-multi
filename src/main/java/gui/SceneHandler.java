@@ -72,7 +72,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
                                         // afficher le jeu sans problèmes.
         var court = new CourtRobot (playerA, 1000, 600);
-        var gameView = new GameRobotView(court, root, 1.0, this);
+        var gameView = new GameRobotView(court, root, 1.0);
         stage.setScene(scene);
         stage.show();
         gameView.animate();

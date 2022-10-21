@@ -21,9 +21,13 @@ public class GameRobotView {
     private final Circle ball;
     private final Text score;
 
-    //bouton son
-    private final Button son;
-    private final SceneHandler sh;
+
+
+
+
+
+
+
 
    
 
@@ -35,11 +39,11 @@ public class GameRobotView {
      * @param scale le facteur d'échelle entre les distances du modèle et le nombre
      *              de pixels correspondants dans la vue
      */
-    public GameRobotView(CourtRobot courtRobot, Pane root, double scale, SceneHandler sh) {
+    public GameRobotView(CourtRobot courtRobot, Pane root, double scale) {
         this.courtRobot = courtRobot;
         this.gameRoot = root;
         this.scale = scale;
-        this.sh = sh;
+
 
         root.setMinWidth(courtRobot.getWidth() * scale + 2 * xMargin);
         root.setMinHeight(courtRobot.getHeight() * scale);
@@ -76,14 +80,9 @@ public class GameRobotView {
         ball.setCenterX(courtRobot.getBallX() * scale + xMargin);
         ball.setCenterY(courtRobot.getBallY() * scale);
 
-        son = new Button();
-        son.setText("On");
-        son.setLayoutX(1050);
-        son.setLayoutY(10);
-        son.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
-        son.setOnAction(event -> son.setText(sh.switchSonButton(son)));
 
-        gameRoot.getChildren().addAll(racketA, racketB, ball, score, son); // On ajoute le score aux éléments du Pane
+
+        gameRoot.getChildren().addAll(racketA, racketB, ball, score); // On ajoute le score aux éléments du Pane
 
     }
 
