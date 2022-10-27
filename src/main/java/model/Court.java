@@ -137,6 +137,7 @@ public class Court {
         return playerA;
     }
 
+
     public double getRacketSpeed() {
         return racketSpeed;
     }
