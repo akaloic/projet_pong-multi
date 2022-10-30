@@ -7,7 +7,7 @@ public class Court {
     private final RacketController playerA;
     private final double width, height; // m
     private final double racketSpeed = 300.0; // m/s
-    private final double racketSize = 100.0; // m
+    private double racketSize = 100.0; // m
     private final double ballRadius = 10.0; // m
     // instance state
     private double racketA; // m
@@ -20,6 +20,8 @@ public class Court {
     private boolean agetscore=true;//true pour playerA a marqué le point sinon false pour PlayerB a marqué le point;
     private double  coeffSpeedA=0.2; // variable qui permet ralentir la vitesse de raquetteA avant chaque déplacement de raquette;
     private double coeffSpeedB=0.2;
+
+    private boolean changeRaquette = false;
 
     public Court(RacketController playerA, double width, double height) {
         this.playerA = playerA;
@@ -85,7 +87,9 @@ public class Court {
         this.ballX = width / 2;
         this.ballY = height / 2;
         this.racketXB=0;
-        this.racketXA=0;  
+        this.racketXA=0;
+        if (changeRaquette) racketSize = 200.0;
+
     }
 
 
@@ -177,6 +181,15 @@ public class Court {
 
     public void setCoefA(double coef) {
         coeffSpeedA = coef;
+    }
+
+    public void setChangeRaquette(){
+        this.changeRaquette = true;
+    }
+
+    public void setRacketSize(double size){
+        this.racketSize = size;
+
     }
 
 
