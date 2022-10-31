@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import model.Court;
 
+
 public class SettingsView extends View{ // Classe similaire à GameView.java & MenuView.java avec des éléments différents
 
     private final Text reglages;
@@ -82,10 +83,13 @@ public class SettingsView extends View{ // Classe similaire à GameView.java & M
         raquetteLarge.setOnAction(event -> {sceneHandler.switchToGameR(getRoot(), 150.0); makePauseFalse();});
 
 
-
         getRoot().getChildren().addAll(reglages, exit, son, tailleRaquette, raquetteSmall, raquetteMedium, raquetteLarge); // On ajoute le title et les boutons aux éléments
         // du Pane
 
+
+
+
     }
+
 
 }
