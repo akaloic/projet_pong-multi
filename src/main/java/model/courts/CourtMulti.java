@@ -6,14 +6,23 @@ import model.RacketController;
 public class CourtMulti extends Court{
     // instance parameters
     private final RacketController playerB;
+
     
     
     public CourtMulti(RacketController playerA, RacketController playerB, double width, double height) {
         super(playerA, width, height);
         this.playerB = playerB;
         reset();
-        
+
     }
+
+    public CourtMulti(RacketController playerA, RacketController playerB, double width, double height, double racketSize) { //contructeur pour modifier la taille de la raquette
+        super(playerA, width, height, racketSize);
+        this.playerB = playerB;
+        reset();
+
+    }
+
 
     
 

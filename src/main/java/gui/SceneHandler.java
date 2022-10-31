@@ -72,6 +72,16 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         ((GameView) view).animate();
     }
 
+    public void switchToGameR(Pane menuRoot, double racketSize) { //on utilise cette methode pour qu'on puisse modifier la taille de la raquette
+        menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
+        // afficher le jeu sans problèmes.
+        court = new CourtMulti(playerA, playerB, 1000, 600, racketSize);
+        view = new GameView(court, root, 1.0, this);
+        stage.setScene(scene);
+        stage.show();
+        ((GameView) view).animate();
+    }
+
     public void switchToGameRobot(Pane menuRoot) {
         menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
                                         // afficher le jeu sans problèmes.

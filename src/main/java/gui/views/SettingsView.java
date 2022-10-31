@@ -2,6 +2,7 @@ package gui.views;
 
 import gui.SceneHandler;
 import gui.View;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -32,6 +33,7 @@ public class SettingsView extends View{ // Classe similaire à GameView.java & M
         reglages = new Text();
         reglages.setX(((court.getWidth() / 2) * scale) - 80);
         reglages.setY((court.getWidth() / 10) * scale);
+        reglages.setTextAlignment(TextAlignment.CENTER);
         reglages.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 50));
         reglages.setFill(Color.BLACK);
         reglages.setText("Réglages");
@@ -51,32 +53,33 @@ public class SettingsView extends View{ // Classe similaire à GameView.java & M
 
         //Raquette Taille
         tailleRaquette = new Text();
-        tailleRaquette.setX(((court.getWidth() / 2) * scale) - 100);
+        tailleRaquette.setX(((court.getWidth() / 2) * scale) - 80);
         tailleRaquette.setY((court.getWidth() / 5) * scale);
+        tailleRaquette.setTextAlignment(TextAlignment.CENTER);
         tailleRaquette.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 40));
         tailleRaquette.setFill(Color.BLACK);
         tailleRaquette.setText("Racket Size");
 
         raquetteSmall = new Button();
         raquetteSmall.setText("Small");
-        raquetteSmall.setLayoutX(700);
+        raquetteSmall.setLayoutX(((court.getWidth() / 2) * scale) - 80);
         raquetteSmall.setLayoutY(250);
         raquetteSmall.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
-        raquetteSmall.setOnAction(event -> son.setText(sceneHandler.switchSonButton(son)));
+        raquetteSmall.setOnAction(event -> sceneHandler.switchToGameR(getRoot(), 75.0));
 
         raquetteMedium = new Button();
         raquetteMedium.setText("Medium");
-        raquetteMedium.setLayoutX(600);
+        raquetteMedium.setLayoutX(((court.getWidth() / 2) * scale) + 11);
         raquetteMedium.setLayoutY(250);
         raquetteMedium.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
-        raquetteMedium.setOnAction(event -> son.setText(sceneHandler.switchSonButton(son)));
+        raquetteMedium.setOnAction(event -> sceneHandler.switchToGame(getRoot()));
 
         raquetteLarge = new Button();
         raquetteLarge.setText("Large");
-        raquetteLarge.setLayoutX(500);
+        raquetteLarge.setLayoutX(((court.getWidth() / 2) * scale) + 120);
         raquetteLarge.setLayoutY(250);
         raquetteLarge.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
-        raquetteLarge.setOnAction(event -> {court.setRacketSize(200.0);sceneHandler.switchToGame(getRoot());});
+        raquetteLarge.setOnAction(event -> sceneHandler.switchToGameR(getRoot(), 150.0));
 
 
 

@@ -29,6 +29,14 @@ public class Court {
         this.height = height;
     }
 
+    public Court(RacketController playerA, double width, double height, double racketSize) { //nouveau constructeur pour qu'on puisse modifier la taille de la raquette
+        this.playerA = playerA;
+        this.width = width;
+        this.height = height;
+        this.racketSize = racketSize;
+    }
+
+
     private double eitherInt(double a, double b) {
         Random rd = new Random();
         int c = rd.nextInt(2);
