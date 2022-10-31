@@ -40,6 +40,7 @@ public class ControlHandler {
                     break;
                 case LEFT:
                     playerB.state = RacketController.State.GOING_LEFT;
+                    break;
                 case SPACE:
                 	View.pauseORcontinue();
                 	break;

@@ -1,16 +1,19 @@
 package model.courts;
 
+import gui.entities.Player;
 import model.Court;
 import model.RacketController;
 
 public class CourtMulti extends Court{
     // instance parameters
     private final RacketController playerB;
+    private final RacketController playerA;
     
     
     public CourtMulti(RacketController playerA, RacketController playerB, double width, double height) {
-        super(playerA, width, height);
+        super(width, height);
         this.playerB = playerB;
+        this.playerA=playerA;
         reset();
         
     }
@@ -19,7 +22,7 @@ public class CourtMulti extends Court{
 
     public void update(double deltaT) { 
     	SpeedUp(deltaT); // fonction qui augmente la coeff de vitesse
-        switch (getPlayerA().getState()) {
+        switch (this.playerA.getState()) {
             case GOING_UP:
                 setRacketA(getRacketA() - getRacketSpeed() * deltaT * getCoefA()) ;
                 if (getRacketA() < 0.0)

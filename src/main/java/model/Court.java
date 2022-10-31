@@ -4,7 +4,6 @@ import java.util.Random;
 
 public class Court {
     // instance parameters
-    private final RacketController playerA;
     private final double width, height; // m
     private final double racketSpeed = 300.0; // m/s
     private final double racketSize = 100.0; // m
@@ -20,9 +19,9 @@ public class Court {
     private boolean agetscore=true;//true pour playerA a marqué le point sinon false pour PlayerB a marqué le point;
     private double  coeffSpeedA=0.2; // variable qui permet ralentir la vitesse de raquetteA avant chaque déplacement de raquette;
     private double coeffSpeedB=0.2;
+    private int nbrejoueur=1;
 
-    public Court(RacketController playerA, double width, double height) {
-        this.playerA = playerA;
+    public Court( double width, double height) {
         this.width = width;
         this.height = height;
     }
@@ -83,6 +82,7 @@ public class Court {
         this.racketXB=0;
         this.racketXA=0;  
     }
+  
 
 
     public double getBallRadius() {
@@ -133,9 +133,6 @@ public class Court {
         return scoreB;
     }
 
-    public RacketController getPlayerA() {
-        return playerA;
-    }
 
 
     public double getRacketSpeed() {
@@ -172,6 +169,12 @@ public class Court {
 
     public void setCoefA(double coef) {
         coeffSpeedA = coef;
+    }
+    public void incrementer() {
+    	this.nbrejoueur++;
+    }
+    public int getNbrejoueur() {
+    	return this.nbrejoueur;
     }
 
 

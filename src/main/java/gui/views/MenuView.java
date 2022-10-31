@@ -1,8 +1,16 @@
 package gui.views;
 
+
+
+
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+
 import gui.SceneHandler;
 import gui.View;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
@@ -41,8 +49,8 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
         start.setLayoutX(((court.getWidth() / 2) * scale) - 80);
         start.setLayoutY(((court.getHeight() / 2) * scale) - 60);
         start.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
-        start.setOnAction(event -> sceneHandler.switchToGame(getRoot())); // Lorsqu'on appuie sur le bouton, cela
-                                                                         // enclanche la méthode switchToGame()
+        start.setOnAction(event -> sceneHandler.switchtoNbreJoueur(getRoot())); // Lorsqu'on appuie sur le bouton, cela
+                                                                        // enclanche la méthode switchToGame()
 
         Button startRobot = new Button("Player vs Bot");
         startRobot.setLayoutX(((court.getWidth() / 2) * scale) - 80);
@@ -61,7 +69,7 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
         shutdown.setLayoutX(((court.getWidth() / 2) * scale) - 80);
         shutdown.setLayoutY(((court.getHeight() - 100)));
         shutdown.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
-        shutdown.setOnAction(event -> System.exit(0));
+
         getRoot().getChildren().addAll(title, start, settings, startRobot,shutdown); // On ajoute le title
 
         // et les boutons aux éléments du Pane

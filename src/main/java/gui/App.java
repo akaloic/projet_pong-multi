@@ -1,19 +1,23 @@
 package gui;
 
+
+
 import gui.entities.Player;
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import model.ControlHandler;
 
 public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
-        var playerA = new Player();
-        var playerB = new Player();
-        SceneHandler sceneHandler = new SceneHandler(primaryStage, playerA, playerB);
+    	primaryStage.setTitle("JeuPong");
+    	//primaryStage.getIcons().addAll(new Image(getClass().getResourceAsStream("/index.png")));
+        SceneHandler sceneHandler = new SceneHandler(primaryStage);
 
-        ControlHandler controlHandler = new ControlHandler(playerA, playerB, sceneHandler);
-        controlHandler.getInput();
+        
         sceneHandler.setMenuScene();
+       
     }
 }

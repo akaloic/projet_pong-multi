@@ -4,15 +4,17 @@ import model.Court;
 import model.RacketController;
 
 public class CourtRobot extends Court{
+	private RacketController playerA;
     
     public CourtRobot(RacketController playerA, double width, double height) {
-        super(playerA, width, height);
+        super(width, height);
+        this.playerA=playerA;
         reset();
     }
 
     public void update(double deltaT) {
 
-        switch (getPlayerA().getState()) {
+        switch (this.playerA.getState()) {
             case GOING_UP:
                 setRacketA(getRacketA() - getRacketSpeed() * deltaT * getCoefA()) ;
                 if (getRacketA() < 0.0)
