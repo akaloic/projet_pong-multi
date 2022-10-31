@@ -41,7 +41,7 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
         start.setLayoutX(((court.getWidth() / 2) * scale) - 80);
         start.setLayoutY(((court.getHeight() / 2) * scale) - 60);
         start.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
-        start.setOnAction(event -> sceneHandler.switchToGame(getRoot())); // Lorsqu'on appuie sur le bouton, cela
+        start.setOnAction(event -> {sceneHandler.switchToGame(getRoot()); makePauseFalse();}); // Lorsqu'on appuie sur le bouton, cela
                                                                          // enclanche la méthode switchToGame()
 
         Button startRobot = new Button("Player vs Bot");

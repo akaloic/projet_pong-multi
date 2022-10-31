@@ -65,21 +65,21 @@ public class SettingsView extends View{ // Classe similaire à GameView.java & M
         raquetteSmall.setLayoutX(((court.getWidth() / 2) * scale) - 80);
         raquetteSmall.setLayoutY(250);
         raquetteSmall.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
-        raquetteSmall.setOnAction(event -> sceneHandler.switchToGameR(getRoot(), 75.0));
+        raquetteSmall.setOnAction(event -> {sceneHandler.switchToGameR(getRoot(), 75.0); makePauseFalse();});
 
         raquetteMedium = new Button();
         raquetteMedium.setText("Medium");
         raquetteMedium.setLayoutX(((court.getWidth() / 2) * scale) + 11);
         raquetteMedium.setLayoutY(250);
         raquetteMedium.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
-        raquetteMedium.setOnAction(event -> sceneHandler.switchToGame(getRoot()));
+        raquetteMedium.setOnAction(event -> {sceneHandler.switchToGame(getRoot()); makePauseFalse();});
 
         raquetteLarge = new Button();
         raquetteLarge.setText("Large");
         raquetteLarge.setLayoutX(((court.getWidth() / 2) * scale) + 120);
         raquetteLarge.setLayoutY(250);
         raquetteLarge.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
-        raquetteLarge.setOnAction(event -> sceneHandler.switchToGameR(getRoot(), 150.0));
+        raquetteLarge.setOnAction(event -> {sceneHandler.switchToGameR(getRoot(), 150.0); makePauseFalse();});
 
 
 

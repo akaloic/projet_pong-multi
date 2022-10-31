@@ -21,7 +21,7 @@ public class Court {
     private double  coeffSpeedA=0.2; // variable qui permet ralentir la vitesse de raquetteA avant chaque déplacement de raquette;
     private double coeffSpeedB=0.2;
 
-    private boolean changeRaquette = false;
+
 
     public Court(RacketController playerA, double width, double height) {
         this.playerA = playerA;
@@ -96,7 +96,7 @@ public class Court {
         this.ballY = height / 2;
         this.racketXB=0;
         this.racketXA=0;
-        if (changeRaquette) racketSize = 200.0;
+
 
     }
 
@@ -191,9 +191,7 @@ public class Court {
         coeffSpeedA = coef;
     }
 
-    public void setChangeRaquette(){
-        this.changeRaquette = true;
-    }
+
 
     public void setRacketSize(double size){
         this.racketSize = size;
