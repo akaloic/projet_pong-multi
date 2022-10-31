@@ -195,7 +195,6 @@ public class Court {
 
     public void setRacketSize(double size){
         this.racketSize = size;
-
     }
 
 
