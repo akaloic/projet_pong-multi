@@ -23,10 +23,17 @@ public class Court {
 
 
 
+
+
+
+
+
+
     public Court(RacketController playerA, double width, double height) {
         this.playerA = playerA;
         this.width = width;
         this.height = height;
+
     }
 
     public Court(RacketController playerA, double width, double height, double racketSize) { //nouveau constructeur pour qu'on puisse modifier la taille de la raquette
@@ -34,6 +41,7 @@ public class Court {
         this.width = width;
         this.height = height;
         this.racketSize = racketSize;
+
     }
 
 
@@ -99,6 +107,7 @@ public class Court {
 
 
     }
+
 
 
     public double getBallRadius() {

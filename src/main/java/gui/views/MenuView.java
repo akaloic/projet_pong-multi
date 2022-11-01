@@ -16,6 +16,15 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
     private final Button settings;
     private final Button shutdown;
 
+    //booleans pour voir laquelle taille est choisie
+    private static boolean racketSmall = false;
+
+    private static boolean racketMedium = false;
+
+    private static boolean racketLarge = false;
+
+
+
     /**
      * @param court le "modèle" de cette vue (le titre et le bouton)
      * 
@@ -41,8 +50,8 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
         start.setLayoutX(((court.getWidth() / 2) * scale) - 80);
         start.setLayoutY(((court.getHeight() / 2) * scale) - 60);
         start.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
-        start.setOnAction(event -> {sceneHandler.switchToGame(getRoot()); makePauseFalse();}); // Lorsqu'on appuie sur le bouton, cela
-                                                                         // enclanche la méthode switchToGame()
+        start.setOnAction(event -> {sceneHandler.switchToGameRbis(getRoot(),racketSmall, racketMedium,racketLarge); makePauseFalse();}); // Lorsqu'on appuie sur le bouton, cela
+                                                                         // enclanche la méthode switchToGame() + avec la bonne taille de la raquette
 
         Button startRobot = new Button("Player vs Bot");
         startRobot.setLayoutX(((court.getWidth() / 2) * scale) - 80);
@@ -69,5 +78,25 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
     }
     // Test
 
-    
+    //pour sauvgarder la taille de la raquette choisi si le jouer revient au start
+    public static void activateSmall(){
+        racketSmall = true;
+        racketMedium = false;
+        racketLarge = false;
+    }
+
+    public static void activateMedium(){
+        racketMedium = true;
+        racketSmall = false;
+        racketLarge = false;
+    }
+
+    public static void activateLarge(){
+        racketLarge = true;
+        racketSmall = false;
+        racketMedium = false;
+    }
+
+
+
 }

@@ -23,6 +23,8 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
     private Court court;
     private Player playerA, playerB;
 
+
+
     public SceneHandler(Stage stage, Player playerA, Player playerB) { // On prends les playerA et playerB en argument
                                                                        // pour pouvoir les redistribuer sur les menuView
                                                                        // / gameView
@@ -81,6 +83,23 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         stage.show();
         ((GameView) view).animate();
     }
+
+    public void switchToGameRbis(Pane menuRoot, boolean small, boolean medium, boolean large) { //on utilise cette methode pour qu'on puisse modifier la taille de la raquette + sauvgarde la derniere taille choisie si le jouer revient au start
+        menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
+        // afficher le jeu sans problèmes.
+        if (small)
+            court = new CourtMulti(playerA, playerB, 1000, 600, 75.0);
+        else if (medium)
+            court = new CourtMulti(playerA, playerB, 1000, 600);
+        else if (large)
+            court = new CourtMulti(playerA, playerB, 1000, 600, 150.0);
+        view = new GameView(court, root, 1.0, this);
+        stage.setScene(scene);
+        stage.show();
+        ((GameView) view).animate();
+    }
+
+
 
     public void switchToGameRobot(Pane menuRoot) {
         menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
