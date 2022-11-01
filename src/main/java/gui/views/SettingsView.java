@@ -25,6 +25,8 @@ public class SettingsView extends View{ // Classe similaire à GameView.java & M
 
 
 
+
+
     public SettingsView(Court court, Pane root, double scale, SceneHandler sceneHandler) {
         super(court, root, scale, sceneHandler);
 
@@ -80,7 +82,13 @@ public class SettingsView extends View{ // Classe similaire à GameView.java & M
         raquetteLarge.setLayoutX(((court.getWidth() / 2) * scale) + 120);
         raquetteLarge.setLayoutY(250);
         raquetteLarge.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
-        raquetteLarge.setOnAction(event -> {MenuView.activateLarge(); sceneHandler.switchToGameR(getRoot(), 150.0); makePauseFalse(); });
+        raquetteLarge.setOnAction(event -> {MenuView.activateLarge(); sceneHandler.switchToGameR(getRoot(), 150.0); makePauseFalse(); raquetteLarge.setStyle("-fx-background-color: #00ff00"); });
+
+        //on change la coleur du bouton qui change la taille de la raquette pour que ca soit plus clair quelle taille est actuellement choisie
+
+        if (MenuView.getRacketSmall()) raquetteSmall.setStyle("-fx-background-color: #FDFCCB");
+        else if(MenuView.getRacketMedium()) raquetteMedium.setStyle("-fx-background-color: #FDFCCB");
+        else if (MenuView.getRacketLarge()) raquetteLarge.setStyle("-fx-background-color: #FDFCCB");
 
 
         getRoot().getChildren().addAll(reglages, exit, son, tailleRaquette, raquetteSmall, raquetteMedium, raquetteLarge); // On ajoute le title et les boutons aux éléments
