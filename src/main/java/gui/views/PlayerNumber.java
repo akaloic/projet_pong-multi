@@ -53,6 +53,7 @@ public class PlayerNumber extends View {
 		menus.setLayoutX(((court.getWidth() / 2) * scale-100));
 		menus.setLayoutY(((court.getHeight()/2)*scale));
 		menus.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
+		menus.setOnAction(event->decrementer());
 		text2=new Text();
 		text2.setText(" "+this.nbre);
 		text2.setLayoutX((court.getWidth()/2)*scale);
@@ -76,6 +77,11 @@ public class PlayerNumber extends View {
 	private void incrementer() {
 		if(this.nbre<4) {
 			this.nbre++;
+		}
+	}
+	private void decrementer() {
+		if(this.nbre>1) {
+			this.nbre--;
 		}
 	}
 

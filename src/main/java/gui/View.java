@@ -1,6 +1,14 @@
 package gui;
 
+import java.awt.Color;
+
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Line;
 import model.Court;
 
 
@@ -19,6 +27,9 @@ public abstract class View {
 
         root.setMinWidth(court.getWidth() * scale + 2 * xMargin);
         root.setMinHeight(court.getHeight() * scale);
+
+        
+        
     }
 
     public Court getCourt() {

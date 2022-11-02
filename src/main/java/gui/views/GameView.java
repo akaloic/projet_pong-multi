@@ -6,7 +6,9 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.*;
 import model.Court;
@@ -18,6 +20,9 @@ public class GameView extends View{
     private final Circle ball;
     private final Text score;
     private Button continu;
+    private Line separateur;
+    private Line ligne2;
+    private Line ligne3;
 
     private final AnimationTimer timer=new AnimationTimer() {
         long last = 0;
@@ -58,7 +63,7 @@ public class GameView extends View{
         super(court, root, scale, sceneHandler);
 
         score = new Text(); // On créer l'objet Text pour pouvoir l'afficher
-        score.setX((court.getWidth() / 2) * scale + getXMargin() / 2); // Petite modification pour mieux placer le score.
+        score.setX((court.getWidth() / 2) * scale + getXMargin() / 2-10); // Petite modification pour mieux placer le score.
         score.setY(35);
         score.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
         score.setFill(Color.BLACK);
@@ -92,7 +97,13 @@ public class GameView extends View{
         continu.setLayoutY(((court.getHeight() / 2) * scale) - 60);
         continu.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
         continu.setOnAction(event->animate());
-        getRoot().getChildren().addAll(racketA, racketB, ball, score); // On ajoute le score aux éléments du Pane
+        double milieu=court.getWidth()/2+getXMargin();
+        separateur=new Line(milieu,45,milieu+8,court.getHeight()-25);
+        separateur.getStrokeDashArray().addAll(35d,30d);
+        ligne2=new Line(getXMargin()-10,0,getXMargin()-10,court.getHeight());
+        ligne3=new Line(court.getWidth()+getXMargin()+10,0,court.getWidth()+getXMargin()+10,court.getHeight());
+       
+        getRoot().getChildren().addAll(racketA, racketB, ball, score,separateur,ligne2,ligne3); // On ajoute le score aux éléments du Pane
 
     }
     public void animate() {

@@ -6,9 +6,15 @@ import gui.views.GameView;
 import gui.views.MenuView;
 import gui.views.PlayerNumber;
 import gui.views.SettingsView;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.ControlHandler;
@@ -52,6 +58,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         court = new CourtMulti(players[0], players[1], 1000, 600); // Extrait du code qu'il y avait dans App.java pour afficher
                                                             // le jeu.
         var gameView = new GameView(court, root, 1.0, this);
+       
         stage.setScene(scene);
         stage.show();
         gameView.animate();
@@ -92,6 +99,8 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
                                         // afficher le jeu sans problèmes.
         court = new CourtRobot (this.players[0], 1000, 600);
         var gameView = new GameRobotView(court, root, 1.0, this);
+       // scene.getStylesheets().add(getClass().getResource("stylesheet1.css").toExternalForm());
+
         ControlHandler controlHandler = new ControlHandler(players, this);
         controlHandler.getInput1();
         stage.setScene(scene);

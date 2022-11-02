@@ -13,10 +13,8 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
     	primaryStage.setTitle("JeuPong");
-    	//primaryStage.getIcons().addAll(new Image(getClass().getResourceAsStream("/index.png")));
-        SceneHandler sceneHandler = new SceneHandler(primaryStage);
-
-        
+    	//primaryStage.getIcons().add(new Image("file:ressource/icon.png"));        
+    	SceneHandler sceneHandler = new SceneHandler(primaryStage);
         sceneHandler.setMenuScene();
        
     }

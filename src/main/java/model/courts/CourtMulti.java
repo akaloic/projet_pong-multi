@@ -47,8 +47,8 @@ public class CourtMulti extends Court{
                 break;
             case GOING_RIGHT:
                 setRacketXA(getRacketXA() + getRacketSpeed() * deltaT  * getCoefA());
-                if (getRacketXA() > getWidth() / 2)
-                    setRacketXA(getWidth() / 2);
+                if (getRacketXA() > getWidth() / 2-20)
+                    setRacketXA(getWidth() / 2-20);
                 break;
 
         }
@@ -69,8 +69,8 @@ public class CourtMulti extends Court{
                 break;
             case GOING_LEFT:
                 setRacketXB(getRacketXB() - getRacketSpeed() * deltaT * getCoefB());
-                if (getRacketXB() < -(getWidth() / 2)) {
-                    setRacketXB(-(getWidth() / 2));
+                if (getRacketXB() < -(getWidth() / 2-20)) {
+                    setRacketXB(-(getWidth() / 2-20));
                 }
                 break;
             case GOING_RIGHT:
