@@ -51,26 +51,18 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
         start.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
         start.setOnAction(event -> sceneHandler.switchtoNbreJoueur(getRoot())); // Lorsqu'on appuie sur le bouton, cela
                                                                         // enclanche la méthode switchToGame()
-
-        Button startRobot = new Button("Player vs Bot");
-        startRobot.setLayoutX(((court.getWidth() / 2) * scale) - 80);
-        startRobot.setLayoutY((court.getHeight()-280));
-        startRobot.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
-        startRobot.setOnAction(event -> sceneHandler.switchToGameRobot(getRoot())); // Lorsqu'on appuie sur le bouton, cela
-                                                                         // enclanche la méthode switchToGame()
-
         settings = new Button("Settings");
         settings.setLayoutX(((court.getWidth() / 2) * scale) - 80);
-        settings.setLayoutY(((court.getHeight() -190)));
+        settings.setLayoutY(((court.getHeight() -280)));
         settings.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
         settings.setOnAction(event -> sceneHandler.switchToSettings(getRoot())); // Lorsqu'on appuie sur le bouton, cela
         // enclanche la méthode switchToGame()
         shutdown = new Button("Quitter");
         shutdown.setLayoutX(((court.getWidth() / 2) * scale) - 80);
-        shutdown.setLayoutY(((court.getHeight() - 100)));
+        shutdown.setLayoutY(((court.getHeight() - 190)));
         shutdown.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
 
-        getRoot().getChildren().addAll(title, start, settings, startRobot,shutdown); // On ajoute le title
+        getRoot().getChildren().addAll(title, start, settings,shutdown); // On ajoute le title
 
         // et les boutons aux éléments du Pane
 

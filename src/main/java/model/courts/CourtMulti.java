@@ -8,6 +8,8 @@ public class CourtMulti extends Court{
     // instance parameters
     private final RacketController playerB;
     private final RacketController playerA;
+    private Player precendentStateA=new Player();
+    private Player precendentStateB=new Player();
     
     
     public CourtMulti(RacketController playerA, RacketController playerB, double width, double height) {
@@ -22,6 +24,8 @@ public class CourtMulti extends Court{
 
     public void update(double deltaT) { 
     	SpeedUp(deltaT); // fonction qui augmente la coeff de vitesse
+    	
+    	
         switch (this.playerA.getState()) {
             case GOING_UP:
                 setRacketA(getRacketA() - getRacketSpeed() * deltaT * getCoefA()) ;

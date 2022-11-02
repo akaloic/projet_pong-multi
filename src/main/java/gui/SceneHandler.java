@@ -57,17 +57,30 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         gameView.animate();
         
     }
+  public void switchToGame(Pane menuRoot,Stage s,int n) {
+	  s.hide();
+	  this.setPlayers(n);
+	  switch (n) {
+		  case 1:this.switchToGameRobot(menuRoot);
+		  break;
+		  case 2:this.switchToGame2(menuRoot);
+		  break;
+		  default:;
+	  
+	  }
+	  
+  }
 
 
 
-    public void switchToGame(Pane menuRoot,Stage s,int n) {
-    	s.hide();
+    public void switchToGame2(Pane menuRoot) {
         menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
                                         // afficher le jeu sans problèmes.
-        this.setPlayers(n);
+        
         court = new CourtMulti(players[0], players[1], 1000, 600);
-        ControlHandler controlHandler = new ControlHandler(players[0], players[1], this);
-        controlHandler.getInput();
+        ControlHandler controlHandler = new ControlHandler(players,this);
+        controlHandler.getInput2();
+        
         view = new GameView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
@@ -77,9 +90,10 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
     public void switchToGameRobot(Pane menuRoot) {
         menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
                                         // afficher le jeu sans problèmes.
-        this.setPlayers(1);
         court = new CourtRobot (this.players[0], 1000, 600);
         var gameView = new GameRobotView(court, root, 1.0, this);
+        ControlHandler controlHandler = new ControlHandler(players, this);
+        controlHandler.getInput1();
         stage.setScene(scene);
         stage.show();
         gameView.animate();

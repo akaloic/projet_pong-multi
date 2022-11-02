@@ -54,7 +54,7 @@ public class PlayerNumber extends View {
 		menus.setLayoutY(((court.getHeight()/2)*scale));
 		menus.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
 		text2=new Text();
-		text2.setText(" "+court.getNbrejoueur());
+		text2.setText(" "+this.nbre);
 		text2.setLayoutX((court.getWidth()/2)*scale);
 		text2.setLayoutY((court.getHeight()/2)*scale+30);
 		text2.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));

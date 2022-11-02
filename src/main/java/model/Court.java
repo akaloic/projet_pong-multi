@@ -19,7 +19,6 @@ public class Court {
     private boolean agetscore=true;//true pour playerA a marqué le point sinon false pour PlayerB a marqué le point;
     private double  coeffSpeedA=0.2; // variable qui permet ralentir la vitesse de raquetteA avant chaque déplacement de raquette;
     private double coeffSpeedB=0.2;
-    private int nbrejoueur=1;
 
     public Court( double width, double height) {
         this.width = width;
@@ -169,12 +168,6 @@ public class Court {
 
     public void setCoefA(double coef) {
         coeffSpeedA = coef;
-    }
-    public void incrementer() {
-    	this.nbrejoueur++;
-    }
-    public int getNbrejoueur() {
-    	return this.nbrejoueur;
     }
 
 
