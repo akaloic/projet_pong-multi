@@ -19,7 +19,7 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
     //booleans pour voir laquelle taille est choisie
     private static boolean racketSmall = false;
 
-    private static boolean racketMedium = true;
+    private static boolean racketMedium = true; //par defaut on a une raquette de taille medium
 
     private static boolean racketLarge = false;
 
