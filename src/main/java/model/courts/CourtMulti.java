@@ -6,16 +6,13 @@ import model.RacketController;
 
 public class CourtMulti extends Court{
     // instance parameters
-    private final RacketController playerB;
-    private final RacketController playerA;
-    private Player precendentStateA=new Player();
-    private Player precendentStateB=new Player();
+	private final RacketController []players;
     
     
-    public CourtMulti(RacketController playerA, RacketController playerB, double width, double height) {
+    
+    public CourtMulti(RacketController[]p, double width, double height) {
         super(width, height);
-        this.playerB = playerB;
-        this.playerA=playerA;
+        this.players=p;
         reset();
         
     }
@@ -26,7 +23,7 @@ public class CourtMulti extends Court{
     	SpeedUp(deltaT); // fonction qui augmente la coeff de vitesse
     	
     	
-        switch (this.playerA.getState()) {
+        switch (this.players[0].getState()) {
             case GOING_UP:
                 setRacketA(getRacketA() - getRacketSpeed() * deltaT * getCoefA()) ;
                 if (getRacketA() < 0.0)
@@ -53,7 +50,7 @@ public class CourtMulti extends Court{
 
         }
 
-        switch (playerB.getState()) {
+        switch (players[1].getState()) {
             case GOING_UP:
                 setRacketB(getRacketB() - getRacketSpeed()* deltaT * getCoefB());
                 if (getRacketB() < 0.0)
@@ -80,6 +77,28 @@ public class CourtMulti extends Court{
                 }
 
         }
+        if(players.length>=3) {
+        	System.out.println(players[2].getState());
+        	switch (players[2].getState()) {
+            case GOING_LEFT:
+                setRacketXC(getRacketXC() - getRacketSpeed() * deltaT );
+                if ((getRacketXC() <-(super.getWidth()/2))) {
+                    setRacketXC(0);
+                }
+                break;
+            case GOING_RIGHT:
+                setRacketXC(getRacketXC() + getRacketSpeed() * deltaT);
+                if (getRacketXC() > getWidth()/2) {
+                    setRacketXC(getWidth()/2);
+                }
+			default:
+				break;
+        	
+        }
+      
+
+    }
+       
         if (updateBall(deltaT))
             reset();
     }

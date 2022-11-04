@@ -9,11 +9,16 @@ public class Court {
     private final double racketSize = 100.0; // m
     private final double ballRadius = 10.0; // m
     // instance state
-    private double racketA; // m
-    private double racketB; // m
+   
     private double racketXB; // m ajouter pour Varier l'echelle X
+    private double racketYB; // m
     private double racketXA; // m ajouter pour Varier l'echelle X
-    private double ballX, ballY; // m
+    private double racketYA; // m
+    private double racketXC;
+    private double racketXD;
+
+
+	private double ballX, ballY; // m
     private double ballSpeedX, ballSpeedY; // m
     private int scoreA, scoreB;
     private boolean agetscore=true;//true pour playerA a marqué le point sinon false pour PlayerB a marqué le point;
@@ -53,9 +58,8 @@ public class Court {
             nextBallY = ballY + deltaT * ballSpeedY;
         }
 
-
-        if ((nextBallX>racketXA && nextBallX<racketXA+10.0 && nextBallY > racketA && nextBallY < racketA + racketSize)           // Rebond raquette gauche
-        || (nextBallX >width+racketXB && nextBallX<width+racketXB+10.0 && nextBallY > racketB && nextBallY < racketB + racketSize)) {    // Rebond raquette droite
+        if ((nextBallX>racketXA-50.0 && nextBallX<racketXA && nextBallY > racketYA && nextBallY < racketYA + racketSize)           // Rebond raquette gauche
+        || (nextBallX >width+racketXB && nextBallX<width+racketXB+50.0 && nextBallY > racketYB && nextBallY < racketYB + racketSize)) {    // Rebond raquette droite
         	ballSpeedX = -ballSpeedX;
             nextBallX = ballX + deltaT * ballSpeedX;
         }
@@ -72,14 +76,16 @@ public class Court {
     }
 
     public void reset() {
-        this.racketA = height / 2;
-        this.racketB = height / 2;
+        this.racketYA = height / 2;
+        this.racketYB = height / 2;
         this.ballSpeedX = (agetscore)?-200.0:200; // la balle va dirigé vers celui qui a marqué le point
         this.ballSpeedY = eitherInt(-200.0, 200.0); // A chaque reset de la balle, on détermine aléatoirement sa trajectoire entre vers le haut ou vers le bas.
         this.ballX = width / 2;
         this.ballY = height / 2;
         this.racketXB=0;
-        this.racketXA=0;  
+        this.racketXA=0; 
+        this.racketXC=0;
+        this.racketXD=0;
     }
   
 
@@ -101,11 +107,11 @@ public class Court {
     }
 
     public double getRacketA() {
-        return racketA;
+        return racketYA;
     }
 
     public double getRacketB() {
-        return racketB;
+        return racketYB;
     }
 
     public double getRacketXB() {
@@ -139,7 +145,7 @@ public class Court {
     }
 
     public void setRacketA(double racketA) {
-        this.racketA = racketA;
+        this.racketYA = racketA;
     }
 
     public void setRacketXA(double racketXA) {
@@ -147,7 +153,7 @@ public class Court {
     }
 
     public void setRacketB(double racketB) {
-        this.racketB = racketB;
+        this.racketYB = racketB;
     }
 
     public void setRacketXB(double racketXB) {
@@ -169,7 +175,21 @@ public class Court {
     public void setCoefA(double coef) {
         coeffSpeedA = coef;
     }
+    public double getRacketXC() {
+		return racketXC;
+	}
 
+	public void setRacketXC(double racketXC) {
+		this.racketXC = racketXC;
+	}
+
+	public double getRacketXD() {
+		return racketXD;
+	}
+
+	public void setRacketXD(double racketXD) {
+		this.racketXD = racketXD;
+	}
 
 
 

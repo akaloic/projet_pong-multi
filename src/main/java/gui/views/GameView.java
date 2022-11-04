@@ -16,7 +16,7 @@ import model.courts.CourtMulti;
 
 public class GameView extends View{
 
-    private final Rectangle racketA, racketB;
+    private final Rectangle racketA, racketB,racketC,racketD;
     private final Circle ball;
     private final Text score;
     private Button continu;
@@ -40,6 +40,9 @@ public class GameView extends View{
             racketA.setX(getXMargin() - getRacketThickness() + getCourt().getRacketXA());
             racketB.setY(getCourt().getRacketB() * getScale());
             racketB.setX(getCourt().getWidth() * getScale() + getXMargin() + getCourt().getRacketXB());
+            if(racketC!=null) {
+            	racketC.setX(getCourt().getWidth()/2*getScale()+getCourt().getRacketXC());
+            }
            
             ball.setCenterX(getCourt().getBallX() * getScale() + getXMargin());
             ball.setCenterY(getCourt().getBallY() * getScale());
@@ -59,7 +62,7 @@ public class GameView extends View{
         
     };
    
-    public GameView(Court court, Pane root, double scale, SceneHandler sceneHandler) {
+    public GameView(Court court, Pane root, double scale, SceneHandler sceneHandler,int nbreracket) {
         super(court, root, scale, sceneHandler);
 
         score = new Text(); // On créer l'objet Text pour pouvoir l'afficher
@@ -68,23 +71,57 @@ public class GameView extends View{
         score.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
         score.setFill(Color.BLACK);
         score.setText(getCourt().getScoreA() + " - " + getCourt().getScoreB());
-       
+        if(nbreracket>=1) {
+        	racketA = new Rectangle();
+            racketA.setHeight(court.getRacketSize() * scale);
+            racketA.setWidth(getRacketThickness());
+            racketA.setFill(Color.BLACK);
+            
+            racketA.setX(getXMargin() - getRacketThickness() + court.getRacketXA());
+            racketA.setY(court.getRacketA() * scale);
+            getRoot().getChildren().add(racketA);
+        }else {
+        	racketA=null;
+        }
+        if(nbreracket>=2) {
+        	 racketB = new Rectangle();
+             racketB.setHeight(court.getRacketSize() * scale);
+             racketB.setWidth(getRacketThickness());
+             racketB.setFill(Color.BLUE);
 
-        racketA = new Rectangle();
-        racketA.setHeight(court.getRacketSize() * scale);
-        racketA.setWidth(getRacketThickness());
-        racketA.setFill(Color.BLACK);
-        
-        racketA.setX(getXMargin() - getRacketThickness() + court.getRacketXA());
-        racketA.setY(court.getRacketA() * scale);
-        
-        racketB = new Rectangle();
-        racketB.setHeight(court.getRacketSize() * scale);
-        racketB.setWidth(getRacketThickness());
-        racketB.setFill(Color.BLACK);
+             racketB.setX(court.getWidth() * scale + getXMargin() + court.getRacketXB());
+             racketB.setY(court.getRacketB() * scale);
+             getRoot().getChildren().add(racketB);
+        }else {
+        	racketB=null;
+        	
+        }
+        if(nbreracket>=3) {
+        	racketC= new Rectangle();
+            racketC.setHeight(super.getRacketThickness());
+            racketC.setWidth(court.getRacketSize() * scale);
+            racketC.setFill(Color.BLUE);
 
-        racketB.setX(court.getWidth() * scale + getXMargin() + court.getRacketXB());
-        racketB.setY(court.getRacketB() * scale);
+            racketC.setX(court.getWidth()/2*scale+court.getRacketXC());
+            racketC.setY(0);
+            getRoot().getChildren().add(racketC);
+       }else {
+       	racketC=null;
+       	
+       }
+        if(nbreracket>=4) {
+       	 racketD= new Rectangle();
+            racketD.setHeight(court.getRacketSize() * scale);
+            racketD.setWidth(getRacketThickness());
+            racketD.setFill(Color.BLUE);
+
+            racketD.setX(court.getWidth()/2 * scale + getXMargin() + court.getRacketXB());
+            racketD.setY(court.getHeight());
+            getRoot().getChildren().add(racketD);
+       }else {
+       	racketD=null;
+       	
+       }
 
         ball = new Circle();
         ball.setRadius(court.getBallRadius());
@@ -103,7 +140,7 @@ public class GameView extends View{
         ligne2=new Line(getXMargin()-10,0,getXMargin()-10,court.getHeight());
         ligne3=new Line(court.getWidth()+getXMargin()+10,0,court.getWidth()+getXMargin()+10,court.getHeight());
        
-        getRoot().getChildren().addAll(racketA, racketB, ball, score,separateur,ligne2,ligne3); // On ajoute le score aux éléments du Pane
+        getRoot().getChildren().addAll( ball, score,separateur,ligne2,ligne3); // On ajoute le score aux éléments du Pane
 
     }
     public void animate() {

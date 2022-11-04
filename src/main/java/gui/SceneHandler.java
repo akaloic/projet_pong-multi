@@ -55,9 +55,9 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
     }
 
   public void setGameScene() {
-        court = new CourtMulti(players[0], players[1], 1000, 600); // Extrait du code qu'il y avait dans App.java pour afficher
+        court = new CourtMulti(players, 1000, 600); // Extrait du code qu'il y avait dans App.java pour afficher
                                                             // le jeu.
-        var gameView = new GameView(court, root, 1.0, this);
+        var gameView = new GameView(court, root, 1.0, this,players.length);
        
         stage.setScene(scene);
         stage.show();
@@ -70,8 +70,9 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
 	  switch (n) {
 		  case 1:this.switchToGameRobot(menuRoot);
 		  break;
-		  case 2:this.switchToGame2(menuRoot);
+		  case 2:this.switchToGame(menuRoot);
 		  break;
+		  case 3:this.switchToGame(menuRoot);
 		  default:;
 	  
 	  }
@@ -80,15 +81,15 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
 
 
 
-    public void switchToGame2(Pane menuRoot) {
+    public void switchToGame(Pane menuRoot) {
         menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
                                         // afficher le jeu sans problèmes.
         
-        court = new CourtMulti(players[0], players[1], 1000, 600);
+        court = new CourtMulti(players,1000, 600);
         ControlHandler controlHandler = new ControlHandler(players,this);
-        controlHandler.getInput2();
+        controlHandler.getInput();
         
-        view = new GameView(court, root, 1.0, this);
+        view = new GameView(court, root, 1.0, this,players.length);
         stage.setScene(scene);
         stage.show();
         ((GameView) view).animate();
@@ -102,7 +103,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
        // scene.getStylesheets().add(getClass().getResource("stylesheet1.css").toExternalForm());
 
         ControlHandler controlHandler = new ControlHandler(players, this);
-        controlHandler.getInput1();
+        controlHandler.getInput();
         stage.setScene(scene);
         stage.show();
         gameView.animate();
