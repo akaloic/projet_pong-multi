@@ -59,7 +59,6 @@ public class CourtRobot extends Court{
             setCoefB(1);
         }
 
-
         if (updateBall(deltaT))
             reset();
     }
