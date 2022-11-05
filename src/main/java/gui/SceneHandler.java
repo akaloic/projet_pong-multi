@@ -1,14 +1,14 @@
 package gui;
 
-import javafx.scene.paint.Color;
-import javafx.event.ActionEvent;
-import javafx.scene.Node;
+import gui.entities.Player;
+import gui.views.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Court;
-import model.CourtRobot;
+import model.courts.CourtMulti;
+import model.courts.CourtRobot;
 import javafx.scene.control.Button;
 
 public class SceneHandler { // Cette classe permet de manipuler les scènes courrantes sans à avoir besoin de
@@ -16,6 +16,8 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
     private Stage stage;
     private Scene scene;
     private Pane root;
+    private View view;
+    private Court court;
     private Player playerA, playerB;
 
     public SceneHandler(Stage stage, Player playerA, Player playerB) { // On prends les playerA et playerB en argument
@@ -41,38 +43,37 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
     }
 
     public void setGameScene() {
-        var court = new Court(playerA, playerB, 1000, 600); // Extrait du code qu'il y avait dans App.java pour afficher
+        court = new CourtMulti(playerA, playerB, 1000, 600); // Extrait du code qu'il y avait dans App.java pour afficher
                                                             // le jeu.
-        var gameView = new GameView(court, root, 1.0);
+        var gameView = new GameView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
         gameView.animate();
     }
 
     public void setMenuScene() {
-        var court = new Court(playerA, playerB, 1000, 600);
-        //root.setStyle("-fx-background-color: #FF0000"); //Changement couleure bg
-        var menuView = new MenuView(court, root, 1.0, this);
+        court = new CourtMulti(playerA, playerB, 1000, 600);
+        //root.setStyle("-fx-background-color: #FF0000"); //Changement couleur
+        view = new MenuView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
-        menuView.animate();
     }
 
     public void switchToGame(Pane menuRoot) {
         menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
                                         // afficher le jeu sans problèmes.
-        var court = new Court(playerA, playerB, 1000, 600);
-        var gameView = new GameView(court, root, 1.0);
+        court = new CourtMulti(playerA, playerB, 1000, 600);
+        view = new GameView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
-        gameView.animate();
+        ((GameView) view).animate();
     }
 
     public void switchToGameRobot(Pane menuRoot) {
         menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
                                         // afficher le jeu sans problèmes.
-        var court = new CourtRobot (playerA, 1000, 600);
-        var gameView = new GameRobotView(court, root, 1.0);
+        court = new CourtRobot (playerA, 1000, 600);
+        var gameView = new GameRobotView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
         gameView.animate();
@@ -80,26 +81,35 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
 
     public void switchToSettings(Pane menuRoot) { // Méthode permettant de passer de menu à Settings
         menuRoot.getChildren().clear();
-        var court = new Court(playerA, playerB, 1000, 600);
-        var settingsView = new SettingsView(court, root, 1.0, this);
+        var court = new CourtMulti(playerA, playerB, 1000, 600);
+        view = new SettingsView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
-        settingsView.animate();
     }
 
     public void switchToMenu(Pane settingsRoot) { // Méthode permettant de passer de Settings à menu
         settingsRoot.getChildren().clear();
-        var court = new Court(playerA, playerB, 1000, 600);
-        var menuView = new MenuView(court, root, 1.0, this);
+        court = new CourtMulti(playerA, playerB, 1000, 600);
+        view = new MenuView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
-        menuView.animate();
     }
 
     public String switchSonButton(Button b){
         if (b.getText().equals("On")) return "Off";
         return "On";
     }
+
+    public void switchToPageWin(Pane settingRoot, String joueur, String typePartie){
+        settingRoot.getChildren().clear();
+        var court = new CourtMulti(playerA, playerB, 1000, 600);
+        view = new WinView(court, root, 1.0, this, joueur, typePartie);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    
+
 
 }
 
