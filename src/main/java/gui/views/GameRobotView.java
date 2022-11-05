@@ -59,10 +59,6 @@ public class GameRobotView extends View {
     public GameRobotView(Court court, Pane root, double scale, SceneHandler sceneHandler) {
         super(court, root, scale, sceneHandler);
 
-
-        root.setMinWidth(court.getWidth() * scale + 2 * getXMargin());
-        root.setMinHeight(court.getHeight() * scale);
-
         score = new Text(); // On créer l'objet Text pour pouvoir l'afficher
         score.setX((court.getWidth() / 2) * scale + getXMargin() / 2); // Petite modification pour mieux placer le score.
         score.setY(35);

@@ -5,25 +5,26 @@ import java.util.Random;
 public class Court {
     // instance parameters
     private final double width, height; // m
-    private final double racketSpeed = 300.0; // m/s
+    private final double racketSpeed = 100.0; // m/s
     private final double racketSize = 100.0; // m
     private final double ballRadius = 10.0; // m
     // instance state
    
-    private double racketXB; // m ajouter pour Varier l'echelle X
-    private double racketYB; // m
-    private double racketXA; // m ajouter pour Varier l'echelle X
-    private double racketYA; // m
+    private double racketXB,preXB; // m ajouter pour Varier l'echelle X
+    private double racketYB,preYB; // m
+    private double racketXA,preXA; // m ajouter pour Varier l'echelle X
+    private double racketYA,preYA; // m
     private double racketXC;
     private double racketXD;
 
 
 	private double ballX, ballY; // m
     private double ballSpeedX, ballSpeedY; // m
-    private int scoreA, scoreB;
+    private int scoreA, scoreB,scoreC,scoreD;
     private boolean agetscore=true;//true pour playerA a marqué le point sinon false pour PlayerB a marqué le point;
-    private double  coeffSpeedA=0.2; // variable qui permet ralentir la vitesse de raquetteA avant chaque déplacement de raquette;
-    private double coeffSpeedB=0.2;
+    private double  coeffSpeedA=0.3; // variable qui permet ralentir la vitesse de raquetteA avant chaque déplacement de raquette;
+    private double coeffSpeedB=0.3;
+    private double coeefSpeedBall=1;
 
     public Court( double width, double height) {
         this.width = width;
@@ -44,8 +45,8 @@ public class Court {
 
 
     public void SpeedUp(double time) { // on augmente la vitesse par rapport le temps
-        this.coeffSpeedA+=time;
-        this.coeffSpeedB+=time;
+        this.coeffSpeedA+=time*2;
+        this.coeffSpeedB+=time*2;
     }
 
     public boolean updateBall(double deltaT) {
@@ -57,10 +58,15 @@ public class Court {
             ballSpeedY = -ballSpeedY;
             nextBallY = ballY + deltaT * ballSpeedY;
         }
-
-        if ((nextBallX>racketXA-50.0 && nextBallX<racketXA && nextBallY > racketYA && nextBallY < racketYA + racketSize)           // Rebond raquette gauche
-        || (nextBallX >width+racketXB && nextBallX<width+racketXB+50.0 && nextBallY > racketYB && nextBallY < racketYB + racketSize)) {    // Rebond raquette droite
-        	ballSpeedX = -ballSpeedX;
+        
+        if ((nextBallX<racketXA && nextBallY > racketYA && nextBallY < racketYA + racketSize)        // Rebond raquette gauche
+        || (nextBallX>racketXB+width && nextBallY > racketYB && nextBallY < racketYB + racketSize)) { // Rebond raquette droite
+        	if(nextBallX>width/2) {
+        		this.SpeedBallUpOrDown(preXB, racketXB);
+        	}else {
+        		this.SpeedBallUpOrDown(preXA, racketXA);
+        	}
+        	ballSpeedX = -ballSpeedX*this.coeefSpeedBall;
             nextBallX = ballX + deltaT * ballSpeedX;
         }
         else if (nextBallX < 0) {
@@ -72,6 +78,8 @@ public class Court {
         }
         ballX = nextBallX;
         ballY = nextBallY;
+        preXA=racketXA;
+        preXB=racketXB;
         return false;
     }
 
@@ -86,6 +94,18 @@ public class Court {
         this.racketXA=0; 
         this.racketXC=0;
         this.racketXD=0;
+    }
+    public void SpeedBallUpOrDown(double preX,double racketX){
+    	if(preX<racketX) {
+    		if(this.coeefSpeedBall<2) {
+    			this.coeefSpeedBall+=0.2;
+    		}
+    		
+    	}else {
+    		if(this.coeefSpeedBall>1) {
+    			this.coeefSpeedBall-=0.2;
+    		}
+    	}
     }
   
 

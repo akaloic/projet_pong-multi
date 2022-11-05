@@ -39,15 +39,19 @@ public class ControlHandler {
                     players[0].state = RacketController.State.GOING_RIGHT;
                     break;
                 case UP:
+                	if(players.length<=1) break;
                     players[1].state = RacketController.State.GOING_UP;
                     break;
                 case DOWN:
+                	if(players.length<=1) break;
                     players[1].state = RacketController.State.GOING_DOWN;
                     break;
                 case RIGHT:
+                	if(players.length<=1) break;
                     players[1].state = RacketController.State.GOING_RIGHT;
                     break;
                 case LEFT:
+                	if(players.length<=1) break;
                     players[1].state = RacketController.State.GOING_LEFT;
                     break;
                 case SPACE:
@@ -57,7 +61,6 @@ public class ControlHandler {
             }
            
         });
-        System.out.println(players[2].state);
         sceneHandler.getScene().setOnKeyReleased(ev -> {
             switch (ev.getCode()) {
                

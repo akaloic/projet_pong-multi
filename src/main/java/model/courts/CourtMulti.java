@@ -21,8 +21,6 @@ public class CourtMulti extends Court{
 
     public void update(double deltaT) { 
     	SpeedUp(deltaT); // fonction qui augmente la coeff de vitesse
-    	
-    	
         switch (this.players[0].getState()) {
             case GOING_UP:
                 setRacketA(getRacketA() - getRacketSpeed() * deltaT * getCoefA()) ;
@@ -78,30 +76,47 @@ public class CourtMulti extends Court{
 
         }
         if(players.length>=3) {
-        	System.out.println(players[2].getState());
         	switch (players[2].getState()) {
             case GOING_LEFT:
                 setRacketXC(getRacketXC() - getRacketSpeed() * deltaT );
-                if ((getRacketXC() <-(super.getWidth()/2))) {
-                    setRacketXC(0);
+                if ((getRacketXC() <-(super.getWidth()/2-40.0))) {
+                    setRacketXC(-(super.getWidth()/2-40.0));
                 }
                 break;
             case GOING_RIGHT:
                 setRacketXC(getRacketXC() + getRacketSpeed() * deltaT);
-                if (getRacketXC() > getWidth()/2) {
-                    setRacketXC(getWidth()/2);
+                if (getRacketXC() > getWidth()/2-40.0) {
+                    setRacketXC(getWidth()/2-40.0);
                 }
 			default:
 				break;
         	
         }
+         if(players.length>=4) {
+        	 switch (players[3].getState()) {
+        	 case GOING_LEFT:
+                 setRacketXD(getRacketXD() - getRacketSpeed() * deltaT );
+                 if ((getRacketXD() <-(super.getWidth()/2-40.0))) {
+                     setRacketXD(-(super.getWidth()/2-40.0));
+                 }
+                 break;
+             case GOING_RIGHT:
+                 setRacketXD(getRacketXD() + getRacketSpeed() * deltaT);
+                 if (getRacketXD() > getWidth()/2-40.0) {
+                     setRacketXD(getWidth()/2-40.0);
+                 }
+ 			default:
+ 				break;
+        	 
+        	 }
+     
+         }
       
-
-    }
+    }     
        
         if (updateBall(deltaT))
             reset();
     }
-    
+
 
 }

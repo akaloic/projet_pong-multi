@@ -35,12 +35,10 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
     public MenuView(Court court, Pane root, double scale, SceneHandler sceneHandler) {
         super(court, root, scale, sceneHandler);
 
-        root.setMinWidth(court.getWidth() * scale + 2 * getXMargin());
-        root.setMinHeight(court.getHeight() * scale);
 
         title = new Text(); // On créer l'objet Text pour pouvoir l'afficher
-        title.setX(((court.getWidth() / 2) * scale) - 20);
-        title.setY(60);
+        title.setLayoutX(((court.getWidth() / 2) * scale) - 20);
+        title.setLayoutY(60);
         title.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 50));
         title.setFill(Color.BLACK);
         title.setText("Pong!");

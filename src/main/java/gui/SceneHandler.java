@@ -39,6 +39,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         this.scene = new Scene(root);
         this.stage = stage;
         
+        
     
     }
 
@@ -70,10 +71,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
 	  switch (n) {
 		  case 1:this.switchToGameRobot(menuRoot);
 		  break;
-		  case 2:this.switchToGame(menuRoot);
-		  break;
-		  case 3:this.switchToGame(menuRoot);
-		  default:;
+		  default:this.switchToGame(menuRoot);
 	  
 	  }
 	  
@@ -86,9 +84,9 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
                                         // afficher le jeu sans problèmes.
         
         court = new CourtMulti(players,1000, 600);
+        
         ControlHandler controlHandler = new ControlHandler(players,this);
         controlHandler.getInput();
-        
         view = new GameView(court, root, 1.0, this,players.length);
         stage.setScene(scene);
         stage.show();

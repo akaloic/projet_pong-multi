@@ -6,6 +6,7 @@ import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
@@ -24,13 +25,10 @@ public abstract class View {
         this.root = root;
         this.scale = scale;
         this.sceneHandler = sceneHandler;
-
-        root.setMinWidth(court.getWidth() * scale + 2 * xMargin);
-        root.setMinHeight(court.getHeight() * scale);
-
-        
-        
+        root.setMinWidth(court.getWidth() * scale+2*xMargin );
+        root.setMinHeight(court.getHeight() * scale);   
     }
+
 
     public Court getCourt() {
         return court;
