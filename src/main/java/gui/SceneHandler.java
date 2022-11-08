@@ -9,6 +9,11 @@ import gui.views.SettingsView;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -22,6 +27,7 @@ import model.Court;
 import model.courts.CourtMulti;
 import model.courts.CourtRobot;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 
 public class SceneHandler { // Cette classe permet de manipuler les scènes courrantes sans à avoir besoin de
                             // réecrire tout le code à chaque fois
@@ -38,7 +44,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         this.root = new Pane();
         this.scene = new Scene(root);
         this.stage = stage;
-        
+      
         
     
     }
@@ -89,6 +95,10 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         controlHandler.getInput();
         view = new GameView(court, root, 1.0, this,players.length);
         stage.setScene(scene);
+      //   BackgroundImage myBI= new BackgroundImage(new Image("file:icon.png",32,32,false,true),
+        //        BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+          //        BackgroundSize.DEFAULT);
+        //root.setBackground(new Background(myBI));
         stage.show();
         ((GameView) view).animate();
     }
@@ -111,7 +121,9 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         menuRoot.getChildren().clear();
         var court = new Court(1000, 600);
         view = new SettingsView(court, root, 1.0, this);
+       
         stage.setScene(scene);
+      
         stage.show();
     }
 

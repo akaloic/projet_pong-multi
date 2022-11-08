@@ -15,7 +15,7 @@ import model.Court;
 
 public abstract class View {
     private final SceneHandler sceneHandler;
-    private final Court court;
+    private Court court;
     private final Pane root;
     private final double scale, xMargin = 50.0, racketThickness = 10.0;
     private static boolean pause=false; //si vrai on met le timer stop sinon le jeu continue de jouer
@@ -52,6 +52,9 @@ public abstract class View {
 
     public SceneHandler getSceneHandler() {
         return sceneHandler;
+    }
+    public void setCourt(Court c) {
+    	this.court=c;
     }
     public static void pauseORcontinue() {
     	pause=!pause;

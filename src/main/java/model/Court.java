@@ -59,8 +59,8 @@ public class Court {
             nextBallY = ballY + deltaT * ballSpeedY;
         }
         
-        if ((nextBallX<racketXA && nextBallY > racketYA && nextBallY < racketYA + racketSize)        // Rebond raquette gauche
-        || (nextBallX>racketXB+width && nextBallY > racketYB && nextBallY < racketYB + racketSize)) { // Rebond raquette droite
+        if ((nextBallX<racketXA && nextBallX>racketXA-30.0 && nextBallY > racketYA && nextBallY < racketYA + racketSize)        // Rebond raquette gauche
+        || (nextBallX>racketXB+width && nextBallX<racketXB+width+30.0 && nextBallY > racketYB && nextBallY < racketYB + racketSize)) { // Rebond raquette droite
         	if(nextBallX>width/2) {
         		this.SpeedBallUpOrDown(preXB, racketXB);
         	}else {

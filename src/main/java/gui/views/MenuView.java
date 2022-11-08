@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 
 import gui.SceneHandler;
 import gui.View;
+import javafx.animation.AnimationTimer;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.layout.Pane;
@@ -23,6 +24,8 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
     private final Button start;
     private final Button settings;
     private final Button shutdown;
+
+    
 
     /**
      * @param court le "modèle" de cette vue (le titre et le bouton)
@@ -61,10 +64,12 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
         shutdown.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
 
         getRoot().getChildren().addAll(title, start, settings,shutdown); // On ajoute le title
+       
 
         // et les boutons aux éléments du Pane
 
     }
+
     // Test
 
     

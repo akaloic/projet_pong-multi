@@ -47,6 +47,7 @@ public class GameRobotView extends View {
                 score.setText(getCourt().getScoreA() + " - " + getCourt().getScoreB()); // On ajoute le score à animate() pour que
                                                                               // le texte s'actualise quand un des
                                                                               // joueurs marque
+                
                 if(getPause()) {     // si le champs boolean pause est vrai 
                 	this.stop();            //on arrete le timer pour faire une pause du scene
                 	this.last=0;            // comme le temps continue de s'avancer , il faut réunitialiser last en 0 pour qu'il soit réinitialisé par la valeur de now pour que le jeu repart au meme moment que là où on arrete

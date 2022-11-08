@@ -17,12 +17,14 @@ import model.courts.CourtMulti;
 public class GameView extends View{
 
     private final Rectangle racketA, racketB,racketC,racketD;
+ 
     private final Circle ball;
     private final Text score;
     private Button continu;
     private Line separateur;
     private Line ligne2;
     private Line ligne3;
+ 
 
     private final AnimationTimer timer=new AnimationTimer() {
         long last = 0;
@@ -56,6 +58,7 @@ public class GameView extends View{
             	getRoot().getChildren().add(continu); // une fois le jeu arreter on fait afficher sur la scene un bouton qui permet de relancer le jeu
             	
             }
+          
             
                         
         }
@@ -64,7 +67,11 @@ public class GameView extends View{
    
     public GameView(Court court, Pane root, double scale, SceneHandler sceneHandler,int nbreracket) {
         super(court, root, scale, sceneHandler);
-
+        double milieu=court.getWidth()/2+getXMargin();
+        separateur=new Line(milieu,45,milieu+8,court.getHeight()-25);
+        separateur.getStrokeDashArray().addAll(35d,30d);
+        ligne2=new Line(getXMargin()-10,0,getXMargin()-10,court.getHeight());
+        ligne3=new Line(court.getWidth()+getXMargin()+10,0,court.getWidth()+getXMargin()+10,court.getHeight());
         score = new Text(); // On créer l'objet Text pour pouvoir l'afficher
         score.setX((court.getWidth() / 2) * scale + getXMargin() / 2-10); // Petite modification pour mieux placer le score.
         score.setY(35);
@@ -79,7 +86,7 @@ public class GameView extends View{
             
             racketA.setX(getXMargin() - getRacketThickness() + court.getRacketXA());
             racketA.setY(court.getRacketA() * scale);
-            getRoot().getChildren().add(racketA);
+            getRoot().getChildren().addAll(racketA,separateur,ligne3,ligne2);
         }else {
         	racketA=null;
         }
@@ -87,8 +94,7 @@ public class GameView extends View{
         	 racketB = new Rectangle();
              racketB.setHeight(court.getRacketSize() * scale);
              racketB.setWidth(getRacketThickness());
-             racketB.setFill(Color.BLUE);
-
+             racketB.setFill(Color.GREY);
              racketB.setX(court.getWidth() * scale + getXMargin() + court.getRacketXB());
              racketB.setY(court.getRacketB() * scale);
              getRoot().getChildren().add(racketB);
@@ -96,25 +102,24 @@ public class GameView extends View{
         	racketB=null;
         	
         }
-        if(nbreracket>=3) {
+        if(nbreracket>=3) {                      //creation de racket C lorsque le nobre de joueur est 3 ou plus 
         	racketC= new Rectangle();
             racketC.setHeight(super.getRacketThickness());
             racketC.setWidth(court.getRacketSize() * scale);
             racketC.setFill(Color.BLUE);
-
             racketC.setX(court.getWidth()/2*scale+court.getRacketXC());
-            racketC.setY(0);
+            racketC.setY(getXMargin());
             getRoot().getChildren().add(racketC);
+            getRoot().getChildren().removeAll(separateur);
        }else {
        	racketC=null;
        	
        }
-        if(nbreracket>=4) {
+        if(nbreracket>=4) {   //creation de racket D lorsque le nobre de joueur est 4
        	 racketD= new Rectangle();
             racketD.setHeight(court.getRacketSize() * scale);
             racketD.setWidth(getRacketThickness());
-            racketD.setFill(Color.BLUE);
-
+            racketD.setFill(Color.RED);
             racketD.setX(court.getWidth()/2 * scale + getXMargin() + court.getRacketXB());
             racketD.setY(court.getHeight());
             getRoot().getChildren().add(racketD);
@@ -126,21 +131,15 @@ public class GameView extends View{
         ball = new Circle();
         ball.setRadius(court.getBallRadius());
         ball.setFill(Color.BLACK);
-
         ball.setCenterX(court.getBallX() * scale + getXMargin());
         ball.setCenterY(court.getBallY() * scale);
         continu=new Button("Continue");
         continu.setLayoutX(((court.getWidth() / 2) * scale) - 80);
         continu.setLayoutY(((court.getHeight() / 2) * scale) - 60);
         continu.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
-        continu.setOnAction(event->animate());
-        double milieu=court.getWidth()/2+getXMargin();
-        separateur=new Line(milieu,45,milieu+8,court.getHeight()-25);
-        separateur.getStrokeDashArray().addAll(35d,30d);
-        ligne2=new Line(getXMargin()-10,0,getXMargin()-10,court.getHeight());
-        ligne3=new Line(court.getWidth()+getXMargin()+10,0,court.getWidth()+getXMargin()+10,court.getHeight());
-       
-        getRoot().getChildren().addAll( ball, score,separateur,ligne2,ligne3); // On ajoute le score aux éléments du Pane
+        continu.setOnMouseClicked(event->animate());
+        
+        getRoot().getChildren().addAll( ball, score); // On ajoute le score aux éléments du Pane
 
     }
     public void animate() {
