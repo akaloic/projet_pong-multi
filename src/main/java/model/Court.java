@@ -68,8 +68,6 @@ public class Court {
             return true; // Quand la balle sort du jeu du côté droit, on donne un point au joueur B
         }
         if (nextBallX > width - 50) {
-            System.out.println(nextBallY+" ballYCourt");
-            System.out.println(racketB+" B");
         	agetscore=true;
             scoreA++;
             return true; // Quand la balle sort du jeu du côté gauche, on donne un point au joueur A

@@ -2,7 +2,9 @@ package gui.views;
 
 import gui.SceneHandler;
 import gui.View;
+import gui.entities.Player;
 import javafx.animation.AnimationTimer;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -17,8 +19,47 @@ public class GameView extends View{
     private final Rectangle racketA, racketB;
     private final Circle ball;
     private final Text score;
+
+    private Button continu;
     private final Label[] commande = new Label[7];
     private static double opacity = 1;
+
+    private final AnimationTimer timer=new AnimationTimer() {
+        long last = 0;
+
+        public void handle(long now) {
+            if (last == 0) { // ignore the first tick, just compute the first deltaT
+                last = now;
+                return;
+            }
+            ((CourtMulti) getCourt()).update((now - last) * 1.0e-9); // convert nanoseconds to seconds
+            last = now;
+            racketA.setY(getCourt().getRacketA() * getScale());
+            racketA.setX(getXMargin() - getRacketThickness() + getCourt().getRacketXA());
+            racketB.setY(getCourt().getRacketB() * getScale());
+            racketB.setX(getCourt().getWidth() * getScale() - getXMargin() + getCourt().getRacketXB());
+
+            ball.setCenterX(getCourt().getBallX() * getScale() + getXMargin());
+            ball.setCenterY(getCourt().getBallY() * getScale());
+            score.setText(getCourt().getScoreA() + " - " + getCourt().getScoreB()); // On ajoute le score à animate() pour que
+            // le texte s'actualise quand un des
+            // joueurs marque
+
+            if (Player.getPause()) {     // si le champs boolean pause est vrai
+                this.stop();            //on arrete le timer pour faire une pause du scene
+                this.last = 0;            // comme le temps continue de s'avancer , il faut réunitialiser last en 0 pour qu'il soit réinitialisé par la valeur de now pour que le jeu repart au meme moment que là où on arrete
+                getRoot().getChildren().add(continu); // une fois le jeu arreter on fait afficher sur la scene un bouton qui permet de relancer le jeu
+
+            }
+            if (getCourt().getScoreA() == 10 || getCourt().getScoreB() == 10) {
+                if (getCourt().getScoreA() == 10) getSceneHandler().switchToPageWin(getRoot(), "A", "Multi");
+                else getSceneHandler().switchToPageWin(getRoot(), "B", "Multi");
+                stop();
+            }
+        }
+    };
+
+
    
     public GameView(Court court, Pane root, double scale, SceneHandler sceneHandler) {
         super(court, root, scale, sceneHandler);
@@ -47,6 +88,11 @@ public class GameView extends View{
 
         ball.setCenterX(court.getBallX() * scale + getXMargin());
         ball.setCenterY(court.getBallY() * scale);
+        continu=new Button("Continue");
+        continu.setLayoutX(((court.getWidth() / 2) * scale) - 80);
+        continu.setLayoutY(((court.getHeight() / 2) * scale) - 60);
+        continu.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
+        continu.setOnAction(event->animate());
 
         commande[0] = new Label(" z : Monter ");
         commande[0].setLayoutX(200);
@@ -82,36 +128,12 @@ public class GameView extends View{
     }
 
     public void animate() {
-        new AnimationTimer() {
-            long last = 0;
+        if(getRoot().getChildren().contains(continu)) {  // si on reprend / commence la partie il faut vérifier si le button continue existe
+            getRoot().getChildren().remove(continu); // si oui , on enleve le bouton
+            Player.pauseORcontinue();  // et on met aussi le champs boolean pause en false pour préparer à la prochaine demande de pause
+        }
 
-            @Override
-            public void handle(long now) {
-                if (last == 0) { // ignore the first tick, just compute the first deltaT
-                    last = now;
-                    return;
-                }
-                ((CourtMulti) getCourt()).update((now - last) * 1.0e-9); // convert nanoseconds to seconds
-                last = now;
-
-                racketA.setX(getXMargin() - getRacketThickness()+getCourt().getRacketXA());
-                racketA.setY(getCourt().getRacketA() * getScale());
-
-                racketB.setX(getCourt().getWidth() - getXMargin() - getRacketThickness() - getCourt().getRacketXB() );
-                racketB.setY(getCourt().getHeight()/2);
-               
-                ball.setCenterX(getCourt().getBallX() * getScale() + getXMargin());
-                ball.setCenterY(getCourt().getBallY() * getScale());
-                score.setText(getCourt().getScoreA() + " - " + getCourt().getScoreB()); // On ajoute le score à animate() pour que
-                                                                              // le texte s'actualise quand un des
-                                                                              // joueurs marque
-                if (getCourt().getScoreA() == 10 || getCourt().getScoreB() == 10){
-                    if (getCourt().getScoreA() == 10) getSceneHandler().switchToPageWin(getRoot(), "A", "Multi");
-                    else getSceneHandler().switchToPageWin(getRoot(), "B", "Multi");
-                    stop();
-                }
-            }
-        }.start();
+       timer.start();
 
         new AnimationTimer() {
             @Override
@@ -130,6 +152,6 @@ public class GameView extends View{
                 }
             }
         }.start();
-
     }
 }
+
