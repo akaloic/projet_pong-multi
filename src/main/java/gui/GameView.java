@@ -83,7 +83,12 @@ public class GameView {
             public void run() {
                 if(timeLeft > 0) {
                     timeDisplay.setText(String.valueOf(timeLeft));
-                    timeLeft--;
+                    if(Player.getPause()) {
+                    	 timeDisplay.setText(String.valueOf(timeLeft));
+                    }
+                    else {
+                    	timeLeft--;
+                    }
                 }
                 else {
                     timeDisplay.setText("Fin du jeu !");
