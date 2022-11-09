@@ -58,7 +58,7 @@ public class Court {
         if (nextBallX>racketXA && nextBallX<racketXA+10.0 && nextBallY > racketA && nextBallY < racketA + racketSize) {
             ballSpeedX = -ballSpeedX + incremente;
         }
-        if (nextBallX > width - 125 && (nextBallY <= racketB + racketSize && nextBallY >= racketB)){
+        if (nextBallX > width - 110 && (nextBallY <= racketB + racketSize && nextBallY >= racketB)){
             ballSpeedX = -ballSpeedX - incremente;
         }
 

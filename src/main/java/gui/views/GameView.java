@@ -135,7 +135,7 @@ public class GameView extends View{
 
        timer.start();
 
-        new AnimationTimer() {
+       new AnimationTimer() {
             @Override
             public void handle(long now) {
                 opacity -= 0.002;

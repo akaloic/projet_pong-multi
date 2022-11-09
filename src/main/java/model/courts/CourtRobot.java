@@ -42,21 +42,21 @@ public class CourtRobot extends Court{
 
         if (getBallY() > getRacketB()){
             setRacketB(getRacketB() + getRacketSpeed() * deltaT * getCoefB());
-            setCoefB(1);
+            setCoefB(0.4);
             if (getRacketB() + getRacketSpeed() * deltaT * getCoefB() > getHeight()){
                 setRacketB(getHeight() - 100);
             }
         }
         else if (getBallY() < getRacketB()){
             setRacketB(getRacketB() - getRacketSpeed() * deltaT * getCoefB()) ;
-            setCoefB(1);
+            setCoefB(0.4);
             if (getRacketB() < 0.0){
                 setRacketB(0.0);
 
             }
         }
         else {
-            setCoefB(1);
+            setCoefB(0.4);
         }
 
         if (updateBall(deltaT))
