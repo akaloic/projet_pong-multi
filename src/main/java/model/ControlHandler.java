@@ -1,6 +1,7 @@
 package model;
 
 import gui.SceneHandler;
+import gui.View;
 import gui.entities.Player;
 
 public class ControlHandler {
@@ -39,7 +40,9 @@ public class ControlHandler {
                     break;
                 case LEFT:
                     playerB.state = RacketController.State.GOING_LEFT;
-
+                case SPACE:
+                	View.pauseORcontinue();
+                	break;
             }
         });
         sceneHandler.getScene().setOnKeyReleased(ev -> {

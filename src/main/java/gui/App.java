@@ -11,6 +11,7 @@ public class App extends Application {
         var playerA = new Player();
         var playerB = new Player();
         SceneHandler sceneHandler = new SceneHandler(primaryStage, playerA, playerB);
+
         ControlHandler controlHandler = new ControlHandler(playerA, playerB, sceneHandler);
         controlHandler.getInput();
         sceneHandler.setMenuScene();
