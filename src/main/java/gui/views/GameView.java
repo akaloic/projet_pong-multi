@@ -45,11 +45,11 @@ public class GameView extends View{
         racketB.setY(court.getRacketB() * scale);
 
         ball = new Circle();
-        ball.setRadius(court.getBallRadius());
+        ball.setRadius(((CourtMulti) court).getBallRadius());
         ball.setFill(Color.BLACK);
 
-        ball.setCenterX(court.getBallX() * scale + getXMargin());
-        ball.setCenterY(court.getBallY() * scale);
+        ball.setCenterX(((CourtMulti) court).getBallX() * scale + getXMargin());
+        ball.setCenterY(((CourtMulti) court).getBallY() * scale);
 
         getRoot().getChildren().addAll(racketA, racketB, ball, score); // On ajoute le score aux éléments du Pane
 
@@ -72,8 +72,8 @@ public class GameView extends View{
                 racketB.setY(getCourt().getRacketB() * getScale());
                 racketB.setX(getCourt().getWidth() * getScale() + getXMargin() + getCourt().getRacketXB());
                
-                ball.setCenterX(getCourt().getBallX() * getScale() + getXMargin());
-                ball.setCenterY(getCourt().getBallY() * getScale());
+                ball.setCenterX(((CourtMulti) getCourt()).getBallX() * getScale() + getXMargin());
+                ball.setCenterY(((CourtMulti) getCourt()).getBallY() * getScale());
                 score.setText(getCourt().getScoreA() + " - " + getCourt().getScoreB()); // On ajoute le score à animate() pour que
                                                                               // le texte s'actualise quand un des
                                                                               // joueurs marque

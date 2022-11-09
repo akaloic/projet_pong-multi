@@ -46,14 +46,14 @@ public class GameRobotView extends View {
         racketB.setFill(Color.BLUE); //le robot
 
         racketB.setX(court.getWidth() * scale + getXMargin());
-        racketB.setY(court.getBallY() * scale);
+        racketB.setY(((CourtRobot) court).getBallY() * scale);
 
         ball = new Circle();
-        ball.setRadius(court.getBallRadius());
+        ball.setRadius(((CourtRobot) court).getBallRadius());
         ball.setFill(Color.BLACK);
 
-        ball.setCenterX(court.getBallX() * scale + getXMargin());
-        ball.setCenterY(court.getBallY() * scale);
+        ball.setCenterX(((CourtRobot) court).getBallX() * scale + getXMargin());
+        ball.setCenterY(((CourtRobot) court).getBallY() * scale);
 
 
 
@@ -75,18 +75,10 @@ public class GameRobotView extends View {
                 last = now;
                 racketA.setY(getCourt().getRacketA() * getScale());
                 racketA.setX(getXMargin() - getRacketThickness()+getCourt().getRacketXA());
-                racketB.setY(getCourt().getBallY() * getScale() + getXMargin() - 65);
+                racketB.setY(((CourtRobot) getCourt()).getBallY() * getScale() + getXMargin() - 65);
                 racketB.setX(getCourt().getWidth() * getScale() + getXMargin());
-                /*
-                racketB.setY(court.getRacketB() * scale);
-                racketB.setX(court.getWidth() * scale + xMargin + court.getRacketXB());
-               
-                ball.setCenterX(court.getBallX() * scale + xMargin);
-                ball.setCenterY(court.getBallY() * scale);
-                */
-
-                ball.setCenterX(getCourt().getBallX() * getScale() + getXMargin());
-                ball.setCenterY(getCourt().getBallY() * getScale());
+                ball.setCenterX(((CourtRobot) getCourt()).getBallX() * getScale() + getXMargin());
+                ball.setCenterY(((CourtRobot) getCourt()).getBallY() * getScale());
                 score.setText(getCourt().getScoreA() + " - " + getCourt().getScoreB()); // On ajoute le score à animate() pour que
                                                                               // le texte s'actualise quand un des
                                                                               // joueurs marque

@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import model.Court;
 import model.courts.CourtMulti;
 import model.courts.CourtRobot;
+import model.courts.CourtVide;
 import javafx.scene.control.Button;
 
 public class SceneHandler { // Cette classe permet de manipuler les scènes courrantes sans à avoir besoin de
@@ -55,7 +56,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
     }
 
     public void setMenuScene() {
-        court = new CourtMulti(playerA, playerB, 1000, 600);
+        court = new CourtVide(1000, 600);
         //root.setStyle("-fx-background-color: #FF0000"); //Changement couleure bg
         view = new MenuView(court, root, 1.0, this);
         stage.setScene(scene);
@@ -75,7 +76,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
     public void switchToGameRobot(Pane menuRoot) {
         menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
                                         // afficher le jeu sans problèmes.
-        court = new CourtRobot (playerA, 1000, 600);
+        court = new CourtRobot(playerA, 1000, 600);
         var gameView = new GameRobotView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
@@ -84,7 +85,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
 
     public void switchToSettings(Pane menuRoot) { // Méthode permettant de passer de menu à Settings
         menuRoot.getChildren().clear();
-        var court = new CourtMulti(playerA, playerB, 1000, 600);
+        var court = new Court(1000, 600);
         view = new SettingsView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
@@ -92,7 +93,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
 
     public void switchToMenu(Pane settingsRoot) { // Méthode permettant de passer de Settings à menu
         settingsRoot.getChildren().clear();
-        court = new CourtMulti(playerA, playerB, 1000, 600);
+        court = new Court(1000, 600);
         view = new MenuView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
