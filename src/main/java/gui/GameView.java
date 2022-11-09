@@ -155,18 +155,11 @@ public class GameView {
     }
     
     public void timerStart(TimerTask task) {
-        
         t.scheduleAtFixedRate(task, 1000, 1000); 
         /*
          * task: It is the task that is to be scheduled.
             delay: Le délais qu'il faut avant de commencer le jeu
             period: It is the time between the successive task of execution, it is in milliseconds.
          */
-   }
-
-    
-	
-
-	
-    
+   }    
 }
