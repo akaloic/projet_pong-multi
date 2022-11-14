@@ -50,8 +50,13 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
         start.setLayoutX(((court.getWidth() / 2) * scale) - 80);
         start.setLayoutY(((court.getHeight() / 2) * scale) - 60);
         start.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
+<<<<<<< HEAD:src/main/java/gui/views/MenuView.java
         start.setOnAction(event -> {sceneHandler.switchToGameRbis(getRoot(),racketSmall, racketMedium,racketLarge); makePauseFalse();}); // Lorsqu'on appuie sur le bouton, cela
                                                                          // enclanche la méthode switchToGame() + avec la bonne taille de la raquette
+=======
+        start.setOnAction(event -> sceneHandler.switchToGame(getRoot())); // Lorsqu'on appuie sur le bouton, cela
+                                                                         // enclanche la méthode switchToGame()
+>>>>>>> ajoutInstructions:src/main/java/gui/MenuView.java
 
         Button startRobot = new Button("Player vs Bot");
         startRobot.setLayoutX(((court.getWidth() / 2) * scale) - 80);
@@ -73,11 +78,17 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
         shutdown.setOnAction(event -> System.exit(0));
         getRoot().getChildren().addAll(title, start, settings, startRobot,shutdown); // On ajoute le title
 
+<<<<<<< HEAD:src/main/java/gui/views/MenuView.java
+=======
+
+        root.getChildren().addAll(title, start, settings, startRobot,shutdown); // On ajoute le title
+>>>>>>> ajoutInstructions:src/main/java/gui/MenuView.java
         // et les boutons aux éléments du Pane
 
     }
     // Test
 
+<<<<<<< HEAD:src/main/java/gui/views/MenuView.java
     //pour sauvgarder la taille de la raquette choisi si le jouer revient au start
     public static void activateSmall(){
         racketSmall = true;
@@ -111,4 +122,7 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
 
 
 
+=======
+    
+>>>>>>> ajoutInstructions:src/main/java/gui/MenuView.java
 }

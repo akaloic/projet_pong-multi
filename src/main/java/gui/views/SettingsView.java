@@ -2,20 +2,27 @@ package gui.views;
 
 import gui.SceneHandler;
 import gui.View;
+<<<<<<< HEAD
 import javafx.geometry.Pos;
+=======
+>>>>>>> ajoutInstructions
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import model.Court;
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ajoutInstructions
 public class SettingsView extends View{ // Classe similaire à GameView.java & MenuView.java avec des éléments différents
 
     private final Text reglages;
     private final Button exit;
     private final Button son;
 
+<<<<<<< HEAD
     //Raquette moduable
     private final Text tailleRaquette;
     private final Button raquetteSmall;
@@ -27,6 +34,8 @@ public class SettingsView extends View{ // Classe similaire à GameView.java & M
 
 
 
+=======
+>>>>>>> ajoutInstructions
     public SettingsView(Court court, Pane root, double scale, SceneHandler sceneHandler) {
         super(court, root, scale, sceneHandler);
 
@@ -36,7 +45,10 @@ public class SettingsView extends View{ // Classe similaire à GameView.java & M
         reglages = new Text();
         reglages.setX(((court.getWidth() / 2) * scale) - 80);
         reglages.setY((court.getWidth() / 10) * scale);
+<<<<<<< HEAD
         reglages.setTextAlignment(TextAlignment.CENTER);
+=======
+>>>>>>> ajoutInstructions
         reglages.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 50));
         reglages.setFill(Color.BLACK);
         reglages.setText("Réglages");
@@ -54,6 +66,7 @@ public class SettingsView extends View{ // Classe similaire à GameView.java & M
         son.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
         son.setOnAction(event -> son.setText(sceneHandler.switchSonButton(son)));
 
+<<<<<<< HEAD
         //Raquette Taille
         tailleRaquette = new Text();
         tailleRaquette.setX(((court.getWidth() / 2) * scale) - 80);
@@ -100,4 +113,11 @@ public class SettingsView extends View{ // Classe similaire à GameView.java & M
     }
 
 
+=======
+        getRoot().getChildren().addAll(reglages, exit, son); // On ajoute le title et les boutons aux éléments
+        // du Pane
+
+    }
+
+>>>>>>> ajoutInstructions
 }

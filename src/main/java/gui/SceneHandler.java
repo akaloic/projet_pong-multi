@@ -1,10 +1,7 @@
 package gui;
 
 import gui.entities.Player;
-import gui.views.GameRobotView;
-import gui.views.GameView;
-import gui.views.MenuView;
-import gui.views.SettingsView;
+import gui.views.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -48,7 +45,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
     }
 
     public void setGameScene() {
-        court = new CourtMulti(playerA, playerB, 1000, 600); // Extrait du code qu'il y avait dans App.java pour afficher
+        court = new CourtMulti(playerA, playerB, 1000, 600, court.getRacketSize()); // Extrait du code qu'il y avait dans App.java pour afficher
                                                             // le jeu.
         var gameView = new GameView(court, root, 1.0, this);
         stage.setScene(scene);
@@ -57,8 +54,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
     }
 
     public void setMenuScene() {
-        court = new CourtMulti(playerA, playerB, 1000, 600);
-        //root.setStyle("-fx-background-color: #FF0000"); //Changement couleure bg
+        court = new CourtMulti(playerA, playerB, 1000, 600, court.getRacketSize());
         view = new MenuView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
@@ -67,7 +63,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
     public void switchToGame(Pane menuRoot) {
         menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
                                         // afficher le jeu sans problèmes.
-        court = new CourtMulti(playerA, playerB, 1000, 600);
+        court = new CourtMulti(playerA, playerB, 1000, 600, court.getRacketSize());
         view = new GameView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
@@ -90,7 +86,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         if (small)
             court = new CourtMulti(playerA, playerB, 1000, 600, 75.0);
         else if (medium)
-            court = new CourtMulti(playerA, playerB, 1000, 600);
+            court = new CourtMulti(playerA, playerB, 1000, 600, court.getRacketSize());
         else if (large)
             court = new CourtMulti(playerA, playerB, 1000, 600, 150.0);
         view = new GameView(court, root, 1.0, this);
@@ -113,7 +109,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
 
     public void switchToSettings(Pane menuRoot) { // Méthode permettant de passer de menu à Settings
         menuRoot.getChildren().clear();
-        var court = new CourtMulti(playerA, playerB, 1000, 600);
+        court = new CourtMulti(playerA, playerB, 1000, 600, court.getRacketSize());
         view = new SettingsView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
@@ -121,7 +117,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
 
     public void switchToMenu(Pane settingsRoot) { // Méthode permettant de passer de Settings à menu
         settingsRoot.getChildren().clear();
-        court = new CourtMulti(playerA, playerB, 1000, 600);
+        court = new CourtMulti(playerA, playerB, 1000, 600, court.getRacketSize());
         view = new MenuView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
@@ -132,6 +128,13 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         return "On";
     }
 
+    public void switchToPageWin(Pane settingRoot, String joueur, String typePartie){
+        settingRoot.getChildren().clear();
+        court = new CourtMulti(playerA, playerB, 1000, 600, court.getRacketSize());
+        view = new WinView(court, root, 1.0, this, joueur, typePartie);
+        stage.setScene(scene);
+        stage.show();
+    }
     
 
 

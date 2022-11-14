@@ -16,7 +16,6 @@ public class ControlHandler {
     public void getInput() {
         sceneHandler.getScene().setOnKeyPressed(ev -> {
             switch (ev.getCode()) {
-                default:;
                 case Z:
                     playerA.state = RacketController.State.GOING_UP;
                     break;
@@ -43,11 +42,13 @@ public class ControlHandler {
                 case SPACE:
                 	View.pauseORcontinue();
                 	break;
+                default:;
+
             }
         });
         sceneHandler.getScene().setOnKeyReleased(ev -> {
             switch (ev.getCode()) {
-                default:;
+
                 case Z:
                     if (playerA.state == RacketController.State.GOING_UP)
                         playerA.state = RacketController.State.IDLE;
@@ -80,6 +81,8 @@ public class ControlHandler {
                     if (playerB.state == RacketController.State.GOING_RIGHT)
                         playerB.state = RacketController.State.IDLE;
                     break;
+                default:;
+
 
             }
         });

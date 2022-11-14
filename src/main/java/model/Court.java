@@ -1,7 +1,7 @@
 package model;
 
+import java.awt.*;
 import java.util.Random;
-
 public class Court {
     // instance parameters
     private final RacketController playerA;
@@ -18,21 +18,19 @@ public class Court {
     private double ballSpeedX, ballSpeedY; // m
     private int scoreA, scoreB;
     private boolean agetscore=true;//true pour playerA a marqué le point sinon false pour PlayerB a marqué le point;
-    private double  coeffSpeedA=0.2; // variable qui permet ralentir la vitesse de raquetteA avant chaque déplacement de raquette;
-    private double coeffSpeedB=0.2;
 
-
-
-
-
-
+    private double coeffSpeedA=1.0; // variable qui permet ralentir la vitesse de raquetteA avant chaque déplacement de raquette;
+    private double coeffSpeedB=1.0;
+    public static double incremente = 100.0;
 
 
 
     public Court(RacketController playerA, double width, double height) {
         this.playerA = playerA;
-        this.width = width;
-        this.height = height;
+        Dimension dimension = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        this.width = dimension.getWidth();
+        this.height = dimension.getHeight();
+
 
     }
 
@@ -55,9 +53,6 @@ public class Court {
         }
     }
 
-    
-
-
     public void SpeedUp(double time) { // on augmente la vitesse par rapport le temps
         this.coeffSpeedA+=time;
         this.coeffSpeedB+=time;
@@ -67,31 +62,47 @@ public class Court {
         // first, compute possible next position if nothing stands in the way
         double nextBallX = ballX + deltaT * ballSpeedX;
         double nextBallY = ballY + deltaT * ballSpeedY;
+
         // next, see if the ball would meet some obstacle
         if (nextBallY < 0 || nextBallY > height) { // Rebonds plafond / sol
             ballSpeedY = -ballSpeedY;
-            nextBallY = ballY + deltaT * ballSpeedY;
+            nextBallY = ballY + deltaT * ballSpeedY;//
         }
-
 
         if ((nextBallX>racketXA && nextBallX<racketXA+10.0 && nextBallY > racketA && nextBallY < racketA + racketSize)           // Rebond raquette gauche
                 || (nextBallX >width+racketXB && nextBallX<width+racketXB+10.0 && nextBallY > racketB && nextBallY < racketB + racketSize)) {    // Rebond raquette droite
-                     if ((nextBallY <= racketA+racketSize+ 15.0 && nextBallY > racketA+racketSize-15.0) || (nextBallY <= racketB + racketSize+15.0 && nextBallY > racketB + racketSize-15.0)){ // Rebond sur les bords
-                        ballSpeedX *=-1;
-                        ballSpeedY *=-1;
-                        ballSpeedX = ballSpeedX;
-                     } else
-                         ballSpeedX = -ballSpeedX;
-                    nextBallX = ballX + deltaT * ballSpeedX;
-        }else if (nextBallX < 0) {
-        	agetscore=false; 
-            scoreB++; return true; // Quand la balle sort du jeu du côté droit, on donne un point au joueur B
-        } else if (nextBallX > width) {
-        	agetscore=true;
-            scoreA++; return true; // Quand la balle sort du jeu du côté gauche, on donne un point au joueur A
+            if ((nextBallY <= racketA + racketSize + 15.0 && nextBallY > racketA + racketSize - 15.0) || (nextBallY <= racketB + racketSize + 15.0 && nextBallY > racketB + racketSize - 15.0)) { // Rebond sur les bords
+                ballSpeedX *= -1 + incremente;
+                ballSpeedY *= -1 - incremente;
+            } else
+                ballSpeedX = -ballSpeedX;
+            nextBallX = ballX + deltaT * ballSpeedX;
         }
+        /*
+        if (nextBallX>racketXA && nextBallX<racketXA+10.0 && nextBallY > racketA && nextBallY < racketA + racketSize) {
+            ballSpeedX = -ballSpeedX + incremente;
+        }
+        if (nextBallX > width - 110 && (nextBallY <= racketB + racketSize && nextBallY >= racketB)){
+            ballSpeedX = -ballSpeedX - incremente;
+        }
+
+         */
+
+        if (nextBallX < 0) {
+        	agetscore=false; 
+            scoreB++;
+            return true; // Quand la balle sort du jeu du côté droit, on donne un point au joueur B
+        }
+        if (nextBallX > width - 50) {
+        	agetscore=true;
+            scoreA++;
+            return true; // Quand la balle sort du jeu du côté gauche, on donne un point au joueur A
+        }
+
         ballX = nextBallX;
         ballY = nextBallY;
+
+
         return false;
     }
 
@@ -104,12 +115,7 @@ public class Court {
         this.ballY = height / 2;
         this.racketXB=0;
         this.racketXA=0;
-
-
     }
-
-
-
     public double getBallRadius() {
         return ballRadius;
     }
@@ -162,8 +168,6 @@ public class Court {
         return playerA;
     }
 
-
-
     public double getRacketSpeed() {
         return racketSpeed;
     }
@@ -205,8 +209,4 @@ public class Court {
     public void setRacketSize(double size){
         this.racketSize = size;
     }
-
-
-
-
 }
