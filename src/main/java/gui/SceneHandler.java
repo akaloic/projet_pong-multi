@@ -1,5 +1,7 @@
 package gui;
 
+import java.nio.file.Paths;
+
 import gui.entities.Player;
 import gui.views.GameRobotView;
 import gui.views.GameView;
@@ -95,10 +97,17 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         controlHandler.getInput();
         view = new GameView(court, root, 1.0, this,players.length);
         stage.setScene(scene);
-      //   BackgroundImage myBI= new BackgroundImage(new Image("file:icon.png",32,32,false,true),
-        //        BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-          //        BackgroundSize.DEFAULT);
-        //root.setBackground(new Background(myBI));
+        //Image image=new Image(getClass().getResourceAsStream(""+Paths.get("icon.png")));
+        //BackgroundImage backgroundimage = new BackgroundImage(image, 
+        //        BackgroundRepeat.NO_REPEAT, 
+         //       BackgroundRepeat.NO_REPEAT, 
+           //     BackgroundPosition.DEFAULT, 
+             //      BackgroundSize.DEFAULT);
+        //root.setBackground(new Background(backgroundimage));
+        //Image image =new Image(getClass().getResourceAsStream(""+Paths.get("icon.png")));
+       
+        
+        System.out.println(Paths.get("icon.png"));
         stage.show();
         ((GameView) view).animate();
     }
