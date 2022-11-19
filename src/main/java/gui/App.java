@@ -21,6 +21,7 @@ public class App extends Application {
     	primaryStage.getIcons().add(image);
     	primaryStage.setMinHeight(600);
     	primaryStage.setMinWidth(1000);
+    	primaryStage.setResizable(false);
     	SceneHandler sceneHandler = new SceneHandler(primaryStage);
         sceneHandler.setMenuScene();
         

@@ -16,6 +16,9 @@ public class CourtMulti extends Court{
         reset();
         
     }
+    
+
+    
 
     
 
@@ -24,8 +27,8 @@ public class CourtMulti extends Court{
         switch (this.players[0].getState()) {
             case GOING_UP:
                 setRacketA(getRacketA() - getRacketSpeed() * deltaT * getCoefA()) ;
-                if (getRacketA() < 0.0)
-                    setRacketA(0.0);
+                if (getRacketA() < 50.0)
+                    setRacketA(50.0);
                 break;
             case IDLE:
                 setCoefA(0.2);
@@ -51,8 +54,8 @@ public class CourtMulti extends Court{
         switch (players[1].getState()) {
             case GOING_UP:
                 setRacketB(getRacketB() - getRacketSpeed()* deltaT * getCoefB());
-                if (getRacketB() < 0.0)
-                    setRacketB(0.0);
+                if (getRacketB() < 50.0)
+                    setRacketB(50.0);
                 break;
             case IDLE:
             	setCoefB(0.2);// lorsque la raquette devient immobile, la vitesse est aussi réinitialiser;
@@ -79,14 +82,14 @@ public class CourtMulti extends Court{
         	switch (players[2].getState()) {
             case GOING_LEFT:
                 setRacketXC(getRacketXC() - getRacketSpeed() * deltaT );
-                if ((getRacketXC() <-(super.getWidth()/2-40.0))) {
-                    setRacketXC(-(super.getWidth()/2-40.0));
+                if ((getRacketXC() <-(super.getWidth()/2-20.0))) {
+                    setRacketXC(-(super.getWidth()/2-20.0));
                 }
                 break;
             case GOING_RIGHT:
                 setRacketXC(getRacketXC() + getRacketSpeed() * deltaT);
-                if (getRacketXC() > getWidth()/2-40.0) {
-                    setRacketXC(getWidth()/2-40.0);
+                if (getRacketXC() > getWidth()/2-20.0) {
+                    setRacketXC(getWidth()/2-20.0);
                 }
 			default:
 				break;
@@ -96,14 +99,14 @@ public class CourtMulti extends Court{
         	 switch (players[3].getState()) {
         	 case GOING_LEFT:
                  setRacketXD(getRacketXD() - getRacketSpeed() * deltaT );
-                 if ((getRacketXD() <-(super.getWidth()/2-40.0))) {
-                     setRacketXD(-(super.getWidth()/2-40.0));
+                 if ((getRacketXD() <-(super.getWidth()/2-20.0))) {
+                     setRacketXD(-(super.getWidth()/2-20.0));
                  }
                  break;
              case GOING_RIGHT:
                  setRacketXD(getRacketXD() + getRacketSpeed() * deltaT);
-                 if (getRacketXD() > getWidth()/2-40.0) {
-                     setRacketXD(getWidth()/2-40.0);
+                 if (getRacketXD() > getWidth()/2-20.0) {
+                     setRacketXD(getWidth()/2-20.0);
                  }
  			default:
  				break;
@@ -112,10 +115,21 @@ public class CourtMulti extends Court{
      
          }
       
-    }     
+    }   
+        if(players.length==1 || players.length==2) {
+        	if (updateBall(deltaT))
+                reset();
+        }else if(players.length==3) {
+        	if (updateBall3(deltaT))
+                reset();
+        }else {
+        	if(updateBall4(deltaT)) {
+        		reset();
+        	}
+        	
+        }
        
-        if (updateBall(deltaT))
-            reset();
+        
     }
 
 

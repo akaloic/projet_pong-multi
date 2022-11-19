@@ -4,6 +4,7 @@ import gui.SceneHandler;
 import gui.View;
 import javafx.animation.AnimationTimer;
 import javafx.scene.control.Button;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -31,9 +32,9 @@ public class GameRobotView extends View {
                 ((CourtRobot) getCourt()).update((now - last) * 1.0e-9); // convert nanoseconds to seconds
                 last = now;
                 racketA.setY(getCourt().getRacketA() * getScale());
-                racketA.setX(getXMargin() - getRacketThickness()+getCourt().getRacketXA());
-                racketB.setY(getCourt().getBallY() * getScale() + getXMargin() - 65);
-                racketB.setX(getCourt().getWidth() * getScale() + getXMargin());
+                racketA.setX(getMargin() - getRacketThickness()+getCourt().getRacketXA());
+                racketB.setY(getCourt().getBallY() * getScale() + getMargin() - 65);
+                racketB.setX(getCourt().getWidth() * getScale() + getMargin());
                 /*
                 racketB.setY(court.getRacketB() * scale);
                 racketB.setX(court.getWidth() * scale + xMargin + court.getRacketXB());
@@ -42,7 +43,7 @@ public class GameRobotView extends View {
                 ball.setCenterY(court.getBallY() * scale);
                 */
 
-                ball.setCenterX(getCourt().getBallX() * getScale() + getXMargin());
+                ball.setCenterX(getCourt().getBallX() * getScale() + getMargin());
                 ball.setCenterY(getCourt().getBallY() * getScale());
                 score.setText(getCourt().getScoreA() + " - " + getCourt().getScoreB()); // On ajoute le score à animate() pour que
                                                                               // le texte s'actualise quand un des
@@ -61,7 +62,7 @@ public class GameRobotView extends View {
         super(court, root, scale, sceneHandler);
 
         score = new Text(); // On créer l'objet Text pour pouvoir l'afficher
-        score.setX((court.getWidth() / 2) * scale + getXMargin() / 2); // Petite modification pour mieux placer le score.
+        score.setX((court.getWidth() / 2) * scale + getMargin() / 2); // Petite modification pour mieux placer le score.
         score.setY(35);
         score.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
         score.setFill(Color.BLACK);
@@ -73,7 +74,7 @@ public class GameRobotView extends View {
         racketA.setWidth(getRacketThickness());
         racketA.setFill(Color.RED); //joueur 
         
-        racketA.setX(getXMargin() - getRacketThickness()+court.getRacketXA());
+        racketA.setX(getMargin() - getRacketThickness()+court.getRacketXA());
         racketA.setY(court.getRacketA() * scale);
         
         racketB = new Rectangle();
@@ -81,14 +82,14 @@ public class GameRobotView extends View {
         racketB.setWidth(getRacketThickness());
         racketB.setFill(Color.BLUE); //le robot
 
-        racketB.setX(court.getWidth() * scale + getXMargin());
+        racketB.setX(court.getWidth() * scale + getMargin());
         racketB.setY(court.getBallY() * scale);
 
         ball = new Circle();
         ball.setRadius(court.getBallRadius());
         ball.setFill(Color.BLACK);
 
-        ball.setCenterX(court.getBallX() * scale + getXMargin());
+        ball.setCenterX(court.getBallX() * scale + getMargin());
         ball.setCenterY(court.getBallY() * scale);
         continu=new Button("Continue");
         continu.setLayoutX(((court.getWidth() / 2) * scale) - 80);

@@ -4,8 +4,10 @@ import gui.SceneHandler;
 import gui.View;
 import javafx.animation.AnimationTimer;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -25,6 +27,7 @@ public class PlayerNumber extends View {
 	private Text text4=new Text();
 	private Text text5=new Text();
 	private Text text6=new Text();
+	private RadioButton radio1;
 	
 	private boolean []AI=new boolean[4]; 
 	private AnimationTimer timer=new AnimationTimer() {
@@ -36,17 +39,20 @@ public class PlayerNumber extends View {
 	            }
 			  text2.setText(" "+nbre);
 			  switch(nbre) {
-			    case 4:text6.setText("Player4 humain/AI ?" );
-			    case 3:text5.setText("Player3 humain/AI ?" );
-			    case 2:text4.setText("Player2 humain/AI ?" );
-			    case 1:text3.setText("Player1 humain/AI ?" ); 
+			    case 4:text6.setText("Player4 humain/AI ?" );break;
+			    case 3:text5.setText("Player3 humain/AI ?" );text6.setText(null); break;
+			    case 2:text4.setText("Player2 humain/AI ?" );text5.setText(null);text6.setText(null); break;
+			    case 1:text3.setText("Player1 humain/AI ?" );text4.setText(null);text5.setText(null);text6.setText(null); break;
 			  }
 			  
 		}
 	};
 	public PlayerNumber(Court court,Pane root,double scale,SceneHandler scenehandler) {
 		super(court,root,scale,scenehandler);
-		
+		 Image image=new Image(MenuView.class.getResourceAsStream("./playerbg.jpg"));
+	        ImageView backg=new ImageView(image);
+	        backg.setFitWidth(root.getMinWidth());
+	        backg.setFitHeight(root.getMinHeight());
 		text=new Text("Nombre de joueur : ");
 		plus=new Button(" + ");
 		menus=new Button(" - ");
@@ -74,11 +80,13 @@ public class PlayerNumber extends View {
 		text2.setLayoutX(centerX*scale);
 		text2.setLayoutY(centerY*scale+spacey+30);
 		text2.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
+		
 		spacey+=80;
 		
 		text3.setLayoutX(centerX-100);
 		text3.setLayoutY(centerY+spacey);
 		text3.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
+		
 		spacey+=20;
 		text4.setLayoutX(centerX-100);
 		text4.setLayoutY(centerY+spacey);
@@ -100,12 +108,12 @@ public class PlayerNumber extends View {
 		
 		this.annuler=new Button();
 		this.annuler.setText("Annuler");
-		annuler.setLayoutX(court.getWidth()/2+200);
+		annuler.setLayoutX(court.getWidth()/2+100);
 		annuler.setLayoutY(court.getHeight()/2*scale+spacey);
 		annuler.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
 		annuler.setOnAction(event->getSceneHandler().switchToMenu(root));
 		
-		getRoot().getChildren().addAll(text,plus,text2,menus,confirmer,annuler,text3,text4,text5,text6);
+		getRoot().getChildren().addAll(backg,text,plus,text2,menus,confirmer,annuler,text3,text4,text5,text6);
 		
 	}
 	private void incrementer() {

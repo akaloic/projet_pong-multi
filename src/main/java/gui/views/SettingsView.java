@@ -17,7 +17,7 @@ public class SettingsView extends View{ // Classe similaire à GameView.java & M
     public SettingsView(Court court, Pane root, double scale, SceneHandler sceneHandler) {
         super(court, root, scale, sceneHandler);
 
-        root.setMinWidth(court.getWidth() * scale + 2 * getXMargin());
+        root.setMinWidth(court.getWidth() * scale + 2 * getMargin());
         root.setMinHeight(court.getHeight() * scale);
 
         reglages = new Text();
