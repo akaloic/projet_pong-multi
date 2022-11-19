@@ -4,6 +4,8 @@ package gui.views;
 
 
 import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
@@ -37,7 +39,11 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
      */
     public MenuView(Court court, Pane root, double scale, SceneHandler sceneHandler) {
         super(court, root, scale, sceneHandler);
-
+        Image image=new Image(MenuView.class.getResourceAsStream("./menu1bg.jpg"));
+        ImageView backg=new ImageView(image);
+        backg.setFitWidth(1000);
+        backg.setFitHeight(600);
+        
 
         title = new Text(); // On créer l'objet Text pour pouvoir l'afficher
         title.setLayoutX(((court.getWidth() / 2) * scale) - 20);
@@ -62,8 +68,9 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
         shutdown.setLayoutX(((court.getWidth() / 2) * scale) - 80);
         shutdown.setLayoutY(((court.getHeight() - 190)));
         shutdown.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
+        shutdown.setOnAction(event->System.exit(0));
 
-        getRoot().getChildren().addAll(title, start, settings,shutdown); // On ajoute le title
+        getRoot().getChildren().addAll(backg,title, start, settings,shutdown); // On ajoute le title
        
 
         // et les boutons aux éléments du Pane

@@ -2,6 +2,7 @@ package gui;
 
 import java.nio.file.Paths;
 
+
 import gui.entities.Player;
 import gui.views.GameRobotView;
 import gui.views.GameView;
@@ -30,6 +31,7 @@ import model.courts.CourtMulti;
 import model.courts.CourtRobot;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class SceneHandler { // Cette classe permet de manipuler les scènes courrantes sans à avoir besoin de
                             // réecrire tout le code à chaque fois
@@ -73,8 +75,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         gameView.animate();
         
     }
-  public void switchToGame(Pane menuRoot,Stage s,int n) {
-	  s.hide();
+  public void switchToGame(Pane menuRoot,int n) { // methode qui passe de ViewplayerNumber à GameView
 	  this.setPlayers(n);
 	  switch (n) {
 		  case 1:this.switchToGameRobot(menuRoot);
@@ -97,13 +98,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         controlHandler.getInput();
         view = new GameView(court, root, 1.0, this,players.length);
         stage.setScene(scene);
-        //Image image=new Image(getClass().getResourceAsStream(""+Paths.get("icon.png")));
-        //BackgroundImage backgroundimage = new BackgroundImage(image, 
-        //        BackgroundRepeat.NO_REPEAT, 
-         //       BackgroundRepeat.NO_REPEAT, 
-           //     BackgroundPosition.DEFAULT, 
-             //      BackgroundSize.DEFAULT);
-        //root.setBackground(new Background(backgroundimage));
+       
         //Image image =new Image(getClass().getResourceAsStream(""+Paths.get("icon.png")));
        
         
@@ -117,8 +112,6 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
                                         // afficher le jeu sans problèmes.
         court = new CourtRobot (this.players[0], 1000, 600);
         var gameView = new GameRobotView(court, root, 1.0, this);
-       // scene.getStylesheets().add(getClass().getResource("stylesheet1.css").toExternalForm());
-
         ControlHandler controlHandler = new ControlHandler(players, this);
         controlHandler.getInput();
         stage.setScene(scene);
@@ -138,17 +131,12 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
 
     public void switchToMenu(Pane settingsRoot) { // Méthode permettant de passer de Settings à menu
         settingsRoot.getChildren().clear();
-        root.setStyle(null);
         court = new Court(1000, 600);
         view = new MenuView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
     }
-    public void switchToMenu(Pane settingsRoot,Stage s) { // Méthode permettant de passer de Settings à menu
-        switchToMenu(settingsRoot);
-        s.hide();
-    }
-
+ 
 
     public String switchSonButton(Button b){
         if (b.getText().equals("On")) return "Off";
@@ -164,15 +152,9 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
     }
     public void switchtoNbreJoueur(Pane menuRoot) {
     	menuRoot.getChildren().clear();
-    	Stage stage2=new Stage();
-    	stage2.initStyle(StageStyle.UNDECORATED);
-    	 var court = new Court(450, 300);
-    	 SceneHandler scenehandle2=new SceneHandler(stage2);
-    	 var view=new PlayerNumber(court,root,1.0,this,scenehandle2);
-    	 stage2.setScene(scene);
-    	 stage2.show();
-    	 stage2.centerOnScreen();
-    	 view.animate();
+    	var court = new Court(1000, 600);
+    	var view=new PlayerNumber(court,root,1.0,this);
+    	view.animate();
     	
     }
     public void setPlayers(int n) {
