@@ -35,7 +35,9 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
     private final Button settings;
     private final Button shutdown;
 
-    
+ 
+
+
 
     /**
      * @param court le "modèle" de cette vue (le titre et le bouton)
@@ -63,6 +65,7 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
 
         start = new Button("Start");
         start.setLayoutX(((court.getWidth() / 2) * scale) - 80);
+
         start.setLayoutY(court.getHeight() / 2 * scale );
         start.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 50));
         start.setOnMouseClicked(event -> sceneHandler.switchtoNbreJoueur(getRoot())); // Lorsqu'on appuie sur le bouton, cela
@@ -70,7 +73,19 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
         start.setOnMouseExited(event-> start.setTextFill(Color.BLACK));
         start.setBackground(null);
         
-                                                                        // enclanche la méthode switchToGame()
+      /*                                                                  // enclanche la méthode switchToGame()
+        start.setLayoutY(((court.getHeight() / 2) * scale) - 60);
+        start.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
+        start.setOnAction(event -> {sceneHandler.switchToGameRbis(getRoot(),racketSmall, racketMedium,racketLarge); makePauseFalse();}); // Lorsqu'on appuie sur le bouton, cela
+                                                                         // enclanche la méthode switchToGame() + avec la bonne taille de la raquette
+
+        Button startRobot = new Button("Player vs Bot");
+        startRobot.setLayoutX(((court.getWidth() / 2) * scale) - 80);
+        startRobot.setLayoutY((court.getHeight()-280));
+        startRobot.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
+        startRobot.setOnAction(event -> sceneHandler.switchToGameRobot(getRoot())); // Lorsqu'on appuie sur le bouton, cela
+                                                                         // enclanche la méthode switchToGame()
+*/
         settings = new Button("Settings");
         settings.setLayoutX(((court.getWidth() / 2) * scale) - 80);
         settings.setLayoutY(court.getHeight()/2+100);
@@ -100,6 +115,9 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
 
     // Test
 
-    
+
+
+
+
 }
 

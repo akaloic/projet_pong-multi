@@ -5,8 +5,9 @@ import java.util.Random;
 public class Court {
     // instance parameters
     private final double width, height; // m
-    private final double racketSpeed = 200.0; // m/s
-    private final double racketSize = 100.0; // m
+
+    private final double racketSpeed = 300.0; // m/s
+    private  double racketSize = 100.0; // m
     private final double ballRadius = 10.0; // m
     // instance state
    
@@ -16,8 +17,6 @@ public class Court {
     private double racketYA,preYA; // m
     private double racketXC;
     private double racketXD;
-
-
 	private double ballX, ballY; // m
     private double ballSpeedX, ballSpeedY; // m
     private int scoreA, scoreB,scoreC,scoreD;
@@ -29,7 +28,16 @@ public class Court {
     public Court( double width, double height) {
         this.width = width;
         this.height = height;
+
     }
+
+    public Court( double width, double height, double racketSize) { //nouveau constructeur pour qu'on puisse modifier la taille de la raquette
+        this.width = width;
+        this.height = height;
+        this.racketSize = racketSize;
+
+    }
+
 
     private double eitherInt(double a, double b) {
         Random rd = new Random();
@@ -202,6 +210,7 @@ public class Court {
   
 
 
+
     public double getBallRadius() {
         return ballRadius;
     }
@@ -249,6 +258,7 @@ public class Court {
     public int getScoreB() {
         return scoreB;
     }
+
 
 
 
@@ -302,6 +312,12 @@ public class Court {
 	public void setRacketXD(double racketXD) {
 		this.racketXD = racketXD;
 	}
+
+
+    public void setRacketSize(double size){
+        this.racketSize = size;
+    }
+
 
 
 

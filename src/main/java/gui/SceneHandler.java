@@ -42,14 +42,13 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
     private Court court;
     private Player []players;
 
-    public SceneHandler(Stage stage) { // On prends les playerA et playerB en argument
-                                                                       // pour pouvoir les redistribuer sur les menuView
-                                                                       // / gameView
+
+    public SceneHandler(Stage stage) { 
+                                     
         this.root = new Pane();
         this.scene = new Scene(root);
         this.stage = stage;
-      
-        
+       
     
     }
 
@@ -75,12 +74,12 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         gameView.animate();
         
     }
-  public void switchToGame(Pane menuRoot,int n) { // methode qui passe de ViewplayerNumber à GameView
+  public void switchToGame(Pane menuRoot,int n, boolean small, boolean medium, boolean large) { // methode qui passe de ViewplayerNumber à GameView
 	  this.setPlayers(n);
 	  switch (n) {
 		  case 1:this.switchToGameRobot(menuRoot);
 		  break;
-		  default:this.switchToGame(menuRoot);
+		  default:this.switchToGameRbis(menuRoot,small,medium,large);
 	  
 	  }
 	  
@@ -93,19 +92,44 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
                                         // afficher le jeu sans problèmes.
         
         court = new CourtMulti(players,1000, 600);
-        
         ControlHandler controlHandler = new ControlHandler(players,this);
-        controlHandler.getInput();
+        controlHandler.getInput();   
         view = new GameView(court, root, 1.0, this,players.length);
         stage.setScene(scene);
-       
-        //Image image =new Image(getClass().getResourceAsStream(""+Paths.get("icon.png")));
-       
-        
-        System.out.println(Paths.get("icon.png"));
         stage.show();
         ((GameView) view).animate();
     }
+
+    public void switchToGameR(Pane menuRoot, double racketSize) { //on utilise cette methode pour qu'on puisse modifier la taille de la raquette
+        menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
+        // afficher le jeu sans problèmes.
+        court = new CourtMulti(players,1000, 600, racketSize);
+        view = new GameView(court, root, 1.0, this,1);
+        ControlHandler controlHandler = new ControlHandler(players,this);
+        controlHandler.getInput();
+        stage.setScene(scene);
+        stage.show();
+        ((GameView) view).animate();
+    }
+
+    public void switchToGameRbis(Pane menuRoot, boolean small, boolean medium, boolean large) { //on utilise cette methode pour qu'on puisse modifier la taille de la raquette + sauvgarde la derniere taille choisie si le jouer revient au start
+        menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
+        // afficher le jeu sans problèmes.
+        if (small)
+            court = new CourtMulti(players, 1000, 600, 75.0);
+        else if (medium)
+            court = new CourtMulti(players, 1000, 600);
+        else if (large)
+            court = new CourtMulti(players, 1000, 600, 150.0);
+        view = new GameView(court, root, 1.0, this,players.length);
+        ControlHandler controlHandler = new ControlHandler(players,this);
+        controlHandler.getInput();
+        stage.setScene(scene);
+        stage.show();
+        ((GameView) view).animate();
+    }
+
+
 
     public void switchToGameRobot(Pane menuRoot) {
         menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite

@@ -27,7 +27,13 @@ public class PlayerNumber extends View {
 	private Text text4=new Text();
 	private Text text5=new Text();
 	private Text text6=new Text();
-	private RadioButton radio1;
+	   
+	//booleans pour voir laquelle taille est choisie
+    private static boolean racketSmall = false;
+
+    private static boolean racketMedium = true; //par defaut on a une raquette de taille medium
+
+    private static boolean racketLarge = false;
 	
 	private boolean []AI=new boolean[4]; 
 	private AnimationTimer timer=new AnimationTimer() {
@@ -104,7 +110,7 @@ public class PlayerNumber extends View {
 		confirmer.setLayoutX(court.getWidth()/2-200);
 		confirmer.setLayoutY(court.getHeight()/2*scale+spacey);
 		confirmer.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
-		confirmer.setOnAction(event->getSceneHandler().switchToGame(root,nbre));
+		confirmer.setOnAction(event->getSceneHandler().switchToGame(root,nbre,racketSmall,racketMedium,racketLarge));
 		
 		this.annuler=new Button();
 		this.annuler.setText("Annuler");
@@ -130,6 +136,37 @@ public class PlayerNumber extends View {
 	public void animate() {
 		timer.start();
 	}
+	
+    //pour sauvgarder la taille de la raquette choisi si le jouer revient au start
+    public static void activateSmall(){
+        racketSmall = true;
+        racketMedium = false;
+        racketLarge = false;
+    }
+
+    public static void activateMedium(){
+        racketMedium = true;
+        racketSmall = false;
+        racketLarge = false;
+    }
+
+    public static void activateLarge(){
+        racketLarge = true;
+        racketSmall = false;
+        racketMedium = false;
+    }
+
+    public static boolean getRacketSmall(){
+        return racketSmall;
+    }
+
+    public static boolean getRacketMedium(){
+        return racketMedium;
+    }
+
+    public static boolean getRacketLarge(){
+        return racketLarge;
+    }
 	
 
 }

@@ -63,6 +63,8 @@ public abstract class View {
     public static void pauseORcontinue() {
     	pause=!pause;
     }
+
+    public static void makePauseFalse(){ pause = false;}
     public static boolean getPause() {
     	return pause;
     }

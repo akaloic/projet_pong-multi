@@ -29,6 +29,8 @@ public class GameView extends View{
     private Region border;
  
 
+    private Button menu;
+
     private final AnimationTimer timer=new AnimationTimer() {
         long last = 0;
         @Override
@@ -62,6 +64,7 @@ public class GameView extends View{
             	this.stop();            //on arrete le timer pour faire une pause du scene
             	this.last=0;            // comme le temps continue de s'avancer , il faut réunitialiser last en 0 pour qu'il soit réinitialisé par la valeur de now pour que le jeu repart au meme moment que là où on arrete
             	getRoot().getChildren().add(continu); // une fois le jeu arreter on fait afficher sur la scene un bouton qui permet de relancer le jeu
+                getRoot().getChildren().add(menu);
             	
             }
           
@@ -152,15 +155,23 @@ public class GameView extends View{
         continu.setLayoutX(((court.getWidth() / 2) * scale) - 80);
         continu.setLayoutY(((court.getHeight() / 2) * scale) - 60);
         continu.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
-        continu.setOnMouseClicked(event->animate());
+        continu.setOnAction(event->animate());
         
+        
+
+        menu=new Button("Menu");
+        menu.setLayoutX(((court.getWidth() / 2) * scale) + 120);
+        menu.setLayoutY(((court.getHeight() / 2) * scale) - 60);
+        menu.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
+        menu.setOnAction(event-> sceneHandler.switchToMenu(getRoot()));
         getRoot().getChildren().addAll(ball, score); // On ajoute le score aux éléments du Pane
 
     }
     public void animate() {
         if(getRoot().getChildren().contains(continu)) {  // si on reprend / commence la partie il faut vérifier si le button continue existe
-        	getRoot().getChildren().remove(continu); // si oui , on enleve le bouton 
-     	    pauseORcontinue();  // et on met aussi le champs boolean pause en false pour préparer à la prochaine demande de pause
+        	getRoot().getChildren().remove(continu); // si oui , on enleve les boutons
+            getRoot().getChildren().remove(menu);
+            pauseORcontinue();  // et on met aussi le champs boolean pause en false pour préparer à la prochaine demande de pause
         }
         timer.start();  // on lance le timer 
  
