@@ -3,88 +3,137 @@ package model;
 import gui.SceneHandler;
 import gui.View;
 import gui.entities.Player;
+import javafx.scene.shape.Line;
 
 public class ControlHandler {
-    private Player playerA, playerB;
+    private Player[]players;
     private SceneHandler sceneHandler;
 
-    public ControlHandler(Player playerA, Player playerB, SceneHandler sceneHandler) {
-        this.playerA = playerA; this.playerB = playerB;
+    public ControlHandler(Player []players, SceneHandler sceneHandler) {
+        this.players=players;
         this.sceneHandler = sceneHandler;
     }
 
     public void getInput() {
         sceneHandler.getScene().setOnKeyPressed(ev -> {
             switch (ev.getCode()) {
-                default:;
                 case Z:
-                    playerA.state = RacketController.State.GOING_UP;
+                    players[0].state = RacketController.State.GOING_UP;
                     break;
                 case S:
-                    playerA.state = RacketController.State.GOING_DOWN;
+                    players[0].state = RacketController.State.GOING_DOWN;
                     break;
                 case Q:
-                    playerA.state = RacketController.State.GOING_LEFT;
-                    break;
+                	if(players.length>2) {
+                		players[2].state=RacketController.State.GOING_LEFT;
+                		break;
+                	}
+                	
+                   players[0].state = RacketController.State.GOING_LEFT;
+                   break;
                 case D:
-                    playerA.state = RacketController.State.GOING_RIGHT;
+                	if(players.length>2) {
+                		players[2].state=RacketController.State.GOING_RIGHT;
+                		break;
+                	}
+                    players[0].state = RacketController.State.GOING_RIGHT;
                     break;
                 case UP:
-                    playerB.state = RacketController.State.GOING_UP;
+                    players[1].state = RacketController.State.GOING_UP;
                     break;
                 case DOWN:
-                    playerB.state = RacketController.State.GOING_DOWN;
+                    players[1].state = RacketController.State.GOING_DOWN;
                     break;
                 case RIGHT:
-                    playerB.state = RacketController.State.GOING_RIGHT;
+                	if(players.length>2) {
+                		if(players.length==4) {
+                			players[3].state=RacketController.State.GOING_RIGHT;
+                		}
+                		break;
+                	}
+                    players[1].state = RacketController.State.GOING_RIGHT;
                     break;
                 case LEFT:
-                    playerB.state = RacketController.State.GOING_LEFT;
+                	if(players.length>2) {
+                		if(players.length==4) {
+                			players[3].state=RacketController.State.GOING_LEFT;
+                		}
+                		break;
+                	}
+                    players[1].state = RacketController.State.GOING_LEFT;
+                    break;
                 case SPACE:
                 	View.pauseORcontinue();
                 	break;
+                default:;
             }
+           
         });
         sceneHandler.getScene().setOnKeyReleased(ev -> {
             switch (ev.getCode()) {
-                default:;
+               
                 case Z:
-                    if (playerA.state == RacketController.State.GOING_UP)
-                        playerA.state = RacketController.State.IDLE;
+                    if (players[0].state == RacketController.State.GOING_UP)
+                        players[0].state = RacketController.State.IDLE;
                     break;
                 case S:
-                    if (playerA.state == RacketController.State.GOING_DOWN)
-                        playerA.state = RacketController.State.IDLE;
+                    if (players[0].state == RacketController.State.GOING_DOWN)
+                        players[0].state = RacketController.State.IDLE;
                     break;
                 case Q:
-                    if (playerA.state == RacketController.State.GOING_LEFT)
-                        playerA.state = RacketController.State.IDLE;
+                	if(players.length>2) {  // si y a plus de deux joueur le de placement de raquette de peut faire que dans deux sens
+                		 if (players[2].state == RacketController.State.GOING_LEFT)
+                         	players[2].state = RacketController.State.IDLE;
+                         break;
+                	}
+                    if (players[0].state == RacketController.State.GOING_LEFT)
+                    	players[0].state = RacketController.State.IDLE;
                     break;
-                case D:
-                    if (playerA.state == RacketController.State.GOING_RIGHT)
-                        playerA.state = RacketController.State.IDLE;
+                case D:   
+                	if(players.length>2) {
+               		 if (players[2].state == RacketController.State.GOING_RIGHT)
+                        	players[2].state = RacketController.State.IDLE;
+                        break;
+               	    }
+                    if (players[0].state == RacketController.State.GOING_RIGHT)
+                    	players[0].state = RacketController.State.IDLE;
                     break;
                 case UP:
-                    if (playerB.state == RacketController.State.GOING_UP)
-                        playerB.state = RacketController.State.IDLE;
+                    if (players[1].state == RacketController.State.GOING_UP)
+                    	players[1].state = RacketController.State.IDLE;
                     break;
                 case DOWN:
-                    if (playerB.state == RacketController.State.GOING_DOWN)
-                        playerB.state = RacketController.State.IDLE;
+                    if (players[1].state == RacketController.State.GOING_DOWN)
+                    	players[1].state = RacketController.State.IDLE;
                     break;
                 case LEFT:
-                    if (playerB.state == RacketController.State.GOING_LEFT)
-                        playerB.state = RacketController.State.IDLE;
+                	if(players.length>2) {
+                		if(players.length==4) {
+                			 if (players[3].state == RacketController.State.GOING_LEFT)
+                                	players[3].state = RacketController.State.IDLE;
+                		}
+                		 break;
+                  	}
+                    if (players[1].state == RacketController.State.GOING_LEFT)
+                    	players[1].state = RacketController.State.IDLE;
                     break;
                 case RIGHT:
-                    if (playerB.state == RacketController.State.GOING_RIGHT)
-                        playerB.state = RacketController.State.IDLE;
+                	if(players.length>2) {
+                		if(players.length==4) {
+                			if (players[3].state == RacketController.State.GOING_RIGHT)
+                               	players[3].state = RacketController.State.IDLE;
+                		}
+                        break;
+                  	}
+                    if (players[1].state == RacketController.State.GOING_RIGHT)
+                    	players[1].state = RacketController.State.IDLE;
                     break;
+                default:;
 
             }
         });
-
     }
+
     
 
 }

@@ -30,7 +30,7 @@ public class SettingsView extends View{ // Classe similaire à GameView.java & M
     public SettingsView(Court court, Pane root, double scale, SceneHandler sceneHandler) {
         super(court, root, scale, sceneHandler);
 
-        root.setMinWidth(court.getWidth() * scale + 2 * getXMargin());
+        root.setMinWidth(court.getWidth() * scale + 2 * getMargin());
         root.setMinHeight(court.getHeight() * scale);
 
         reglages = new Text();
@@ -68,27 +68,27 @@ public class SettingsView extends View{ // Classe similaire à GameView.java & M
         raquetteSmall.setLayoutX(((court.getWidth() / 2) * scale) - 80);
         raquetteSmall.setLayoutY(250);
         raquetteSmall.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
-        raquetteSmall.setOnAction(event -> {MenuView.activateSmall(); sceneHandler.switchToGameR(getRoot(), 75.0); makePauseFalse(); });
+        raquetteSmall.setOnAction(event -> {PlayerNumber.activateSmall(); /*sceneHandler.switchToGameR(getRoot(), 75.0); makePauseFalse();*/ });
 
         raquetteMedium = new Button();
         raquetteMedium.setText("Medium");
         raquetteMedium.setLayoutX(((court.getWidth() / 2) * scale) + 11);
         raquetteMedium.setLayoutY(250);
         raquetteMedium.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
-        raquetteMedium.setOnAction(event -> {MenuView.activateMedium();sceneHandler.switchToGameR(getRoot(), 100.0); makePauseFalse(); });
+        raquetteMedium.setOnAction(event -> {PlayerNumber.activateMedium();/*sceneHandler.switchToGameR(getRoot(), 100.0); makePauseFalse();*/ });
 
         raquetteLarge = new Button();
         raquetteLarge.setText("Large");
         raquetteLarge.setLayoutX(((court.getWidth() / 2) * scale) + 120);
         raquetteLarge.setLayoutY(250);
         raquetteLarge.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
-        raquetteLarge.setOnAction(event -> {MenuView.activateLarge(); sceneHandler.switchToGameR(getRoot(), 150.0); makePauseFalse(); raquetteLarge.setStyle("-fx-background-color: #00ff00"); });
+        raquetteLarge.setOnAction(event -> {PlayerNumber.activateLarge(); /*sceneHandler.switchToGameR(getRoot(), 150.0); makePauseFalse(); raquetteLarge.setStyle("-fx-background-color: #00ff00");*/ });
 
         //on change la coleur du bouton qui change la taille de la raquette pour que ca soit plus clair quelle taille est actuellement choisie
 
-        if (MenuView.getRacketSmall()) raquetteSmall.setStyle("-fx-background-color: #FDFCCB");
-        else if(MenuView.getRacketMedium()) raquetteMedium.setStyle("-fx-background-color: #FDFCCB");
-        else if (MenuView.getRacketLarge()) raquetteLarge.setStyle("-fx-background-color: #FDFCCB");
+        if (PlayerNumber.getRacketSmall()) raquetteSmall.setStyle("-fx-background-color: #FDFCCB");
+        else if(PlayerNumber.getRacketMedium()) raquetteMedium.setStyle("-fx-background-color: #FDFCCB");
+        else if (PlayerNumber.getRacketLarge()) raquetteLarge.setStyle("-fx-background-color: #FDFCCB");
 
 
         getRoot().getChildren().addAll(reglages, exit, son, tailleRaquette, raquetteSmall, raquetteMedium, raquetteLarge); // On ajoute le title et les boutons aux éléments

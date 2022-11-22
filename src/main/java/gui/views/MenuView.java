@@ -1,8 +1,27 @@
 package gui.views;
 
+
+
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+
+
+import javafx.scene.control.MenuItem;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+
 import gui.SceneHandler;
 import gui.View;
+import javafx.animation.AnimationTimer;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
@@ -16,12 +35,7 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
     private final Button settings;
     private final Button shutdown;
 
-    //booleans pour voir laquelle taille est choisie
-    private static boolean racketSmall = false;
-
-    private static boolean racketMedium = true; //par defaut on a une raquette de taille medium
-
-    private static boolean racketLarge = false;
+ 
 
 
 
@@ -35,19 +49,31 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
      */
     public MenuView(Court court, Pane root, double scale, SceneHandler sceneHandler) {
         super(court, root, scale, sceneHandler);
-
-        root.setMinWidth(court.getWidth() * scale + 2 * getXMargin());
-        root.setMinHeight(court.getHeight() * scale);
+        Image image=new Image(MenuView.class.getResourceAsStream("./menu3bg.jpg"));
+        ImageView backg=new ImageView(image);
+        backg.setFitWidth(root.getMinWidth());
+        backg.setFitHeight(root.getMinHeight());
+       
+        
 
         title = new Text(); // On créer l'objet Text pour pouvoir l'afficher
-        title.setX(((court.getWidth() / 2) * scale) - 20);
-        title.setY(60);
+        title.setLayoutX(((court.getWidth() / 2) * scale) - 200);
+        title.setLayoutY(150);
         title.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 50));
         title.setFill(Color.BLACK);
         title.setText("Pong!");
 
         start = new Button("Start");
         start.setLayoutX(((court.getWidth() / 2) * scale) - 80);
+
+        start.setLayoutY(court.getHeight() / 2 * scale );
+        start.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 50));
+        start.setOnMouseClicked(event -> sceneHandler.switchtoNbreJoueur(getRoot())); // Lorsqu'on appuie sur le bouton, cela
+        start.setOnMouseEntered(event-> start.setTextFill(Color.RED));
+        start.setOnMouseExited(event-> start.setTextFill(Color.BLACK));
+        start.setBackground(null);
+        
+      /*                                                                  // enclanche la méthode switchToGame()
         start.setLayoutY(((court.getHeight() / 2) * scale) - 60);
         start.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
         start.setOnAction(event -> {sceneHandler.switchToGameRbis(getRoot(),racketSmall, racketMedium,racketLarge); makePauseFalse();}); // Lorsqu'on appuie sur le bouton, cela
@@ -59,56 +85,39 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
         startRobot.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
         startRobot.setOnAction(event -> sceneHandler.switchToGameRobot(getRoot())); // Lorsqu'on appuie sur le bouton, cela
                                                                          // enclanche la méthode switchToGame()
-
+*/
         settings = new Button("Settings");
         settings.setLayoutX(((court.getWidth() / 2) * scale) - 80);
-        settings.setLayoutY(((court.getHeight() -190)));
-        settings.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
-        settings.setOnAction(event -> sceneHandler.switchToSettings(getRoot())); // Lorsqu'on appuie sur le bouton, cela
+        settings.setLayoutY(court.getHeight()/2+100);
+        settings.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 50));
+        settings.setOnMouseClicked(event -> sceneHandler.switchToSettings(getRoot())); // Lorsqu'on appuie sur le bouton, cela
+        settings.setOnMouseEntered(event-> settings.setTextFill(Color.RED));
+        settings.setOnMouseExited(event-> settings.setTextFill(Color.BLACK));
+        settings.setBackground(null);
         // enclanche la méthode switchToGame()
         shutdown = new Button("Quitter");
         shutdown.setLayoutX(((court.getWidth() / 2) * scale) - 80);
-        shutdown.setLayoutY(((court.getHeight() - 100)));
-        shutdown.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
-        shutdown.setOnAction(event -> System.exit(0));
-        getRoot().getChildren().addAll(title, start, settings, startRobot,shutdown); // On ajoute le title
+        shutdown.setLayoutY(court.getHeight()/2+200);
+        shutdown.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 50));
+        shutdown.setBackground(null);
+        shutdown.setOnMouseEntered(event-> shutdown.setTextFill(Color.RED));
+        shutdown.setOnMouseExited(event-> shutdown.setTextFill(Color.BLACK));
+        shutdown.setOnMouseClicked(event->System.exit(0));
+        
+        
+
+        getRoot().getChildren().addAll(backg, start, settings,shutdown); // On ajoute le title
+       
 
         // et les boutons aux éléments du Pane
 
     }
+
     // Test
 
-    //pour sauvgarder la taille de la raquette choisi si le jouer revient au start
-    public static void activateSmall(){
-        racketSmall = true;
-        racketMedium = false;
-        racketLarge = false;
-    }
 
-    public static void activateMedium(){
-        racketMedium = true;
-        racketSmall = false;
-        racketLarge = false;
-    }
-
-    public static void activateLarge(){
-        racketLarge = true;
-        racketSmall = false;
-        racketMedium = false;
-    }
-
-    public static boolean getRacketSmall(){
-        return racketSmall;
-    }
-
-    public static boolean getRacketMedium(){
-        return racketMedium;
-    }
-
-    public static boolean getRacketLarge(){
-        return racketLarge;
-    }
 
 
 
 }
+
