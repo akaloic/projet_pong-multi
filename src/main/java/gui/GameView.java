@@ -1,7 +1,6 @@
 package gui;
 
 import javafx.animation.AnimationTimer;
-
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -27,9 +26,7 @@ public class GameView {
     private final Text score;
     private final Text timeDisplay; //pour afficher le timer
     private final Timer t;
-    
     private static int timeLeft  = 10;
-    
     private Button continu;
     private final AnimationTimer timer=new AnimationTimer() {
         long last = 0;
@@ -57,7 +54,6 @@ public class GameView {
             	this.stop();            //on arrete le timer pour faire une pause du scene
             	this.last=0;            // comme le temps continue de s'avancer , il faut réunitialiser last en 0 pour qu'il soit réinitialisé par la valeur de now pour que le jeu repart au meme moment que là où on arrete
             	gameRoot.getChildren().add(continu); // une fois le jeu arreter on fait afficher sur la scene un bouton qui permet de relancer le jeu
-            	
             }                    
         }
     };
@@ -140,7 +136,6 @@ public class GameView {
         continu.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
         continu.setOnAction(event->animate());
         gameRoot.getChildren().addAll(racketA, racketB, ball, score, timeDisplay); // On ajoute le score aux éléments du Pane
-
         timerStart(task);
     }
    
@@ -151,15 +146,9 @@ public class GameView {
     	   Player.pauseORcontinue();  // et on met aussi le champs boolean pause en false pour préparer à la prochaine demande de pause
        }
        timer.start();  // on lance le timer    
-        
     }
     
     public void timerStart(TimerTask task) {
-        t.scheduleAtFixedRate(task, 1000, 1000); 
-        /*
-         * task: It is the task that is to be scheduled.
-            delay: Le délais qu'il faut avant de commencer le jeu
-            period: It is the time between the successive task of execution, it is in milliseconds.
-         */
-   }    
+    	t.scheduleAtFixedRate(task, 1000, 1000);
+    }
 }
