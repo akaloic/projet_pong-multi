@@ -19,44 +19,47 @@ public class GameRobotView extends View {
     private final Circle ball;
     private final Text score;
     private Button continu;
-    private AnimationTimer timer =
-    	new AnimationTimer() {
-            long last = 0;
+    private AnimationTimer timer = new AnimationTimer() {
+        long last = 0;
 
-            @Override
-            public void handle(long now) {
-                if (last == 0) { // ignore the first tick, just compute the first deltaT
-                    last = now;
-                    return;
-                }
-                ((CourtRobot) getCourt()).update((now - last) * 1.0e-9); // convert nanoseconds to seconds
+        @Override
+        public void handle(long now) {
+            if (last == 0) { // ignore the first tick, just compute the first deltaT
                 last = now;
-                racketA.setY(getCourt().getRacketA() * getScale());
-                racketA.setX(getMargin() - getRacketThickness()+getCourt().getRacketXA());
-                racketB.setY(getCourt().getBallY() * getScale() + getMargin() - 65);
-                racketB.setX(getCourt().getWidth() * getScale() + getMargin());
-                /*
-                racketB.setY(court.getRacketB() * scale);
-                racketB.setX(court.getWidth() * scale + xMargin + court.getRacketXB());
-               
-                ball.setCenterX(court.getBallX() * scale + xMargin);
-                ball.setCenterY(court.getBallY() * scale);
-                */
+                return;
+            }
+            ((CourtRobot) getCourt()).update((now - last) * 1.0e-9); // convert nanoseconds to seconds
+            last = now;
+            racketA.setY(getCourt().getRacketA() * getScale());
+            racketA.setX(getMargin() - getRacketThickness() + getCourt().getRacketXA());
+            racketB.setY(getCourt().getBallY() * getScale() + getMargin() - 65);
+            racketB.setX(getCourt().getWidth() * getScale() + getMargin());
+            /*
+             * racketB.setY(court.getRacketB() * scale);
+             * racketB.setX(court.getWidth() * scale + xMargin + court.getRacketXB());
+             * 
+             * ball.setCenterX(court.getBallX() * scale + xMargin);
+             * ball.setCenterY(court.getBallY() * scale);
+             */
 
-                ball.setCenterX(getCourt().getBallX() * getScale() + getMargin());
-                ball.setCenterY(getCourt().getBallY() * getScale());
-                score.setText(getCourt().getScoreA() + " - " + getCourt().getScoreB()); // On ajoute le score à animate() pour que
-                                                                              // le texte s'actualise quand un des
-                                                                              // joueurs marque
-                
-                if(getPause()) {     // si le champs boolean pause est vrai 
-                	this.stop();            //on arrete le timer pour faire une pause du scene
-                	this.last=0;            // comme le temps continue de s'avancer , il faut réunitialiser last en 0 pour qu'il soit réinitialisé par la valeur de now pour que le jeu repart au meme moment que là où on arrete
-                	getRoot().getChildren().add(continu); // une fois le jeu arreter on fait afficher sur la scene un bouton qui permet de relancer le jeu
-                	
-                }
-            }};
-  
+            ball.setCenterX(getCourt().getBallX() * getScale() + getMargin());
+            ball.setCenterY(getCourt().getBallY() * getScale());
+            score.setText(getCourt().getScoreA() + " - " + getCourt().getScoreB()); // On ajoute le score à animate()
+                                                                                    // pour que
+            // le texte s'actualise quand un des
+            // joueurs marque
+
+            if (getPause()) { // si le champs boolean pause est vrai
+                this.stop(); // on arrete le timer pour faire une pause du scene
+                this.last = 0; // comme le temps continue de s'avancer , il faut réunitialiser last en 0 pour
+                               // qu'il soit réinitialisé par la valeur de now pour que le jeu repart au meme
+                               // moment que là où on arrete
+                getRoot().getChildren().add(continu); // une fois le jeu arreter on fait afficher sur la scene un bouton
+                                                      // qui permet de relancer le jeu
+
+            }
+        }
+    };
 
     public GameRobotView(Court court, Pane root, double scale, SceneHandler sceneHandler) {
         super(court, root, scale, sceneHandler);
@@ -67,20 +70,19 @@ public class GameRobotView extends View {
         score.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
         score.setFill(Color.BLACK);
         score.setText(getCourt().getScoreA() + " - " + getCourt().getScoreB());
-       
 
         racketA = new Rectangle();
         racketA.setHeight(court.getRacketSize() * scale);
         racketA.setWidth(getRacketThickness());
-        racketA.setFill(Color.RED); //joueur 
-        
-        racketA.setX(getMargin() - getRacketThickness()+court.getRacketXA());
+        racketA.setFill(Color.RED); // joueur
+
+        racketA.setX(getMargin() - getRacketThickness() + court.getRacketXA());
         racketA.setY(court.getRacketA() * scale);
-        
+
         racketB = new Rectangle();
         racketB.setHeight(court.getRacketSize() * scale);
         racketB.setWidth(getRacketThickness());
-        racketB.setFill(Color.BLUE); //le robot
+        racketB.setFill(Color.BLUE); // le robot
 
         racketB.setX(court.getWidth() * scale + getMargin());
         racketB.setY(court.getBallY() * scale);
@@ -91,18 +93,20 @@ public class GameRobotView extends View {
 
         ball.setCenterX(court.getBallX() * scale + getMargin());
         ball.setCenterY(court.getBallY() * scale);
-        continu=new Button("Continue");
+        continu = new Button("Continue");
         continu.setLayoutX(((court.getWidth() / 2) * scale) - 80);
         continu.setLayoutY(((court.getHeight() / 2) * scale) - 60);
         continu.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
-        continu.setOnAction(event->animate());
+        continu.setOnAction(event -> animate());
         getRoot().getChildren().addAll(racketA, racketB, ball, score); // On ajoute le score aux éléments du Pane
     }
 
     public void animate() {
-    	if(getRoot().getChildren().contains(continu)) {  // si on reprend / commence la partie il faut vérifier si le button continue existe
-        	getRoot().getChildren().remove(continu); // si oui , on enleve le bouton 
-     	    pauseORcontinue();  // et on met aussi le champs boolean pause en false pour préparer à la prochaine demande de pause
+        if (getRoot().getChildren().contains(continu)) { // si on reprend / commence la partie il faut vérifier si le
+                                                         // button continue existe
+            getRoot().getChildren().remove(continu); // si oui , on enleve le bouton
+            pauseORcontinue(); // et on met aussi le champs boolean pause en false pour préparer à la prochaine
+                               // demande de pause
         }
         timer.start();
     }
