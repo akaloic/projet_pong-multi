@@ -1,14 +1,18 @@
 package gui;
 
-import javafx.scene.paint.Color;
-import javafx.event.ActionEvent;
-import javafx.scene.Node;
+import gui.entities.Player;
+import gui.views.GameRobotView;
+import gui.views.GameView;
+import gui.views.MenuView;
+import gui.views.SettingsView;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.Court;
-import model.CourtRobot;
+import model.courts.CourtMulti;
+import model.courts.CourtRobot;
 import javafx.scene.control.Button;
 
 public class SceneHandler { // Cette classe permet de manipuler les scènes courrantes sans à avoir besoin de
@@ -16,6 +20,8 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
     private Stage stage;
     private Scene scene;
     private Pane root;
+    private View view;
+    private Court court;
     private Player playerA, playerB;
     public static String bgcolor = "#FFFFFF"; // Couleur du background en hexadecimal en blanc par défaut
     public static Color itemcolor = Color.BLACK;
@@ -43,20 +49,20 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
     }
 
     public void setGameScene() {
-        var court = new Court(playerA, playerB, 1000, 600); // Extrait du code qu'il y avait dans App.java pour afficher
-                                                            // le jeu.
-        var gameView = new GameView(court, root, 1.0);
+        court = new CourtMulti(playerA, playerB, 1000, 600); // Extrait du code qu'il y avait dans App.java pour
+                                                             // afficher
+                                                             // le jeu.
+        var gameView = new GameView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
         gameView.animate();
     }
 
     public void setMenuScene() {
-        var court = new Court(playerA, playerB, 1000, 600);
-        var menuView = new MenuView(court, root, 1.0, this);
+        court = new CourtMulti(playerA, playerB, 1000, 600);
+        view = new MenuView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
-        menuView.animate();
     }
 
     public void paneColor() {
@@ -71,18 +77,51 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
     public void switchToGame(Pane menuRoot) {
         menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
                                         // afficher le jeu sans problèmes.
-        var court = new Court(playerA, playerB, 1000, 600);
+        court = new CourtMulti(playerA, playerB, 1000, 600);
         this.paneColor();
-        var gameView = new GameView(court, root, 1.0);
+        view = new GameView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
-        gameView.animate();
+        ((GameView) view).animate();
+    }
+
+    public void switchToGameR(Pane menuRoot, double racketSize) { // on utilise cette methode pour qu'on puisse modifier
+                                                                  // la taille de la raquette
+        menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
+        // afficher le jeu sans problèmes.
+        court = new CourtMulti(playerA, playerB, 1000, 600, racketSize);
+        view = new GameView(court, root, 1.0, this);
+        stage.setScene(scene);
+        stage.show();
+        ((GameView) view).animate();
+    }
+
+    public void switchToGameRbis(Pane menuRoot, boolean small, boolean medium, boolean large) { // on utilise cette
+                                                                                                // methode pour qu'on
+                                                                                                // puisse modifier la
+                                                                                                // taille de la raquette
+                                                                                                // + sauvgarde la
+                                                                                                // derniere taille
+                                                                                                // choisie si le jouer
+                                                                                                // revient au start
+        menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
+        // afficher le jeu sans problèmes.
+        if (small)
+            court = new CourtMulti(playerA, playerB, 1000, 600, 75.0);
+        else if (medium)
+            court = new CourtMulti(playerA, playerB, 1000, 600);
+        else if (large)
+            court = new CourtMulti(playerA, playerB, 1000, 600, 150.0);
+        view = new GameView(court, root, 1.0, this);
+        stage.setScene(scene);
+        stage.show();
+        ((GameView) view).animate();
     }
 
     public void switchToGameRobot(Pane menuRoot) {
         menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
                                         // afficher le jeu sans problèmes.
-        var court = new CourtRobot(playerA, 1000, 600);
+        court = new CourtRobot(playerA, 1000, 600);
         this.paneColor();
         var gameView = new GameRobotView(court, root, 1.0, this);
         stage.setScene(scene);
@@ -92,32 +131,29 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
 
     public void switchToSettings(Pane menuRoot) { // Méthode permettant de passer de menu à Settings
         menuRoot.getChildren().clear();
-        var court = new Court(playerA, playerB, 1000, 600);
         this.paneColor();
-        var settingsView = new SettingsView(court, root, 1.0, this);
+        var court = new CourtMulti(playerA, playerB, 1000, 600);
+        view = new SettingsView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
-        settingsView.animate();
     }
 
     public void refreshSettings(Pane settingsRoot) { // SettingsToSettings
         settingsRoot.getChildren().clear();
-        var court = new Court(playerA, playerB, 1000, 600);
+        var court = new CourtMulti(playerA, playerB, 1000, 600);
         this.paneColor();
         var settingsView = new SettingsView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
-        settingsView.animate();
     }
 
     public void switchToMenu(Pane settingsRoot) { // Méthode permettant de passer de Settings à menu
         settingsRoot.getChildren().clear();
-        var court = new Court(playerA, playerB, 1000, 600);
+        court = new CourtMulti(playerA, playerB, 1000, 600);
         this.paneColor();
-        var menuView = new MenuView(court, root, 1.0, this);
+        view = new MenuView(court, root, 1.0, this);
         stage.setScene(scene);
         stage.show();
-        menuView.animate();
     }
 
     public String switchSonButton(Button b) {

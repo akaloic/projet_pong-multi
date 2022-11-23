@@ -2,13 +2,14 @@ package model;
 
 import java.util.Random;
 import javafx.scene.media.AudioClip;
+import sound.AudioBank;
 
 public class Court {
     // instance parameters
-    private final RacketController playerA, playerB;
+    private final RacketController playerA;
     private final double width, height; // m
     private final double racketSpeed = 300.0; // m/s
-    private final double racketSize = 100.0; // m
+    private double racketSize = 100.0; // m
     private final double ballRadius = 10.0; // m
     // instance state
     private double racketA; // m
@@ -22,15 +23,101 @@ public class Court {
                                      // point;
     private double coeffSpeedA = 0.2; // variable qui permet ralentir la vitesse de raquetteA avant chaque déplacement
                                       // de raquette;
-    private double coeffSpeedB = 0.2;// variable qui permet ralentir la vitesse de raquetteB avant chaque déplacement
-                                     // de raquette;
+    private double coeffSpeedB = 0.2;
 
-    public Court(RacketController playerA, RacketController playerB, double width, double height) {
+    public Court(RacketController playerA, double width, double height) {
         this.playerA = playerA;
-        this.playerB = playerB;
         this.width = width;
         this.height = height;
-        reset();
+
+    }
+
+    public Court(RacketController playerA, double width, double height, double racketSize) { // nouveau constructeur
+                                                                                             // pour qu'on puisse
+                                                                                             // modifier la taille de la
+                                                                                             // raquette
+        this.playerA = playerA;
+        this.width = width;
+        this.height = height;
+        this.racketSize = racketSize;
+
+    }
+
+    private double eitherInt(double a, double b) {
+        Random rd = new Random();
+        int c = rd.nextInt(2);
+        if (c == 1) {
+            return a;
+        } else {
+            return b;
+        }
+    }
+
+    public void SpeedUp(double time) { // on augmente la vitesse par rapport le temps
+        this.coeffSpeedA += time;
+        this.coeffSpeedB += time;
+    }
+
+    public boolean updateBall(double deltaT) {
+        // first, compute possible next position if nothing stands in the way
+        double nextBallX = ballX + deltaT * ballSpeedX;
+        double nextBallY = ballY + deltaT * ballSpeedY;
+        // next, see if the ball would meet some obstacle
+        if (nextBallY < 0 || nextBallY > height) { // Rebonds plafond / sol
+            AudioBank.hit.play();
+            ballSpeedY = -ballSpeedY;
+            nextBallY = ballY + deltaT * ballSpeedY;
+        }
+
+        if ((nextBallX > racketXA && nextBallX < racketXA + 10.0 && nextBallY > racketA
+                && nextBallY < racketA + racketSize) // Rebond raquette gauche
+                || (nextBallX > width + racketXB && nextBallX < width + racketXB + 10.0 && nextBallY > racketB
+                        && nextBallY < racketB + racketSize)) { // Rebond raquette droite
+            if ((nextBallY <= racketA + racketSize + 15.0 && nextBallY > racketA + racketSize - 15.0)
+                    || (nextBallY <= racketB + racketSize + 15.0 && nextBallY > racketB + racketSize - 15.0)) { // Rebond
+                                                                                                                // sur
+                                                                                                                // les
+                                                                                                                // bords
+                AudioBank.hit.play();
+                ballSpeedX *= -1;
+                ballSpeedY *= -1;
+                ballSpeedX = ballSpeedX;
+            } else {
+                AudioBank.hit.play();
+                ballSpeedX = -ballSpeedX;
+            }
+            nextBallX = ballX + deltaT * ballSpeedX;
+        } else if (nextBallX < 0) {
+            AudioBank.score.play();
+            agetscore = false;
+            scoreB++;
+            return true; // Quand la balle sort du jeu du côté droit, on donne un point au joueur B
+        } else if (nextBallX > width) {
+            AudioBank.score.play();
+            agetscore = true;
+            scoreA++;
+            return true; // Quand la balle sort du jeu du côté gauche, on donne un point au joueur A
+        }
+        ballX = nextBallX;
+        ballY = nextBallY;
+        return false;
+    }
+
+    public void reset() {
+        this.racketA = height / 2;
+        this.racketB = height / 2;
+        this.ballSpeedX = (agetscore) ? -200.0 : 200; // la balle va dirigé vers celui qui a marqué le point
+        this.ballSpeedY = eitherInt(-200.0, 200.0); // A chaque reset de la balle, on détermine aléatoirement sa
+                                                    // trajectoire entre vers le haut ou vers le bas.
+        this.ballX = width / 2;
+        this.ballY = height / 2;
+        this.racketXB = 0;
+        this.racketXA = 0;
+
+    }
+
+    public double getBallRadius() {
+        return ballRadius;
     }
 
     public double getWidth() {
@@ -77,134 +164,48 @@ public class Court {
         return scoreB;
     }
 
-    private double eitherInt(double a, double b) { // Fonction permettant de tirer au hasard entre 2 doubles donnés en
-                                                   // argument
-        Random rd = new Random();
-        int c = rd.nextInt(2);
-        if (c == 1) {
-            return a;
-        } else {
-            return b;
-        }
+    public RacketController getPlayerA() {
+        return playerA;
     }
 
-    public void update(double deltaT) {
-        SpeedUp(deltaT); // fonction qui augmente la coeff de vitesse
-        switch (playerA.getState()) {
-            case GOING_UP:
-                racketA -= this.racketSpeed * deltaT * this.coeffSpeedA;
-                if (racketA < 0.0)
-                    racketA = 0.0;
-                break;
-            case IDLE:
-                this.coeffSpeedA = 0.2;// lorsque la raquette devient immobile, la vitesse est aussi réinitialiser;
-                break;
-            case GOING_DOWN:
-                racketA += this.racketSpeed * deltaT * this.coeffSpeedA;
-                if (racketA + racketSize > height)
-                    racketA = height - racketSize;
-                break;
-            case GOING_LEFT:
-                racketXA -= racketSpeed * deltaT * this.coeffSpeedA;
-                if (racketXA < 0.0)
-                    racketXA = 0.0;
-                break;
-            case GOING_RIGHT:
-
-                racketXA += this.racketSpeed * deltaT * this.coeffSpeedA;
-                if (racketXA > width / 2)
-                    racketXA = width / 2;
-                break;
-
-        }
-
-        switch (playerB.getState()) {
-            case GOING_UP:
-                racketB -= this.racketSpeed * deltaT * this.coeffSpeedB;
-                if (racketB < 0.0)
-                    racketB = 0.0;
-                break;
-            case IDLE:
-                this.coeffSpeedB = 0.2;// lorsque la raquette devient immobile, la vitesse est aussi réinitialiser;
-                break;
-            case GOING_DOWN:
-                racketB += this.racketSpeed * deltaT * this.coeffSpeedB;
-                if (racketB + racketSize > height)
-                    racketB = height - racketSize;
-                break;
-            case GOING_LEFT:
-                racketXB -= this.racketSpeed * deltaT * this.coeffSpeedB;
-                if (racketXB < -(width / 2)) {
-                    racketXB = -(width / 2);
-                }
-                break;
-            case GOING_RIGHT:
-                racketXB += this.racketSpeed * deltaT * this.coeffSpeedB;
-                if (racketXB > 0.0) {
-                    racketXB = 0.0;
-                }
-
-        }
-        if (updateBall(deltaT))
-            reset();
+    public double getRacketSpeed() {
+        return racketSpeed;
     }
 
-    public void SpeedUp(double time) { // on augmente la vitesse par rapport le temps
-        this.coeffSpeedA += time;
-        this.coeffSpeedB += time;
+    public void setRacketA(double racketA) {
+        this.racketA = racketA;
     }
 
-    /**
-     * @return true if a player lost
-     */
-    private boolean updateBall(double deltaT) {
-        // first, compute possible next position if nothing stands in the way
-        double nextBallX = ballX + deltaT * ballSpeedX;
-        double nextBallY = ballY + deltaT * ballSpeedY;
-        // next, see if the ball would meet some obstacle
-        if (nextBallY < 0 || nextBallY > height) { // Rebonds plafond / sol
-            ballSpeedY = -ballSpeedY;
-            nextBallY = ballY + deltaT * ballSpeedY;
-            AudioBankModel.hit.play();
-        }
-
-        if ((nextBallX > racketXA && nextBallX < racketXA + 10.0 && nextBallY > racketA
-                && nextBallY < racketA + racketSize) // Rebond raquette gauche
-                || (nextBallX > width + racketXB && nextBallX < width + racketXB + 10.0 && nextBallY > racketB
-                        && nextBallY < racketB + racketSize)) { // Rebond raquette droite
-            ballSpeedX = -ballSpeedX;
-            nextBallX = ballX + deltaT * ballSpeedX;
-            AudioBankModel.hit.play();
-        } else if (nextBallX < 0) {
-            agetscore = false;
-            scoreB++;
-            AudioBankModel.score.play();
-            return true; // Quand la balle sort du jeu du côté droit, on donne un point au joueur B
-        } else if (nextBallX > width) {
-            agetscore = true;
-            scoreA++;
-            AudioBankModel.score.play();
-            return true; // Quand la balle sort du jeu du côté gauche, on donne un point au joueur A
-        }
-        ballX = nextBallX;
-        ballY = nextBallY;
-        return false;
+    public void setRacketXA(double racketXA) {
+        this.racketXA = racketXA;
     }
 
-    public double getBallRadius() {
-        return ballRadius;
+    public void setRacketB(double racketB) {
+        this.racketB = racketB;
     }
 
-    void reset() {
-        this.racketA = height / 2;
-        this.racketB = height / 2;
-        this.ballSpeedX = (agetscore) ? -200.0 : 200; // la balle va dirigé vers celui qui a marqué le point
-        this.ballSpeedY = eitherInt(-200.0, 200.0); // A chaque reset de la balle, on détermine aléatoirement sa
-                                                    // trajectoire entre vers le haut ou vers le bas.
-        this.ballX = width / 2;
-        this.ballY = height / 2;
-        this.racketXB = 0;
-        this.racketXA = 0;
-
+    public void setRacketXB(double racketXB) {
+        this.racketXB = racketXB;
     }
+
+    public double getCoefB() {
+        return coeffSpeedB;
+    }
+
+    public void setCoefB(double coef) {
+        coeffSpeedB = coef;
+    }
+
+    public double getCoefA() {
+        return coeffSpeedA;
+    }
+
+    public void setCoefA(double coef) {
+        coeffSpeedA = coef;
+    }
+
+    public void setRacketSize(double size) {
+        this.racketSize = size;
+    }
+
 }
