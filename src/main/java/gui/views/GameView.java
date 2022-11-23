@@ -168,7 +168,7 @@ public class GameView extends View{
 
     }
     public void animate() {
-        if(getRoot().getChildren().contains(continu)) {  // si on reprend / commence la partie il faut vérifier si le button continue existe
+        if(getRoot().getChildren().contains(continu)) {  // si on reprend ou on commence la partie il faut vérifier si le button continue existe
         	getRoot().getChildren().remove(continu); // si oui , on enleve les boutons
             getRoot().getChildren().remove(menu);
             pauseORcontinue();  // et on met aussi le champs boolean pause en false pour préparer à la prochaine demande de pause

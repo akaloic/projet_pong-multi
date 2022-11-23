@@ -138,7 +138,7 @@ public class Court {
         double nextBallY = ballY + deltaT * ballSpeedY;
        
         // next, see if the ball would meet some obstacle
-        if ( nextBallY > height-5.00) { // Rebonds plafond / sol
+        if ( nextBallY > height-5.00) { // Rebonds  sol
             ballSpeedY = -ballSpeedY;
             nextBallY = ballY + deltaT * ballSpeedY;
          /*   System.out.println(nextBallX);
