@@ -21,6 +21,15 @@ public class PlayerNumber extends View {
 	private Button menus;
 	private Button confirmer;
 	private Button annuler;
+	private Button AI1=new Button("AI");
+	private Button AI2=new Button("AI");
+	private Button AI3=new Button("AI");
+	private Button AI4=new Button("AI");
+	
+	private Button HUMAIN1=new Button("Humain");
+	private Button HUMAIN2=new Button("Humain");
+	private Button HUMAIN3=new Button("Humain");
+	private Button HUMAIN4=new Button("Humain");
 	private Text text;
 	private Text text2;
 	private Text text3=new Text();
@@ -47,9 +56,15 @@ public class PlayerNumber extends View {
 			  switch(nbre) {
 			    case 4:text6.setText("Player4 humain/AI ?" );break;
 			    case 3:text5.setText("Player3 humain/AI ?" );text6.setText(null); break;
-			    case 2:text4.setText("Player2 humain/AI ?" );text5.setText(null);text6.setText(null); break;
+			    case 2:text4.setText("Player2 humain/AI ?" );text.setText(null);text6.setText(null); break;
 			    case 1:text3.setText("Player1 humain/AI ?" );text4.setText(null);text5.setText(null);text6.setText(null); break;
 			  }
+			  switch(nbre){
+				case 1:getRoot().getChildren().removeAll(HUMAIN2,HUMAIN3,HUMAIN4,AI2,AI3,AI4);break;
+				case 2:getRoot().getChildren().addAll(HUMAIN2,AI2);getRoot().getChildren().removeAll(HUMAIN3,HUMAIN4,AI3,AI4);break;
+				case 3:getRoot().getChildren().addAll(HUMAIN3,AI3);getRoot().getChildren().removeAll(HUMAIN4,AI4);break;
+				case 4:getRoot().getChildren().addAll(HUMAIN4,AI4);break;
+				}
 			  
 		}
 	};
@@ -92,19 +107,63 @@ public class PlayerNumber extends View {
 		text3.setLayoutX(centerX-100);
 		text3.setLayoutY(centerY+spacey);
 		text3.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
-		
-		spacey+=20;
+		AI1.setLayoutX(centerX+160);
+		AI1.setLayoutY(centerY+spacey-20);
+		AI1.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
+		AI1.setOnAction(event->{this.AI[0]=true;AI1.setDisable(true);HUMAIN1.setDisable(false);});
+		HUMAIN1.setLayoutX(centerX+160+40);
+		HUMAIN1.setDisable(true);
+		HUMAIN1.setLayoutY(centerY+spacey-20);
+		HUMAIN1.setOnAction(event->{this.AI[0]=false;HUMAIN1.setDisable(true);AI1.setDisable(false);});
+		HUMAIN1.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
+
+		spacey+=30;
 		text4.setLayoutX(centerX-100);
 		text4.setLayoutY(centerY+spacey);
 		text4.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
-		spacey+=20;
+		AI2.setLayoutX(centerX+160);
+		AI2.setLayoutY(centerY+spacey-20);
+		AI2.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
+		AI2.setOnAction(event->{this.AI[1]=true;AI2.setDisable(true);HUMAIN2.setDisable(false);});
+		HUMAIN2.setLayoutX(centerX+160+40);
+		HUMAIN2.setDisable(true);
+		HUMAIN2.setLayoutY(centerY+spacey-20);
+		HUMAIN2.setOnAction(event->{this.AI[1]=false;HUMAIN2.setDisable(true);AI2.setDisable(false);});
+		HUMAIN2.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
+
+
+
+		spacey+=30;
 		text5.setLayoutX(centerX-100);
 		text5.setLayoutY(centerY+spacey);
 		text5.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
-		spacey+=20;
+		AI3.setLayoutX(centerX+160);
+		AI3.setLayoutY(centerY+spacey-20);
+		AI3.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
+		AI3.setOnAction(event->{this.AI[2]=true;AI3.setDisable(true);HUMAIN3.setDisable(false);});
+		HUMAIN3.setLayoutX(centerX+160+40);
+		HUMAIN3.setDisable(true);
+		HUMAIN3.setLayoutY(centerY+spacey-20);
+		HUMAIN3.setOnAction(event->{this.AI[2]=false;HUMAIN3.setDisable(true);AI3.setDisable(false);});
+		HUMAIN3.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
+		
+		
+		
+		spacey+=30;
 		text6.setLayoutX(centerX-100);
 		text6.setLayoutY(centerY+spacey);
 		text6.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
+		AI4.setLayoutX(centerX+160);
+		AI4.setLayoutY(centerY+spacey-20);
+		AI4.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
+		AI4.setOnAction(event->{this.AI[3]=true;AI4.setDisable(true);HUMAIN4.setDisable(false);});
+		HUMAIN4.setLayoutX(centerX+160+40);
+		HUMAIN4.setDisable(true);
+		HUMAIN4.setLayoutY(centerY+spacey-20);
+		HUMAIN4.setOnAction(event->{this.AI[3]=false;HUMAIN4.setDisable(true);AI4.setDisable(false);});
+		HUMAIN4.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
+		
+		
 		this.confirmer=new Button();
 		confirmer.setText("Confirmer");
 		confirmer.setLayoutX(court.getWidth()/2-200);
@@ -119,7 +178,7 @@ public class PlayerNumber extends View {
 		annuler.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
 		annuler.setOnAction(event->getSceneHandler().switchToMenu(root));
 		
-		getRoot().getChildren().addAll(backg,text,plus,text2,menus,confirmer,annuler,text3,text4,text5,text6);
+		getRoot().getChildren().addAll(backg,text,plus,text2,menus,confirmer,annuler,text3,text4,text5,text6,AI1,HUMAIN1);
 		
 	}
 	private void incrementer() {
