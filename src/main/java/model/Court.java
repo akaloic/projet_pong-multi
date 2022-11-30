@@ -57,6 +57,8 @@ public class Court {
         this.coeffSpeedB+=time*2;
     }
 
+
+
     public boolean updateBall(double deltaT) {
         // first, compute possible next position if nothing stands in the way
         double nextBallX = ballX + deltaT * ballSpeedX;
@@ -78,6 +80,15 @@ public class Court {
         	ballSpeedX = -ballSpeedX*this.coeefSpeedBall;
             nextBallX = ballX + deltaT * ballSpeedX;
         }
+        /*
+        if (nextBallX>racketXA && nextBallX<racketXA+10.0 && nextBallY > racketYA && nextBallY < racketYA + racketSize) {
+            ballSpeedX = -ballSpeedX + incremente;
+        }
+        if (nextBallX > width - 110 && (nextBallY <= racketYB + racketSize && nextBallY >= racketYB)){
+            ballSpeedX = -ballSpeedX - incremente;
+        }
+         */
+
         else if (nextBallX < 0) {
         	agetscore=false; 
             scoreB++; return true; // Quand la balle sort du jeu du côté droit, on donne un point au joueur B

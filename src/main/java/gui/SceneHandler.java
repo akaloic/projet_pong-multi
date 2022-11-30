@@ -4,11 +4,8 @@ import java.nio.file.Paths;
 
 
 import gui.entities.Player;
-import gui.views.GameRobotView;
-import gui.views.GameView;
-import gui.views.MenuView;
-import gui.views.PlayerNumber;
-import gui.views.SettingsView;
+import gui.views.*;
+import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -188,8 +185,12 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
     	}
     }
 
-    
-
-
+    public void switchToPageWin(Pane settingRoot, String joueur, String typePartie){
+        settingRoot.getChildren().clear();
+        court = new CourtMulti(players, 1000, 600, court.getRacketSize());
+        view = new WinView(court, root, 1.0, this, joueur, typePartie);
+        stage.setScene(scene);
+        stage.show();
+    }
 }
 

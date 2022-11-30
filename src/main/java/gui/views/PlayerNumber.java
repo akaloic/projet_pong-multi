@@ -122,6 +122,7 @@ public class PlayerNumber extends View {
 		getRoot().getChildren().addAll(backg,text,plus,text2,menus,confirmer,annuler,text3,text4,text5,text6);
 		
 	}
+
 	private void incrementer() {
 		if(this.nbre<4) {
 			this.nbre++;
