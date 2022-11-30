@@ -45,7 +45,6 @@ public class GameRobotView extends View {
                 racketA.setX(getMargin() - getRacketThickness()+getCourt().getRacketXA());
                 //racketB.setY(getCourt().getRacketB() * getScale() + getMargin() - 65);  //ici racketB est AI
                 racketB.setX(getCourt().getWidth() * getScale() + getMargin());
-                System.out.println((getCourt().getHeight()-5.00)/2+" ensuite "+getCourt().getRacketB() * getScale() + getMargin());
                 if (getCourt().getRacketB() * getScale() + getMargin() - 65 > 500) racketB.setY(500);
                 else racketB.setY(getCourt().getRacketB() * getScale() + getMargin() - 65);  //ici racketB est AI
 
