@@ -82,7 +82,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         this.setPlayers(n);
         switch (n) {
             case 1:
-                this.switchToGameRobot(menuRoot);
+                this.switchToGameRobot(menuRoot, small, medium, large);
                 break;
             default:
                 this.switchToGameRbis(menuRoot, small, medium, large);
@@ -150,11 +150,16 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         ((GameView) view).animate();
     }
 
-    public void switchToGameRobot(Pane menuRoot) {
+    public void switchToGameRobot(Pane menuRoot,boolean small, boolean medium, boolean large ) {
         menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
                                         // afficher le jeu sans problèmes.
         this.paneColor();
-        court = new CourtRobot(this.players[0], 1000, 600);
+        if (small)
+            court = new CourtRobot(this.players[0], 1000, 600, 75.0);
+        else if (medium)
+            court = new CourtRobot(this.players[0], 1000, 600, 100.0);
+        else if (large)
+            court = new CourtRobot(this.players[0], 1000, 600, 150.0);
         var gameView = new GameRobotView(court, root, 1.0, this);
         ControlHandler controlHandler = new ControlHandler(players, this);
         controlHandler.getInput();

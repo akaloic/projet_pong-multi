@@ -6,8 +6,8 @@ import model.RacketController;
 public class CourtRobot extends Court{
 	private RacketController playerA;
     
-    public CourtRobot(RacketController playerA, double width, double height) {
-        super(width, height);
+    public CourtRobot(RacketController playerA, double width, double height, double racketSize) {
+        super(width, height, racketSize);
         this.playerA=playerA;
         reset();
     }

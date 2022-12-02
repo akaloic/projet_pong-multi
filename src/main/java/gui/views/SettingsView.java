@@ -146,34 +146,35 @@ public class SettingsView extends View { // Classe similaire à GameView.java & 
                 tailleRaquette.setText("Racket Size");
 
                 raquetteSmall = new Button();
+                raquetteMedium = new Button();
+                raquetteLarge = new Button();
+
                 raquetteSmall.setText("Small");
                 raquetteSmall.setLayoutX(((court.getWidth() / 2) * scale) - 80);
                 raquetteSmall.setLayoutY(250);
                 raquetteSmall.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
                 raquetteSmall.setOnAction(event -> {
                         PlayerNumber.activateSmall();
-                        /* sceneHandler.switchToGameR(getRoot(), 75.0); makePauseFalse(); */ });
+                        makePauseFalse(); raquetteSmall.setStyle("-fx-background-color: #FDFCCB"); raquetteMedium.setStyle(null); raquetteLarge.setStyle(null);});
 
-                raquetteMedium = new Button();
+
                 raquetteMedium.setText("Medium");
                 raquetteMedium.setLayoutX(((court.getWidth() / 2) * scale) + 11);
                 raquetteMedium.setLayoutY(250);
                 raquetteMedium.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
                 raquetteMedium.setOnAction(event -> {
                         PlayerNumber.activateMedium();
-                        /* sceneHandler.switchToGameR(getRoot(), 100.0); makePauseFalse(); */ });
+                        makePauseFalse(); raquetteMedium.setStyle("-fx-background-color: #FDFCCB"); raquetteSmall.setStyle(null); raquetteLarge.setStyle(null);});
 
-                raquetteLarge = new Button();
+
                 raquetteLarge.setText("Large");
                 raquetteLarge.setLayoutX(((court.getWidth() / 2) * scale) + 120);
                 raquetteLarge.setLayoutY(250);
                 raquetteLarge.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
                 raquetteLarge.setOnAction(event -> {
                         PlayerNumber.activateLarge();
-                        /*
-                         * sceneHandler.switchToGameR(getRoot(), 150.0); makePauseFalse();
-                         * raquetteLarge.setStyle("-fx-background-color: #00ff00");
-                         */ });
+                        makePauseFalse(); raquetteLarge.setStyle("-fx-background-color: #FDFCCB"); raquetteSmall.setStyle(null); raquetteMedium.setStyle(null);});
+
 
                 // on change la coleur du bouton qui change la taille de la raquette pour que ca
                 // soit plus clair quelle taille est actuellement choisie
