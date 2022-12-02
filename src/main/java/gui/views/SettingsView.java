@@ -34,6 +34,10 @@ public class SettingsView extends View { // Classe similaire à GameView.java & 
         private final Text background;
         private final Button background1;
 
+        private final Button background2;
+
+        private final Button background3;
+
         // Darktheme
         private final Button darktheme;
         public static boolean darkthemetest = false; // Couleur du fond blanc
@@ -59,8 +63,8 @@ public class SettingsView extends View { // Classe similaire à GameView.java & 
                 reglages.setText("Réglages");
 
                 exit = new Button("Exit");
-                exit.setLayoutX(((court.getWidth() / 2) * scale) - 5);
-                exit.setLayoutY(((court.getHeight() / 2) * scale) + 230);
+                exit.setLayoutX(((court.getWidth() / 2) * scale) + 475);
+                exit.setLayoutY(((court.getHeight() / 2) * scale) + 320);
                 exit.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
                 exit.setOnAction(event -> {
                         AudioBank.volume = slVolume.getValue();
@@ -91,7 +95,7 @@ public class SettingsView extends View { // Classe similaire à GameView.java & 
 
                 playButton = new Button("Pause");
                 playButton.setLayoutX(((court.getWidth() / 2) * scale - 50));
-                playButton.setLayoutY(((court.getHeight() / 2) * scale) + 170);
+                playButton.setLayoutY(((court.getHeight() / 2) * scale) + 300);
                 playButton.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
                 playButton.setOnAction(event -> {
                         if (playButton.getText().equals("Pause")) {
@@ -106,7 +110,7 @@ public class SettingsView extends View { // Classe similaire à GameView.java & 
 
                 slVolume = new Slider();
                 slVolume.setLayoutX(((court.getWidth() / 2) * scale) + 10);
-                slVolume.setLayoutY(((court.getHeight() / 2) * scale) + 170);
+                slVolume.setLayoutY(((court.getHeight() / 2) * scale) + 300);
                 slVolume.setPrefWidth(150);
                 slVolume.setMaxWidth(Region.USE_PREF_SIZE);
                 slVolume.setMinWidth(30);
@@ -114,24 +118,55 @@ public class SettingsView extends View { // Classe similaire à GameView.java & 
                 AudioBank.menuSongPlayer.volumeProperty().bind(slVolume.valueProperty().divide(100));
 
                 //choisir le fond
-                Image image=new Image(MenuView.class.getResourceAsStream("./playerbg.jpg"));
-                ImageView backg=new ImageView(image);
-                backg.setFitWidth(root.getMinWidth());
-                backg.setFitHeight(root.getMinHeight());
+                Image image1=new Image(MenuView.class.getResourceAsStream("./onepicebg.jpg"));
+                ImageView backg1=new ImageView(image1);
+                backg1.setFitWidth(root.getMinWidth());
+                backg1.setFitHeight(root.getMinHeight());
+
+                Image image2=new Image(MenuView.class.getResourceAsStream("./brick.jpg"));
+                ImageView backg2=new ImageView(image2);
+                backg2.setFitWidth(root.getMinWidth());
+                backg2.setFitHeight(root.getMinHeight());
+
+                Image image3=new Image(MenuView.class.getResourceAsStream("./bleu.jpg"));
+                ImageView backg3=new ImageView(image3);
+                backg3.setFitWidth(root.getMinWidth());
+                backg3.setFitHeight(root.getMinHeight());
 
                 background = new Text();
                 background.setX(((court.getWidth() / 2) * scale) - 80);
-                background.setY(((court.getWidth() / 5) * scale ) + 175);
+                background.setY(((court.getWidth() / 5) * scale ) + 225);
                 background.setTextAlignment(TextAlignment.CENTER);
                 background.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 40));
                 background.setFill(SceneHandler.itemcolor);
                 background.setText("Background");
 
                 background1 = new Button();
-                background1.setPrefSize(200,100);
-                backg.setFitHeight(100);
-                backg.setPreserveRatio(true);
-                background1.setGraphic(backg);
+                background1.setPrefSize(150,75);
+                background1.setLayoutX(((court.getWidth() / 2) * scale) - 195);
+                background1.setLayoutY(((court.getWidth() / 5) * scale ) + 255);
+                backg1.setFitHeight(75);
+                backg1.setPreserveRatio(true);
+                background1.setGraphic(backg1);
+                background1.setOnAction(event -> {GameView.setFond("./onepicebg.jpg");});
+
+                background2 = new Button();
+                background2.setPrefSize(150,75);
+                background2.setLayoutX(((court.getWidth() / 2) * scale) - 35);
+                background2.setLayoutY(((court.getWidth() / 5) * scale ) + 255);
+                backg2.setFitHeight(75);
+                backg2.setPreserveRatio(true);
+                background2.setGraphic(backg2);
+                background2.setOnAction(event -> {GameView.setFond("./brick.jpg");});
+
+                background3 = new Button();
+                background3.setPrefSize(150,75);
+                background3.setLayoutX(((court.getWidth() / 2) * scale) + 125);
+                background3.setLayoutY(((court.getWidth() / 5) * scale ) + 255);
+                backg3.setFitHeight(75);
+                backg3.setPreserveRatio(true);
+                background3.setGraphic(backg3);
+                background3.setOnAction(event -> {GameView.setFond("./bleu.jpg");});
 
 
 
@@ -190,7 +225,7 @@ public class SettingsView extends View { // Classe similaire à GameView.java & 
                                 tailleRaquette,
                                 raquetteSmall,
                                 raquetteMedium,
-                                raquetteLarge, background, background1); // On ajoute le title et les boutons aux éléments
+                                raquetteLarge, background, background1, background2, background3); // On ajoute le title et les boutons aux éléments
                 // du Pane
 
         }

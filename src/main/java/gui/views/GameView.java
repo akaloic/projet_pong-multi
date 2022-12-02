@@ -30,6 +30,8 @@ public class GameView extends View {
 
         private Button menu;
 
+        private static String fond = "./defaut.jpg";
+
         private final AnimationTimer timer = new AnimationTimer() {
                 long last = 0;
 
@@ -82,7 +84,7 @@ public class GameView extends View {
 
         public GameView(Court court, Pane root, double scale, SceneHandler sceneHandler, int nbreracket) {
                 super(court, root, scale, sceneHandler);
-                Image image = new Image(MenuView.class.getResourceAsStream("./onepicebg.jpg"));
+                Image image = new Image(MenuView.class.getResourceAsStream(fond));
                 ImageView backg = new ImageView(image);
                 backg.setFitWidth(root.getMinWidth());
                 backg.setFitHeight(root.getMinHeight());
@@ -185,6 +187,16 @@ public class GameView extends View {
                 }
                 timer.start(); // on lance le timer
 
+        }
+
+        //method pour changer le fond
+
+        public static void setFond(String f){
+                fond = f;
+        }
+
+        public static String getFond(){
+                return fond;
         }
 
 }

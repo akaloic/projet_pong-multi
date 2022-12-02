@@ -4,6 +4,8 @@ import gui.SceneHandler;
 import gui.View;
 import javafx.animation.AnimationTimer;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -64,6 +66,11 @@ public class GameRobotView extends View {
     public GameRobotView(Court court, Pane root, double scale, SceneHandler sceneHandler) {
         super(court, root, scale, sceneHandler);
 
+        Image image = new Image(MenuView.class.getResourceAsStream(GameView.getFond()));
+        ImageView backg = new ImageView(image);
+        backg.setFitWidth(root.getMinWidth());
+        backg.setFitHeight(root.getMinHeight());
+
         score = new Text(); // On créer l'objet Text pour pouvoir l'afficher
         score.setX((court.getWidth() / 2) * scale + getMargin() / 2); // Petite modification pour mieux placer le score.
         score.setY(35);
@@ -98,7 +105,7 @@ public class GameRobotView extends View {
         continu.setLayoutY(((court.getHeight() / 2) * scale) - 60);
         continu.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
         continu.setOnAction(event -> animate());
-        getRoot().getChildren().addAll(racketA, racketB, ball, score); // On ajoute le score aux éléments du Pane
+        getRoot().getChildren().addAll(backg, racketA, racketB, ball, score); // On ajoute le score aux éléments du Pane
     }
 
     public void animate() {
