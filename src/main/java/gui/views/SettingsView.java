@@ -16,6 +16,9 @@ import model.Court;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import sound.AudioBank;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 
 public class SettingsView extends View { // Classe similaire à GameView.java & MenuView.java avec des éléments
                                          // différents
@@ -26,6 +29,10 @@ public class SettingsView extends View { // Classe similaire à GameView.java & 
 
         private Slider slVolume;
         private final Button playButton;
+
+        //choisir le fond
+        private final Text background;
+        private final Button background1;
 
         // Darktheme
         private final Button darktheme;
@@ -106,6 +113,29 @@ public class SettingsView extends View { // Classe similaire à GameView.java & 
                 slVolume.setValue(AudioBank.volume);
                 AudioBank.menuSongPlayer.volumeProperty().bind(slVolume.valueProperty().divide(100));
 
+                //choisir le fond
+                Image image=new Image(MenuView.class.getResourceAsStream("./playerbg.jpg"));
+                ImageView backg=new ImageView(image);
+                backg.setFitWidth(root.getMinWidth());
+                backg.setFitHeight(root.getMinHeight());
+
+                background = new Text();
+                background.setX(((court.getWidth() / 2) * scale) - 80);
+                background.setY(((court.getWidth() / 5) * scale ) + 175);
+                background.setTextAlignment(TextAlignment.CENTER);
+                background.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 40));
+                background.setFill(SceneHandler.itemcolor);
+                background.setText("Background");
+
+                background1 = new Button();
+                background1.setPrefSize(200,100);
+                backg.setFitHeight(100);
+                backg.setPreserveRatio(true);
+                background1.setGraphic(backg);
+
+
+
+
                 // Raquette Taille
                 tailleRaquette = new Text();
                 tailleRaquette.setX(((court.getWidth() / 2) * scale) - 80);
@@ -159,7 +189,7 @@ public class SettingsView extends View { // Classe similaire à GameView.java & 
                                 tailleRaquette,
                                 raquetteSmall,
                                 raquetteMedium,
-                                raquetteLarge); // On ajoute le title et les boutons aux éléments
+                                raquetteLarge, background, background1); // On ajoute le title et les boutons aux éléments
                 // du Pane
 
         }
