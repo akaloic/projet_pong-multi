@@ -27,6 +27,8 @@ public class Court {
     private double coeffSpeedA = 0.3; // variable qui permet ralentir la vitesse de raquetteA avant chaque déplacement
                                       // de raquette;
     private double coeffSpeedB = 0.3;
+    private double coeffSpeedC = 0.3;
+    private double coeffSpeedD = 0.3;
     private double coeefSpeedBall = 1;
 
     public Court(double width, double height) {
@@ -150,7 +152,7 @@ public class Court {
         double nextBallY = ballY + deltaT * ballSpeedY;
 
         // next, see if the ball would meet some obstacle
-        if ( nextBallY > height-5.00) { // Rebonds  sol
+        if ( nextBallY > height-5.00 ) { // Rebonds  sol //
 
             ballSpeedY = -ballSpeedY;
             nextBallY = ballY + deltaT * ballSpeedY;
@@ -313,6 +315,19 @@ public class Court {
     public void setCoefA(double coef) {
         coeffSpeedA = coef;
     }
+    public double getCoefC(){
+        return this.coeffSpeedC;
+    }
+    public double getCoefD(){
+        return this.coeffSpeedD;
+    }
+    public void setCoefC(double coef){
+        this.coeffSpeedC=coef;
+    }
+    public void setCoefD(double coef){
+        this.coeffSpeedD=coef;
+    }
+
 
     public double getRacketXC() {
         return racketXC;

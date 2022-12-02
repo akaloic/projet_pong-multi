@@ -1,37 +1,21 @@
 package gui;
 
-import java.nio.file.Paths;
-
 import gui.entities.Player;
 import gui.views.GameRobotView;
 import gui.views.GameView;
 import gui.views.MenuView;
 import gui.views.PlayerNumber;
 import gui.views.SettingsView;
-import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Paint;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import model.ControlHandler;
 import model.Court;
 import model.courts.CourtMulti;
 import model.courts.CourtRobot;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 public class SceneHandler { // Cette classe permet de manipuler les scènes courrantes sans à avoir besoin de
                             // réecrire tout le code à chaque fois
@@ -41,6 +25,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
     private View view;
     private Court court;
     private Player[] players;
+    private boolean[]AI=new boolean[4];
     public static String bgcolor = "#FFFFFF"; // Couleur du background en hexadecimal en blanc par défaut
     public static Color itemcolor = Color.BLACK;
 
@@ -67,7 +52,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
     public void setGameScene() {
         court = new CourtMulti(players, 1000, 600); // Extrait du code qu'il y avait dans App.java pour afficher
                                                     // le jeu.
-        var gameView = new GameView(court, root, 1.0, this, players.length);
+        var gameView = new GameView(court, root, 1.0, this, players.length,AI);
 
         stage.setScene(scene);
         stage.show();
@@ -75,12 +60,13 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
 
     }
 
-    public void switchToGame(Pane menuRoot, int n, boolean small, boolean medium, boolean large) { // methode qui passe
+    public void switchToGame(Pane menuRoot, int n, boolean small, boolean medium, boolean large,boolean[]AI) { // methode qui passe
                                                                                                    // de
                                                                                                    // ViewplayerNumber à
                                                                                                    // GameView
         this.setPlayers(n);
-        switch (n) {
+        this.switchToGameRbis(menuRoot,small,medium,large,AI);
+      /*  switch (n) {
             case 1:
                 this.switchToGameRobot(menuRoot);
                 break;
@@ -88,6 +74,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
                 this.switchToGameRbis(menuRoot, small, medium, large);
 
         }
+        */
 
     }
 
@@ -107,7 +94,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         court = new CourtMulti(players, 1000, 600);
         ControlHandler controlHandler = new ControlHandler(players, this);
         controlHandler.getInput();
-        view = new GameView(court, root, 1.0, this, players.length);
+        view = new GameView(court, root, 1.0, this, players.length,AI);
         stage.setScene(scene);
         stage.show();
         ((GameView) view).animate();
@@ -117,8 +104,8 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
                                                                   // la taille de la raquette
         menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
         // afficher le jeu sans problèmes.
-        court = new CourtMulti(players, 1000, 600, racketSize);
-        view = new GameView(court, root, 1.0, this, 1);
+        court = new CourtMulti(players, 1000, 600, racketSize,AI);
+        view = new GameView(court, root, 1.0, this, 1,AI);
         ControlHandler controlHandler = new ControlHandler(players, this);
         controlHandler.getInput();
         stage.setScene(scene);
@@ -126,7 +113,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         ((GameView) view).animate();
     }
 
-    public void switchToGameRbis(Pane menuRoot, boolean small, boolean medium, boolean large) { // on utilise cette
+    public void switchToGameRbis(Pane menuRoot, boolean small, boolean medium, boolean large, boolean[] AI) { // on utilise cette
                                                                                                 // methode pour qu'on
                                                                                                 // puisse modifier la
                                                                                                 // taille de la raquette
@@ -137,12 +124,12 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
         // afficher le jeu sans problèmes.
         if (small)
-            court = new CourtMulti(players, 1000, 600, 75.0);
+            court = new CourtMulti(players, 1000, 600, 75.0,AI);
         else if (medium)
-            court = new CourtMulti(players, 1000, 600);
+            court = new CourtMulti(players, 1000, 600,100,AI);
         else if (large)
-            court = new CourtMulti(players, 1000, 600, 150.0);
-        view = new GameView(court, root, 1.0, this, players.length);
+            court = new CourtMulti(players, 1000, 600, 150.0,AI);
+        view = new GameView(court, root, 1.0, this, players.length,AI);
         ControlHandler controlHandler = new ControlHandler(players, this);
         controlHandler.getInput();
         stage.setScene(scene);

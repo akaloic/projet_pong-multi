@@ -36,6 +36,23 @@ public class PlayerNumber extends View {
 	private Text text4=new Text();
 	private Text text5=new Text();
 	private Text text6=new Text();
+	private AnimationTimer timer=new AnimationTimer() {
+		long last=0;
+		public void handle(long now) {
+			if (last == 0) { // ignore the first tick, just compute the first deltaT
+				last = now;
+				return;
+			}
+			text2.setText(" "+nbre);
+			switch(nbre) {
+				case 4:text6.setText("Player4 humain/AI ?" );;break;
+				case 3:text5.setText("Player3 humain/AI ?" );text6.setText(null); break;
+				case 2:text4.setText("Player2 humain/AI ?" );text5.setText(null);text6.setText(null);break;
+				case 1:text3.setText("Player1 humain/AI ?" );hidebutton(nbre);text4.setText(null);text5.setText(null);text6.setText(null);break;
+			}
+
+		}
+	};
 	   
 	//booleans pour voir laquelle taille est choisie
     private static boolean racketSmall = false;
@@ -49,9 +66,9 @@ public class PlayerNumber extends View {
 	public PlayerNumber(Court court,Pane root,double scale,SceneHandler scenehandler) {
 		super(court,root,scale,scenehandler);
 		 Image image=new Image(MenuView.class.getResourceAsStream("./playerbg.jpg"));
-	        ImageView backg=new ImageView(image);
-	        backg.setFitWidth(root.getMinWidth());
-	        backg.setFitHeight(root.getMinHeight());
+		 ImageView backg=new ImageView(image);
+		 backg.setFitWidth(root.getMinWidth());
+		 backg.setFitHeight(root.getMinHeight());
 		text=new Text("Nombre de joueur : ");
 		plus=new Button(" + ");
 		menus=new Button(" - ");
@@ -147,7 +164,7 @@ public class PlayerNumber extends View {
 		confirmer.setLayoutX(court.getWidth()/2-200);
 		confirmer.setLayoutY(court.getHeight()/2*scale+spacey);
 		confirmer.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
-		confirmer.setOnAction(event->getSceneHandler().switchToGame(root,nbre,racketSmall,racketMedium,racketLarge));
+		confirmer.setOnAction(event->getSceneHandler().switchToGame(root,nbre,racketSmall,racketMedium,racketLarge,AI));
 		
 		this.annuler=new Button();
 		this.annuler.setText("Annuler");
@@ -176,23 +193,7 @@ public class PlayerNumber extends View {
 	}
 
 	public void animate() {
-		new AnimationTimer() {
-			long last=0;
-			public void handle(long now) {
-				  if (last == 0) { // ignore the first tick, just compute the first deltaT
-		                last = now;
-		                return;
-		            }
-				  text2.setText(" "+nbre);
-				  switch(nbre) {
-				    case 4:text6.setText("Player4 humain/AI ?" );;break;
-				    case 3:text5.setText("Player3 humain/AI ?" );text6.setText(null); break;
-				    case 2:text4.setText("Player2 humain/AI ?" );text5.setText(null);text6.setText(null);break;
-				    case 1:text3.setText("Player1 humain/AI ?" );hidebutton(nbre);text4.setText(null);text5.setText(null);text6.setText(null);break; 
-				  }
-				  
-			}
-		}.start();
+		timer.start();
 	}
 	private void hidebutton(int n) {
 		switch(n) {

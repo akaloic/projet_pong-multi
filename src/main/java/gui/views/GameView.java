@@ -21,7 +21,8 @@ import model.courts.CourtMulti;
 public class GameView extends View {
 
         private final Rectangle racketA, racketB, racketC, racketD;
-
+        private  boolean[]AI=new boolean[4];   //tab pour indiquer si la raquette est controlé par machine ou joueur
+        private int nbreRacket;
         private final Circle ball;
         private final Text score;
         private Button continu;
@@ -29,6 +30,7 @@ public class GameView extends View {
         private Region border;
 
         private Button menu;
+
 
         private final AnimationTimer timer = new AnimationTimer() {
                 long last = 0;
@@ -43,10 +45,32 @@ public class GameView extends View {
                         last = now;
                         ((CourtMulti) getCourt()).update((now - last) * 1.0e-9); // convert nanoseconds to seconds
                         last = now;
-                        racketA.setY(getCourt().getRacketA() * getScale());
-                        racketA.setX(getMargin() - getRacketThickness() + getCourt().getRacketXA());
-                        racketB.setY(getCourt().getRacketB() * getScale());
-                        racketB.setX(getCourt().getWidth() * getScale() + getMargin() + getCourt().getRacketXB());
+                        if (nbreRacket>=1){
+                                if(!AI[0]){
+                                        racketA.setY(getCourt().getRacketA() * getScale());
+                                        racketA.setX(getMargin() - getRacketThickness() + getCourt().getRacketXA());
+                                }else{
+                                        racketA.setX(getMargin() - getRacketThickness());
+                                        if (getCourt().getRacketA() * getScale() + getMargin() - 65 > 500) racketA.setY(500);
+                                        else racketA.setY(getCourt().getRacketA() * getScale() + getMargin() - 65);
+
+                                }
+
+                        }
+
+                        if(nbreRacket>=2){
+                                if(!AI[1]){
+                                        racketB.setY(getCourt().getRacketB() * getScale());
+                                        racketB.setX(getCourt().getWidth() * getScale() + getMargin() + getCourt().getRacketXB());
+                                }else{
+                                        racketB.setX(getCourt().getWidth() * getScale() + getMargin());
+                                        if (getCourt().getRacketB() * getScale() + getMargin() - 65 > 500) racketB.setY(500);
+                                        else racketB.setY(getCourt().getRacketB() * getScale() + getMargin() - 65);  //ici racketB est AI
+
+                                }
+
+                        }
+
                         if (racketC != null) {
                                 racketC.setX(getCourt().getWidth() / 2 * getScale() + getCourt().getRacketXC());
                         }
@@ -80,8 +104,10 @@ public class GameView extends View {
 
         };
 
-        public GameView(Court court, Pane root, double scale, SceneHandler sceneHandler, int nbreracket) {
+        public GameView(Court court, Pane root, double scale, SceneHandler sceneHandler, int nbreracket,boolean[]AI) {
                 super(court, root, scale, sceneHandler);
+                this.nbreRacket=nbreracket;
+                this.AI=AI;  // initialiser l'attribut avec le tab qui est passée par PlayerNumberView
                 Image image = new Image(MenuView.class.getResourceAsStream("./onepicebg.jpg"));
                 ImageView backg = new ImageView(image);
                 backg.setFitWidth(root.getMinWidth());
@@ -170,6 +196,10 @@ public class GameView extends View {
                 menu.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
                 menu.setOnAction(event -> sceneHandler.switchToMenu(getRoot()));
                 getRoot().getChildren().addAll(ball, score); // On ajoute le score aux éléments du Pane
+
+        }
+
+        public void setRaquetteAI(int i) {
 
         }
 
