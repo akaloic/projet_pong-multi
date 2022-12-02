@@ -126,7 +126,7 @@ public class SettingsView extends View { // Classe similaire à GameView.java & 
                 raquetteSmall.setOnAction(event -> {
                         PlayerNumber.activateSmall();
                         makePauseFalse(); raquetteSmall.setStyle("-fx-background-color: #FDFCCB"); raquetteMedium.setStyle(null); raquetteLarge.setStyle(null);});
-                        // aquetteSmall.setOnAction(event -> {MenuView.activateSmall(); makePauseFalse(); raquetteSmall.setStyle("-fx-background-color: #FDFCCB"); raquetteMedium.setStyle(null); raquetteLarge.setStyle(null);});
+
 
                 raquetteMedium.setText("Medium");
                 raquetteMedium.setLayoutX(((court.getWidth() / 2) * scale) + 11);
