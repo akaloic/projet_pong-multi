@@ -41,11 +41,12 @@ public class GameRobotView extends View {
                 }
                 ((CourtRobot) getCourt()).update((now - last) * 1.0e-9); // convert nanoseconds to seconds
                 last = now;
-                racketA.setY(getCourt().getRacketA() * getScale());
+                if (getCourt().getRacketA() * getScale() + getMargin() - 55 < 60) racketA.setY(55);
+                else racketA.setY(getCourt().getRacketA() * getScale());
                 racketA.setX(getMargin() - getRacketThickness()+getCourt().getRacketXA());
-                //racketB.setY(getCourt().getRacketB() * getScale() + getMargin() - 65);  //ici racketB est AI
                 racketB.setX(getCourt().getWidth() * getScale() + getMargin());
-                if (getCourt().getRacketB() * getScale() + getMargin() - 65 > 500) racketB.setY(500);
+                if (getCourt().getRacketB() * getScale() + getMargin() - 55 > 500) racketB.setY(500);
+                else if (getCourt().getRacketB() * getScale() + getMargin() - 55 < 60) racketB.setY(55);
                 else racketB.setY(getCourt().getRacketB() * getScale() + getMargin() - 65);  //ici racketB est AI
 
                 ball.setCenterX(getCourt().getBallX() * getScale() + getMargin());

@@ -24,6 +24,7 @@ public class Court {
     private double  coeffSpeedA=0.3; // variable qui permet ralentir la vitesse de raquetteA avant chaque déplacement de raquette;
     private double coeffSpeedB=0.3;
     private double coeefSpeedBall=1;
+    private double nextBallX, nextBallY;
 
     public Court( double width, double height) {
         this.width = width;
@@ -61,23 +62,33 @@ public class Court {
 
     public boolean updateBall(double deltaT) {
         // first, compute possible next position if nothing stands in the way
-        double nextBallX = ballX + deltaT * ballSpeedX;
-        double nextBallY = ballY + deltaT * ballSpeedY;
+        nextBallX = ballX + deltaT * ballSpeedX;
+        nextBallY = ballY + deltaT * ballSpeedY;
         // next, see if the ball would meet some obstacle
         if (nextBallY < 55.00 || nextBallY > height-5.00) { // Rebonds plafond / sol
             ballSpeedY = -ballSpeedY;
             nextBallY = ballY + deltaT * ballSpeedY;
         }
-        
+        /*          //version de sisi
         if ((nextBallX<racketXA && nextBallX>racketXA-30.0 && nextBallY > racketYA && nextBallY < racketYA + racketSize)        // Rebond raquette gauche
         || (nextBallX>racketXB+width && nextBallX<racketXB+width+30.0 && nextBallY > racketYB && nextBallY < racketYB + racketSize)) // Rebond raquette droite
-        { 
+        {
         	if(nextBallX>width/2) {
         		this.SpeedBallUpOrDown(preXB, racketXB);
         	}else {
         		this.SpeedBallUpOrDown(preXA, racketXA);
         	}
-        	ballSpeedX = -ballSpeedX*this.coeefSpeedBall;
+        	ballSpeedX = -ballSpeedX*this.coeefSpeedBall + 100;
+            nextBallX = ballX + deltaT * ballSpeedX;
+        }
+
+         */
+        if (nextBallX<racketXA && nextBallX>racketXA-30.0 && nextBallY > racketYA && nextBallY < racketYA + racketSize){
+            ballSpeedX = -ballSpeedX*this.coeefSpeedBall + 100;
+            nextBallX = ballX + deltaT * ballSpeedX;
+        }
+        if (nextBallX>racketXB+width && nextBallX<racketXB+width+30.0 && nextBallY > racketYB && nextBallY < racketYB + racketSize){
+            ballSpeedX = -ballSpeedX*this.coeefSpeedBall - 100;
             nextBallX = ballX + deltaT * ballSpeedX;
         }
         /*
@@ -102,6 +113,7 @@ public class Court {
         preXB=racketXB;
         return false;
     }
+
     public boolean updateBall4(double deltaT) {
         // first, compute possible next position if nothing stands in the way
         double nextBallX = ballX + deltaT * ballSpeedX;
@@ -152,23 +164,17 @@ public class Court {
         if ( nextBallY > height-5.00) { // Rebonds plafond / sol
             ballSpeedY = -ballSpeedY;
             nextBallY = ballY + deltaT * ballSpeedY;
-         /*   System.out.println(nextBallX);
-            System.out.println(racketXC);
-            System.out.println(width/2);
-            System.out.println(width/2+racketXC);
-            System.out.println(width/2+racketXC+racketSize);*/
-           
         }
         
         if ((nextBallX<racketXA && nextBallX>racketXA-30.0 && nextBallY > racketYA && nextBallY < racketYA + racketSize)        // Rebond raquette gauche
-        || (nextBallX>racketXB+width && nextBallX<racketXB+width+30.0 && nextBallY > racketYB && nextBallY < racketYB + racketSize)) // Rebond raquette droite              
-        { 
+        || (nextBallX>racketXB+width && nextBallX<racketXB+width+30.0 && nextBallY > racketYB && nextBallY < racketYB + racketSize)) // Rebond raquette droite
+        {
         	if(nextBallX>width/2) {
         		this.SpeedBallUpOrDown(preXB, racketXB);
         	}else {
         		this.SpeedBallUpOrDown(preXA, racketXA);
         	}
-        	ballSpeedX = -ballSpeedX*this.coeefSpeedBall;
+        	ballSpeedX = -ballSpeedX * coeefSpeedBall;
             nextBallX = ballX + deltaT * ballSpeedX;
         }else if (nextBallY<55.0+20.0 && nextBallX>width/2+racketXC-55 && nextBallX<width/2+racketXC+racketSize-55) {  //rebond de raquette haut ,//55.0 c'est la valeur de la marge + epaisseur de bordure.
         	ballSpeedY= -ballSpeedY*this.coeefSpeedBall;
@@ -270,8 +276,17 @@ public class Court {
         return scoreB;
     }
 
+    public double getBallSpeedY() {
+        return ballSpeedY;
+    }
 
+    public double getNextBallX() {
+        return nextBallX;
+    }
 
+    public double getNextBallY() {
+        return nextBallY;
+    }
 
     public double getRacketSpeed() {
         return racketSpeed;
