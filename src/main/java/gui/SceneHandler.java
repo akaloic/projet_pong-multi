@@ -135,18 +135,6 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         ((GameView) view).animate();
     }
 
-    public void switchToGameRobot(Pane menuRoot) {
-        menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
-                                        // afficher le jeu sans problèmes.
-        this.paneColor();
-        court = new CourtRobot(this.players[0], 1000, 600);
-        var gameView = new GameRobotView(court, root, 1.0, this);
-        ControlHandler controlHandler = new ControlHandler(players, this);
-        controlHandler.getInput();
-        stage.setScene(scene);
-        stage.show();
-        gameView.animate();
-    }
 
     public void switchToSettings(Pane menuRoot) { // Méthode permettant de passer de menu à Settings
         menuRoot.getChildren().clear();
