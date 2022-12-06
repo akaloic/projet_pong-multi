@@ -17,6 +17,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.*;
 import model.Court;
 import model.courts.CourtMulti;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class GameView extends View{
 
@@ -27,7 +29,9 @@ public class GameView extends View{
     private Button continu;
     private Line separateur;
     private Region border;
- 
+    private final Text timeDisplay; //pour afficher le timer
+    private final Timer t;
+    private static int timeLeft  = 10;
 
     private Button menu;
 
@@ -76,6 +80,27 @@ public class GameView extends View{
    
     public GameView(Court court, Pane root, double scale, SceneHandler sceneHandler,int nbreracket) {
         super(court, root, scale, sceneHandler);
+        this.timeDisplay = new Text();
+        this.t = new Timer();
+        final TimerTask task = new TimerTask() {
+            public void run() {
+                if(timeLeft > 0) {
+                    timeDisplay.setText(String.valueOf(timeLeft));
+                    if(View.getPause()) { //ICI ON A PLUS GETPAUSE
+                    	 timeDisplay.setText(String.valueOf(timeLeft));
+                    }
+                    else {
+                    	timeLeft--;
+                    }
+                }
+                else {
+                	//TROUVER LES BOUTONS RESTART POUR RECOMMENCER LE JEU
+                    timeDisplay.setText("Fin du jeu !");
+                    t.cancel();
+                }
+            }  
+        };     
+
         Image image=new Image(MenuView.class.getResourceAsStream("./onepicebg.jpg"));
         ImageView backg=new ImageView(image);
         backg.setFitWidth(root.getMinWidth());
@@ -164,7 +189,13 @@ public class GameView extends View{
         menu.setLayoutY(((court.getHeight() / 2) * scale) - 60);
         menu.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
         menu.setOnAction(event-> sceneHandler.switchToMenu(getRoot()));
-        getRoot().getChildren().addAll(ball, score); // On ajoute le score aux éléments du Pane
+        getRoot().getChildren().addAll(ball, score, timeDisplay); // On ajoute le score aux éléments du Pane
+        timerStart(task);
+        
+        timeDisplay.setX((court.getWidth() / 3) * scale + getMargin() / 2);
+        timeDisplay.setY(35);
+        timeDisplay.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
+        timeDisplay.setFill(Color.RED);
 
     }
     public void animate() {
@@ -174,8 +205,10 @@ public class GameView extends View{
             pauseORcontinue();  // et on met aussi le champs boolean pause en false pour préparer à la prochaine demande de pause
         }
         timer.start();  // on lance le timer 
- 
      }
 
-    
+    public void timerStart(TimerTask task) {
+    	t.scheduleAtFixedRate(task, 1000, 1000);
+    }
+
 }
