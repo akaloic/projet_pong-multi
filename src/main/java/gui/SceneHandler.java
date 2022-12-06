@@ -3,11 +3,8 @@ package gui;
 import java.nio.file.Paths;
 
 import gui.entities.Player;
-import gui.views.GameRobotView;
-import gui.views.GameView;
-import gui.views.MenuView;
-import gui.views.PlayerNumber;
-import gui.views.SettingsView;
+import gui.views.*;
+import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

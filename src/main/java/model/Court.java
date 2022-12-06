@@ -58,10 +58,12 @@ public class Court {
         this.coeffSpeedB += time * 2;
     }
 
+
+
     public boolean updateBall(double deltaT) {
         // first, compute possible next position if nothing stands in the way
-        double nextBallX = ballX + deltaT * ballSpeedX;
-        double nextBallY = ballY + deltaT * ballSpeedY;
+        nextBallX = ballX + deltaT * ballSpeedX;
+        nextBallY = ballY + deltaT * ballSpeedY;
         // next, see if the ball would meet some obstacle
         if (nextBallY < 55.00 || nextBallY > height - 5.00) { // Rebonds plafond / sol
             ballSpeedY = -ballSpeedY;

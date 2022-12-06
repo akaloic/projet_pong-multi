@@ -4,10 +4,15 @@ import gui.SceneHandler;
 import gui.View;
 import javafx.animation.AnimationTimer;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.*;
 import model.Court;
@@ -63,6 +68,20 @@ public class GameRobotView extends View {
 
     public GameRobotView(Court court, Pane root, double scale, SceneHandler sceneHandler) {
         super(court, root, scale, sceneHandler);
+        Image image=new Image(MenuView.class.getResourceAsStream("./onepicebg.jpg"));
+        ImageView backg=new ImageView(image);
+        backg.setFitWidth(root.getMinWidth());
+        backg.setFitHeight(root.getMinHeight());
+        double milieu=court.getWidth()/2+getMargin();
+        separateur=new Line(milieu,45,milieu,court.getHeight()-25);
+        separateur.getStrokeDashArray().addAll(35d,30d);
+        border=new Region();
+        border.setMinHeight(court.getHeight()-getMargin());
+        border.setMinWidth(court.getWidth()+2*super.getRacketThickness());
+        border.setLayoutX(getMargin()-super.getRacketThickness());
+        border.setLayoutY(getMargin());
+        border.setStyle("-fx-border-style:solid;-fx-border-color:black;-fx-border-width:4");
+        getRoot().getChildren().addAll(backg,border);
 
         score = new Text(); // On créer l'objet Text pour pouvoir l'afficher
         score.setX((court.getWidth() / 2) * scale + getMargin() / 2); // Petite modification pour mieux placer le score.
@@ -101,6 +120,35 @@ public class GameRobotView extends View {
         getRoot().getChildren().addAll(racketA, racketB, ball, score); // On ajoute le score aux éléments du Pane
     }
 
+        commande[0] = new Label(" z : Monter pour joueur gauche ");
+        commande[0].setLayoutX(court.getWidth()/2 - 135);
+        commande[0].setLayoutY(200);
+        commande[0].setStyle("-fx-border-color: black; -fx-text-fill:black; -fx-font-size: 20;");
+        commande[1] = new Label(" s : Descendre pour joueur gauche ");
+        commande[1].setLayoutX(court.getWidth()/2 - 150);
+        commande[1].setLayoutY(250);
+        commande[1].setStyle("-fx-border-color: black; -fx-text-fill:black; -fx-font-size: 20;");
+        commande[2] = new Label(" p : Faire pause ");
+        commande[2].setLayoutX(court.getWidth()/2 - 90);
+        commande[2].setLayoutY(300);
+        commande[2].setStyle("-fx-border-color: black; -fx-text-fill:black; -fx-font-size: 20;");
+        commande[3] = new Label(" ESC : Quitter le jeu ");
+        commande[3].setLayoutX(court.getWidth()/2 - 100);
+        commande[3].setLayoutY(350);
+        commande[3].setStyle("-fx-border-color: black; -fx-text-fill:black; -fx-font-size: 20;");
+        commande[4] = new Label(" INSTRUCTIONS: ");
+        commande[4].setLayoutX(court.getWidth()/2 - 90);
+        commande[4].setLayoutY(120);
+        commande[4].setStyle("-fx-text-fill:black; -fx-text-fill:black; -fx-font-size: 20;");
+
+        menu=new Button("Menu");
+        menu.setLayoutX(((court.getWidth() / 2) * scale) + 120);
+        menu.setLayoutY(((court.getHeight() / 2) * scale) - 60);
+        menu.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
+        menu.setOnAction(event-> sceneHandler.switchToMenu(getRoot()));
+
+        getRoot().getChildren().addAll(racketA, racketB, ball, score, commande[0], commande[1], commande[2], 	commande[3], commande[4]);
+    }
     public void animate() {
         if (getRoot().getChildren().contains(continu)) { // si on reprend / commence la partie il faut vérifier si le
                                                          // button continue existe
