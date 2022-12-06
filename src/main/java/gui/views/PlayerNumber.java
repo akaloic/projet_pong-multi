@@ -4,10 +4,8 @@ import gui.SceneHandler;
 import gui.View;
 import javafx.animation.AnimationTimer;
 import javafx.scene.control.Button;
-import javafx.scene.control.RadioButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -35,7 +33,7 @@ public class PlayerNumber extends View {
 
     private static boolean racketLarge = false;
 	
-	private boolean []AI=new boolean[4]; 
+	// private boolean []AI=new boolean[4]; 
 	private AnimationTimer timer=new AnimationTimer() {
 		long last=0;
 		public void handle(long now) {

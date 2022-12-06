@@ -3,7 +3,6 @@ package model;
 import gui.SceneHandler;
 import gui.View;
 import gui.entities.Player;
-import javafx.scene.shape.Line;
 
 public class ControlHandler {
     private Player[]players;
