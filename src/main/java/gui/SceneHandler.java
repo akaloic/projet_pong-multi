@@ -1,7 +1,6 @@
 package gui;
 
 import gui.entities.Player;
-import gui.views.GameRobotView;
 import gui.views.GameView;
 import gui.views.MenuView;
 import gui.views.PlayerNumber;
@@ -14,7 +13,6 @@ import javafx.stage.Stage;
 import model.ControlHandler;
 import model.Court;
 import model.courts.CourtMulti;
-import model.courts.CourtRobot;
 import javafx.scene.control.Button;
 
 public class SceneHandler { // Cette classe permet de manipuler les scènes courrantes sans à avoir besoin de
