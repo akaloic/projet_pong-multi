@@ -6,7 +6,7 @@ import sound.AudioBank;
 
 public class Court {
     // instance parameters
-    private final double width, height; // m
+    private double width, height; // m
 
     private final double racketSpeed = 300.0; // m/s
     private double racketSize = 100.0; // m
@@ -28,6 +28,12 @@ public class Court {
                                       // de raquette;
     private double coeffSpeedB = 0.3;
     private double coeefSpeedBall = 1;
+
+    // Mort Subite
+    private double leftwall = 0;
+    private double rightwall = 0;
+    private boolean tie = true;
+    private boolean suddenDeath = true;
 
     public Court(double width, double height) {
         this.width = width;
@@ -62,6 +68,14 @@ public class Court {
         // first, compute possible next position if nothing stands in the way
         double nextBallX = ballX + deltaT * ballSpeedX;
         double nextBallY = ballY + deltaT * ballSpeedY;
+        // SuddenDeath
+        if (tie && suddenDeath) {
+            if (leftwall < 300 && rightwall > -300) {
+                leftwall += 0.1;
+                rightwall -= 0.1;
+            }
+        }
+
         // next, see if the ball would meet some obstacle
         if (nextBallY < 55.00 || nextBallY > height - 5.00) { // Rebonds plafond / sol
             ballSpeedY = -ballSpeedY;
@@ -80,11 +94,12 @@ public class Court {
             }
             ballSpeedX = -ballSpeedX * this.coeefSpeedBall;
             nextBallX = ballX + deltaT * ballSpeedX;
-        } else if (nextBallX < 0) {
+        } else if (nextBallX < 0 || nextBallX < leftwall - 20) {
+            AudioBank.score.play();
             agetscore = false;
             scoreB++;
             return true; // Quand la balle sort du jeu du côté droit, on donne un point au joueur B
-        } else if (nextBallX > width) {
+        } else if (nextBallX > width || nextBallX > rightwall + width + 20) {
             AudioBank.score.play();
             agetscore = true;
             scoreA++;
@@ -101,7 +116,6 @@ public class Court {
         // first, compute possible next position if nothing stands in the way
         double nextBallX = ballX + deltaT * ballSpeedX;
         double nextBallY = ballY + deltaT * ballSpeedY;
-
         if ((nextBallX < racketXA && nextBallX > racketXA - 30.0 && nextBallY > racketYA
                 && nextBallY < racketYA + racketSize) // Rebond raquette gauche
                 || (nextBallX > racketXB + width && nextBallX < racketXB + width + 30.0 && nextBallY > racketYB
@@ -122,6 +136,7 @@ public class Court {
 
             ballSpeedY = -ballSpeedY * this.coeefSpeedBall;
             nextBallY = ballY + deltaT * ballSpeedY;
+
         } else if (nextBallX < 0) {
             agetscore = false;
             scoreB++;
@@ -142,6 +157,7 @@ public class Court {
         preXA = racketXA;
         preXB = racketXB;
         return false;
+
     }
 
     public boolean updateBall3(double deltaT) {
@@ -281,6 +297,14 @@ public class Court {
         return racketSpeed;
     }
 
+    public double getLeftwall() {
+        return this.leftwall;
+    }
+
+    public double getRightwall() {
+        return this.rightwall;
+    }
+
     public void setRacketA(double racketA) {
         this.racketYA = racketA;
     }
@@ -331,6 +355,14 @@ public class Court {
 
     public void setRacketSize(double size) {
         this.racketSize = size;
+    }
+
+    public void setLeftwall(double leftwall) {
+        this.leftwall = leftwall;
+    }
+
+    public void setRightwall(double rightwall) {
+        this.rightwall = rightwall;
     }
 
 }
