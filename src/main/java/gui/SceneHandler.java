@@ -51,29 +51,15 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         court = new CourtMulti(players, 1000, 600); // Extrait du code qu'il y avait dans App.java pour afficher
                                                     // le jeu.
         var gameView = new GameView(court, root, 1.0, this, players.length,AI);
-
         stage.setScene(scene);
         stage.show();
         gameView.animate();
 
     }
 
-    public void switchToGame(Pane menuRoot, int n, boolean small, boolean medium, boolean large,boolean[]AI) { // methode qui passe
-                                                                                                   // de
-                                                                                                   // ViewplayerNumber à
-                                                                                                   // GameView
+    public void switchToGame(Pane menuRoot, int n, boolean small, boolean medium, boolean large,boolean[]AI) { // methode qui passe                                                                                        // GameView
         this.setPlayers(n);
         this.switchToGameRbis(menuRoot,small,medium,large,AI);
-      /*  switch (n) {
-            case 1:
-                this.switchToGameRobot(menuRoot);
-                break;
-            default:
-                this.switchToGameRbis(menuRoot, small, medium, large);
-
-        }
-        */
-
     }
 
     public void paneColor() {
@@ -112,13 +98,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
     }
 
     public void switchToGameRbis(Pane menuRoot, boolean small, boolean medium, boolean large, boolean[] AI) { // on utilise cette
-                                                                                                // methode pour qu'on
-                                                                                                // puisse modifier la
-                                                                                                // taille de la raquette
-                                                                                                // + sauvgarde la
-                                                                                                // derniere taille
-                                                                                                // choisie si le jouer
-                                                                                                // revient au start
+                                                                         // revient au start
         menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
         // afficher le jeu sans problèmes.
         if (small)

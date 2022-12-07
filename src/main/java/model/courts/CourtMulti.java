@@ -17,6 +17,7 @@ public class CourtMulti extends Court{
     public CourtMulti(RacketController[]p, double width, double height) {
         super(width, height);
         this.players=p;
+        super.setNbrejoueur(p.length);
         reset();
     }
 
@@ -24,6 +25,7 @@ public class CourtMulti extends Court{
         super(width,height,racketSize);
         this.players=p;
         this.AI=AI;
+        super.setNbrejoueur(p.length);
         reset();
 
     }
@@ -76,7 +78,7 @@ public class CourtMulti extends Court{
 
         }
 
-        if (!AI[1]) {
+        if (!AI[1] && getNbrej()>=2) {
             switch (players[1].getState()) {
                 case GOING_UP:
                     setRacketB(getRacketB() - getRacketSpeed() * deltaT * getCoefB());
@@ -123,7 +125,7 @@ public class CourtMulti extends Court{
 
 
 
-        if(players.length>=3) {
+        if(getNbrej()>=3) {
             if (!AI[2]) {
                 switch (players[2].getState()) {
                     case GOING_LEFT:
@@ -160,7 +162,7 @@ public class CourtMulti extends Court{
         }
 
 
-         if(players.length>=4) {
+         if(getNbrej()>=4) {
              if (!AI[3]) {
                  switch (players[3].getState()) {
                      case GOING_LEFT:
@@ -197,22 +199,10 @@ public class CourtMulti extends Court{
      
          }
       
+       if (updateBall(deltaT))
+            reset();
+        }   
 
-        if(players.length==1 || players.length==2) {
-        	if (updateBall(deltaT))
-                reset();
-        }else if(players.length==3) {
-        	if (updateBall3(deltaT))
-                reset();
-        }else {
-        	if(updateBall4(deltaT)) {
-        		reset();
-        	}
-        	
-        }
-       
-        
-    }
 
 
 }
