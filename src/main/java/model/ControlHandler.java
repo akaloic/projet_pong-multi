@@ -23,12 +23,11 @@ public class ControlHandler {
                 case S:
                     players[0].state = RacketController.State.GOING_DOWN;
                     break;
-                case A:
+                case Q:
                     if (players.length > 2) {
                         players[2].state = RacketController.State.GOING_LEFT;
                         break;
                     }
-
                     players[0].state = RacketController.State.GOING_LEFT;
                     break;
                 case D:
@@ -68,7 +67,6 @@ public class ControlHandler {
                 default:
                     ;
             }
-
         });
         sceneHandler.getScene().setOnKeyReleased(ev -> {
             switch (ev.getCode()) {

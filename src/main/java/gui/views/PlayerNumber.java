@@ -128,7 +128,7 @@ public class PlayerNumber extends View {
 		confirmer.setLayoutY(court.getHeight() / 2 * scale + spacey);
 		confirmer.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
 		confirmer.setOnAction(
-				event -> getSceneHandler().switchToGame(root, nbre, racketSmall, racketMedium, racketLarge));
+				event -> getSceneHandler().switchToGame(root, nbre, racketSmall, racketMedium, racketLarge, AI));
 
 		this.annuler = new Button();
 		this.annuler.setText("Annuler");

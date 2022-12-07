@@ -146,6 +146,7 @@ public class SettingsView extends View { // Classe similaire à GameView.java & 
                         makePauseFalse(); raquetteLarge.setStyle("-fx-background-color: #FDFCCB"); raquetteSmall.setStyle(null); raquetteMedium.setStyle(null);});
 
 
+
                 // on change la coleur du bouton qui change la taille de la raquette pour que ca
                 // soit plus clair quelle taille est actuellement choisie
 
