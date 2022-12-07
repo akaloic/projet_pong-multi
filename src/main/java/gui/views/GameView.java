@@ -4,6 +4,7 @@ import gui.SceneHandler;
 import gui.View;
 import javafx.animation.AnimationTimer;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -17,8 +18,6 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.*;
 import model.Court;
 import model.courts.CourtMulti;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class GameView extends View{
 
@@ -29,16 +28,13 @@ public class GameView extends View{
     private Button continu;
     private Line separateur;
     private Region border;
-    private final Text timeDisplay; //pour afficher le timer
-    private final Timer t;
-    private static int timeLeft  = 5;
+ 
 
     private Button menu;
-    private Button restart;
-
+    private final Label[] commande = new Label[5];
+    private static double opacity = 1;
     private final AnimationTimer timer=new AnimationTimer() {
         long last = 0;
-        
         @Override
         public void handle(long now) {
             if (last == 0) { // ignore the first tick, just compute the first deltaT
@@ -65,18 +61,22 @@ public class GameView extends View{
             score.setText(getCourt().getScoreA() + " - " + getCourt().getScoreB()); // On ajoute le score à animate() pour que
                                                                           // le texte s'actualise quand un des
                                                                           // joueurs marque
+
+            if (getCourt().getScoreA() == 10 || getCourt().getScoreB() == 10){
+                if (getCourt().getScoreA() == 10) getSceneHandler().switchToPageWin(getRoot(), "A", "2 joueurs");
+                else getSceneHandler().switchToPageWin(getRoot(), "B", "2 joueurs");
+                stop();
+            }
             
             if(getPause()) {     // si le champs boolean pause est vrai 
             	this.stop();            //on arrete le timer pour faire une pause du scene
             	this.last=0;            // comme le temps continue de s'avancer , il faut réunitialiser last en 0 pour qu'il soit réinitialisé par la valeur de now pour que le jeu repart au meme moment que là où on arrete
             	getRoot().getChildren().add(continu); // une fois le jeu arreter on fait afficher sur la scene un bouton qui permet de relancer le jeu
-                getRoot().getChildren().add(menu);
+                getRoot().getChildren().add(menu); 	
             }
+            //SI TIMEDISPLAY EST FINI => AFFICHER DES BOUTONS
+          
             
-            else if(timeDisplay.getText().equals("FIN DU JEU !")) {
-            	getRoot().getChildren().add(menu);
-            	getRoot().getChildren().add(restart);
-            }
                         
         }
         
@@ -84,27 +84,6 @@ public class GameView extends View{
    
     public GameView(Court court, Pane root, double scale, SceneHandler sceneHandler,int nbreracket) {
         super(court, root, scale, sceneHandler);
-        this.timeDisplay = new Text();
-        this.t = new Timer();
-        final TimerTask task = new TimerTask() {
-            public void run() {
-                if(timeLeft > 0) {
-                    timeDisplay.setText(String.valueOf(timeLeft));
-                    if(View.getPause()) { //ICI ON A PLUS GETPAUSE
-                    	 timeDisplay.setText(String.valueOf(timeLeft));
-                    }
-                    else {
-                    	timeLeft--;
-                    }
-                }
-                else{
-                	timeDisplay.setText("FIN DU JEU !");
-                    t.cancel();
-                }
-            }
-        };
-      
-
         Image image=new Image(MenuView.class.getResourceAsStream("./onepicebg.jpg"));
         ImageView backg=new ImageView(image);
         backg.setFitWidth(root.getMinWidth());
@@ -130,8 +109,6 @@ public class GameView extends View{
             racketA.setHeight(court.getRacketSize() * scale);
             racketA.setWidth(getRacketThickness());
             racketA.setFill(Color.BLACK);
-            racketA.setStroke(Color.CYAN);
-            racketA.setStrokeWidth(2);
             
             racketA.setX(getMargin() - getRacketThickness() + court.getRacketXA());
             racketA.setY(court.getRacketA() * scale);
@@ -144,8 +121,6 @@ public class GameView extends View{
              racketB.setHeight(court.getRacketSize() * scale);
              racketB.setWidth(getRacketThickness());
              racketB.setFill(Color.GREY);
-             racketB.setStroke(Color.CYAN);
-             racketB.setStrokeWidth(2);
              racketB.setX(court.getWidth() * scale + getMargin() + court.getRacketXB());
              racketB.setY(court.getRacketB() * scale);
              getRoot().getChildren().add(racketB);
@@ -184,50 +159,75 @@ public class GameView extends View{
         ball.setFill(Color.BLACK);
         ball.setCenterX(court.getBallX() * scale + getMargin());
         ball.setCenterY(court.getBallY() * scale);
-        
         continu=new Button("Continue");
         continu.setLayoutX(((court.getWidth() / 2) * scale) - 80);
         continu.setLayoutY(((court.getHeight() / 2) * scale) - 60);
         continu.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
         continu.setOnAction(event->animate());
-        
-        restart = new Button("Restart");
-        restart.setLayoutX(((court.getWidth() / 2) * scale) - 80);
-        restart.setLayoutY(((court.getHeight() / 2) * scale) - 60);
-        restart.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
-        restart.setOnAction(event-> sceneHandler.switchToGame(getRoot(), nbreracket, PlayerNumber.getRacketSmall(),PlayerNumber.getRacketMedium(),PlayerNumber.getRacketLarge()));        
+
+        commande[0] = new Label(" z : Monter pour joueur gauche ");
+        commande[0].setLayoutX(court.getWidth()/2 - 85);
+        commande[0].setLayoutY(200);
+        commande[0].setStyle("-fx-border-color: black; -fx-text-fill:black; -fx-font-size: 20;");
+        commande[1] = new Label(" s : Descendre pour joueur gauche ");
+        commande[1].setLayoutX(court.getWidth()/2 - 100);
+        commande[1].setLayoutY(250);
+        commande[1].setStyle("-fx-border-color: black; -fx-text-fill:black; -fx-font-size: 20;");
+        commande[2] = new Label(" p : Faire pause ");
+        commande[2].setLayoutX(court.getWidth()/2 - 40);
+        commande[2].setLayoutY(300);
+        commande[2].setStyle("-fx-border-color: black; -fx-text-fill:black; -fx-font-size: 20;");
+        commande[3] = new Label(" ESC : Quitter le jeu ");
+        commande[3].setLayoutX(court.getWidth()/2 - 50);
+        commande[3].setLayoutY(350);
+        commande[3].setStyle("-fx-border-color: black; -fx-text-fill:black; -fx-font-size: 20;");
+        commande[4] = new Label(" INSTRUCTIONS: ");
+        commande[4].setLayoutX(court.getWidth()/2 - 40);
+        commande[4].setLayoutY(120);
+        commande[4].setStyle("-fx-border-color: black; -fx-text-fill:black; -fx-font-size: 20;");
+
+
+
 
         menu=new Button("Menu");
         menu.setLayoutX(((court.getWidth() / 2) * scale) + 120);
         menu.setLayoutY(((court.getHeight() / 2) * scale) - 60);
         menu.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
         menu.setOnAction(event-> sceneHandler.switchToMenu(getRoot()));
-                
-        timeDisplay.setX((court.getWidth() / 3) * scale + getMargin() / 2);
-        timeDisplay.setY(35);
-        timeDisplay.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
-        timeDisplay.setFill(Color.RED);
+        getRoot().getChildren().addAll(ball, score, commande[0], commande[1], commande[2], commande[3], commande[4]);
+        // On ajoute le score aux éléments du Pane
         
-        getRoot().getChildren().addAll(ball, score, timeDisplay); // On ajoute le score aux éléments du Pane
-        timerStart(task);
+        
+        
+        //TIMEDISPLAY
 
     }
     public void animate() {
+        new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                opacity -= 0.002;
+                commande[0].opacityProperty().set(opacity);
+                commande[1].opacityProperty().set(opacity);
+                commande[2].opacityProperty().set(opacity);
+                commande[3].opacityProperty().set(opacity);
+                commande[4].opacityProperty().set(opacity);
+
+                if (opacity <= 0) {
+                    stop();
+                }
+            }
+        }.start();
         if(getRoot().getChildren().contains(continu)) {  // si on reprend / commence la partie il faut vérifier si le button continue existe
         	getRoot().getChildren().remove(continu); // si oui , on enleve les boutons
             getRoot().getChildren().remove(menu);
             pauseORcontinue();  // et on met aussi le champs boolean pause en false pour préparer à la prochaine demande de pause
         }
-        else if(getRoot().getChildren().contains(restart)) {
-        	getRoot().getChildren().remove(restart); // si oui , on enleve les boutons
-            getRoot().getChildren().remove(menu);
-            timer.start();  // on lance le timer 
-        }
         timer.start();  // on lance le timer 
+ 
      }
+    
+    //IL Y A MOYEN QUE J'AILLE A TIMEOUT
 
-    public void timerStart(TimerTask task) {
-    	t.scheduleAtFixedRate(task, 1000, 1000);
-    }
-
+    
 }
