@@ -78,47 +78,70 @@ public class GameView extends View {
 
                         ball.setCenterX(getCourt().getBallX() * getScale() + getMargin());
                         ball.setCenterY(getCourt().getBallY() * getScale());
-                      // score.setText(getCourt().getScoreA() + " - " + getCourt().getScoreB()); // On ajoute le score à                                                                      // pour que
+                        // score.setText(getCourt().getScoreA() + " - " + getCourt().getScoreB()); // On ajoute le score à                                                                      // pour que
                                                                                        // le texte s'actualise quand un des
 
-                        	lifePlayerLeft.setText("PlayerA : "+getCourt().getScoreA());
-                            lifePlayerR.setText("PlayerB : "+getCourt().getScoreB());
-                            lifePlayerU.setText("PlayerC : "+getCourt().getScoreC());
-                            lifePlayerD.setText("PlayerD : "+getCourt().getScoreD());
-                            if(getCourt().getScoreA()==0) {
-                            	if(getRoot().getChildren().contains(lifePlayerLeft)) {
-                            		getRoot().getChildren().removeAll(lifePlayerLeft,racketA);
-                            		getCourt().setRacketA(-30); 
-                            	}
+                        lifePlayerLeft.setText("PlayerA : "+getCourt().getScoreA());
+                        lifePlayerR.setText("PlayerB : "+getCourt().getScoreB());
+                        lifePlayerU.setText("PlayerC : "+getCourt().getScoreC());
+                        lifePlayerD.setText("PlayerD : "+getCourt().getScoreD());
+                        if(getCourt().getScoreA()==0) {
+                            if(getRoot().getChildren().contains(lifePlayerLeft)) {
+                                getRoot().getChildren().removeAll(lifePlayerLeft,racketA);
+                                getCourt().setRacketA(-30);
                             }
-                            if(getCourt().getScoreB()==0) {
-                            	if(getRoot().getChildren().contains(lifePlayerR)) {
-                            		getRoot().getChildren().removeAll(lifePlayerR,racketB);
-                            		getCourt().setRacketB(-30); 
-                            	}
+                        }
+                        if(getCourt().getScoreB()==0) {
+                            if(getRoot().getChildren().contains(lifePlayerR)) {
+                                getRoot().getChildren().removeAll(lifePlayerR,racketB);
+                                getCourt().setRacketB(-30);
                             }
-                            if(getCourt().getScoreC()==0) {
-                            	if(getRoot().getChildren().contains(lifePlayerU)) {
-                            		getRoot().getChildren().removeAll(lifePlayerU,racketC);
-                            		getCourt().setRacketXC(-30); 
-                            	}
+                        }
+                        if(getCourt().getScoreC()==0) {
+                            if(getRoot().getChildren().contains(lifePlayerU)) {
+                                getRoot().getChildren().removeAll(lifePlayerU,racketC);
+                                getCourt().setRacketXC(-30);
                             }
-                            if(getCourt().getScoreD()==0) {
-                            	if(getRoot().getChildren().contains(lifePlayerD)) {
-                            		getRoot().getChildren().removeAll(lifePlayerD,racketD);
-                            		getCourt().setRacketXD(-30); 
-                            	}
+                        }
+                        if(getCourt().getScoreD()==0) {
+                            if(getRoot().getChildren().contains(lifePlayerD)) {
+                                getRoot().getChildren().removeAll(lifePlayerD,racketD);
+                                getCourt().setRacketXD(-30);
                             }
-                           
-                           
-                       
+                        }
+
+
+                        /*
+                        if (getCourt().getScoreA() == 0 && getCourt().getScoreB() == 0 && getCourt().getScoreC() == 0 && getCourt().getScoreD() == 0) {
+                                timer.stop();
+                                getRoot().getChildren().removeAll(racketA, racketB, racketC, racketD, ball, lifePlayerLeft, lifePlayerR, lifePlayerU, lifePlayerD);
+                                getRoot().getChildren().addAll(continu, menu);
+                                continu.setOpacity(opacity);
+                                menu.setOpacity(opacity);
+                                opacity -= 0.01;
+                                if (opacity <= 0) {
+                                        opacity = 1;
+                                        timer.stop();
+                                }
+                        }
+
+                         */
+                        /*
+                        if (getCourt().getScoreA() == 10 || getCourt().getScoreB() == 10){
+                            if (getCourt().getScoreA() == 10) getSceneHandler().switchToPageWin(getRoot(), "A", "Robot");
+                            else getSceneHandler().switchToPageWin(getRoot(), "Robot", "Robot");
+                            stop();
+                        }
+
+                         */
+
 
                         if (getPause()) { // si le champs boolean pause est vrai
-                                this.stop(); // on arrete le timer pour faire une pause du scene
-                                this.last = 0; // comme le temps continue de s'avancer , il faut réunitialiser last en 0
-                                               // pour qu'il soit réinitialisé par la valeur de now pour que le jeu repart au moment que là où on arrete
-                                getRoot().getChildren().add(continu); // une fois le jeu arreter on fait afficher sur la scene un bouton qui permet de relancer le jeu
-                                getRoot().getChildren().add(menu);
+                                    this.stop(); // on arrete le timer pour faire une pause du scene
+                                    this.last = 0; // comme le temps continue de s'avancer , il faut réunitialiser last en 0
+                                                   // pour qu'il soit réinitialisé par la valeur de now pour que le jeu repart au moment que là où on arrete
+                                    getRoot().getChildren().add(continu); // une fois le jeu arreter on fait afficher sur la scene un bouton qui permet de relancer le jeu
+                                    getRoot().getChildren().add(menu);
 
                         }
 
