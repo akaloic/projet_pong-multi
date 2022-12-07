@@ -73,7 +73,7 @@ public class GameView extends View{
                 getRoot().getChildren().add(menu);
             }
             
-            else if(timeDisplay.getText().equals("FIN DU JEU !")) {
+            else if(timeLeft == 0) {
             	getRoot().getChildren().add(menu);
             	getRoot().getChildren().add(restart);
             }
@@ -90,7 +90,7 @@ public class GameView extends View{
             public void run() {
                 if(timeLeft > 0) {
                     timeDisplay.setText(String.valueOf(timeLeft));
-                    if(View.getPause()) { //ICI ON A PLUS GETPAUSE
+                    if(View.getPause()) {
                     	 timeDisplay.setText(String.valueOf(timeLeft));
                     }
                     else {
