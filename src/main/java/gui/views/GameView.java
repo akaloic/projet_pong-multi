@@ -71,13 +71,7 @@ public class GameView extends View{
             	this.last=0;            // comme le temps continue de s'avancer , il faut réunitialiser last en 0 pour qu'il soit réinitialisé par la valeur de now pour que le jeu repart au meme moment que là où on arrete
             	getRoot().getChildren().add(continu); // une fois le jeu arreter on fait afficher sur la scene un bouton qui permet de relancer le jeu
                 getRoot().getChildren().add(menu);
-            }
-            
-            else if(timeLeft == 0) {
-            	getRoot().getChildren().add(menu);
-            	getRoot().getChildren().add(restart);
-            }
-                        
+            }              
         }
         
     };
