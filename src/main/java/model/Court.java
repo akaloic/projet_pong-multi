@@ -69,20 +69,6 @@ public class Court {
             ballSpeedY = -ballSpeedY;
             nextBallY = ballY + deltaT * ballSpeedY;
         }
-        /*          //version de sisi
-        if ((nextBallX<racketXA && nextBallX>racketXA-30.0 && nextBallY > racketYA && nextBallY < racketYA + racketSize)        // Rebond raquette gauche
-        || (nextBallX>racketXB+width && nextBallX<racketXB+width+30.0 && nextBallY > racketYB && nextBallY < racketYB + racketSize)) // Rebond raquette droite
-        {
-        	if(nextBallX>width/2) {
-        		this.SpeedBallUpOrDown(preXB, racketXB);
-        	}else {
-        		this.SpeedBallUpOrDown(preXA, racketXA);
-        	}
-        	ballSpeedX = -ballSpeedX*this.coeefSpeedBall + 100;
-            nextBallX = ballX + deltaT * ballSpeedX;
-        }
-
-         */
         if (nextBallX<racketXA && nextBallX>racketXA-30.0 && nextBallY > racketYA && nextBallY < racketYA + racketSize){
             ballSpeedX = -ballSpeedX*this.coeefSpeedBall + 100;
             nextBallX = ballX + deltaT * ballSpeedX;
@@ -91,14 +77,6 @@ public class Court {
             ballSpeedX = -ballSpeedX*this.coeefSpeedBall - 100;
             nextBallX = ballX + deltaT * ballSpeedX;
         }
-        /*
-        if (nextBallX>racketXA && nextBallX<racketXA+10.0 && nextBallY > racketYA && nextBallY < racketYA + racketSize) {
-            ballSpeedX = -ballSpeedX + incremente;
-        }
-        if (nextBallX > width - 110 && (nextBallY <= racketYB + racketSize && nextBallY >= racketYB)){
-            ballSpeedX = -ballSpeedX - incremente;
-        }
-         */
 
         else if (nextBallX < 0) {
         	agetscore=false; 
@@ -278,6 +256,10 @@ public class Court {
 
     public double getBallSpeedY() {
         return ballSpeedY;
+    }
+
+    public double getBallSpeedX() {
+        return ballSpeedX;
     }
 
     public double getNextBallX() {
