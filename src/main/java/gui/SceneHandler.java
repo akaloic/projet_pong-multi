@@ -1,7 +1,6 @@
 package gui;
 
 import gui.entities.Player;
-
 import gui.views.*;
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
@@ -176,4 +175,11 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         }
     }
 
+    public void switchToPageWin(Pane settingRoot, String joueur, String typePartie){
+        settingRoot.getChildren().clear();
+        court = new Court(1000, 600);
+        view = new WinView(court, root, 1.0, this, joueur, typePartie);
+        stage.setScene(scene);
+        stage.show();
+    }
 }

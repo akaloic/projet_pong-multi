@@ -33,10 +33,9 @@ public class GameView extends View {
         private Button continu;
         private Line separateur;
         private Region border;
-
         private Button menu;
-
-
+        private final Label[] commande = new Label[5];
+        private static double opacity = 1;
         private final AnimationTimer timer = new AnimationTimer() {
                 long last = 0;
 
@@ -81,7 +80,7 @@ public class GameView extends View {
                         ball.setCenterY(getCourt().getBallY() * getScale());
                       // score.setText(getCourt().getScoreA() + " - " + getCourt().getScoreB()); // On ajoute le score à                                                                      // pour que
                                                                                        // le texte s'actualise quand un des
-        
+
                         	lifePlayerLeft.setText("PlayerA : "+getCourt().getScoreA());
                             lifePlayerR.setText("PlayerB : "+getCourt().getScoreB());
                             lifePlayerU.setText("PlayerC : "+getCourt().getScoreC());
@@ -231,23 +230,55 @@ public class GameView extends View {
                 menu.setLayoutY(((court.getHeight() / 2) * scale) - 60);
                 menu.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
                 menu.setOnAction(event -> sceneHandler.switchToMenu(getRoot()));
-                getRoot().getChildren().addAll(ball,lifePlayerLeft,lifePlayerR); // On ajoute le score aux éléments du Pane
+
+                commande[0] = new Label(" z : Monter pour joueur gauche ");
+                commande[0].setLayoutX(court.getWidth()/2 - 85);
+                commande[0].setLayoutY(200);
+                commande[0].setStyle("-fx-border-color: black; -fx-text-fill:black; -fx-font-size: 20;");
+                commande[1] = new Label(" s : Descendre pour joueur gauche ");
+                commande[1].setLayoutX(court.getWidth()/2 - 100);
+                commande[1].setLayoutY(250);
+                commande[1].setStyle("-fx-border-color: black; -fx-text-fill:black; -fx-font-size: 20;");
+                commande[2] = new Label(" p : Faire pause ");
+                commande[2].setLayoutX(court.getWidth()/2 - 40);
+                commande[2].setLayoutY(300);
+                commande[2].setStyle("-fx-border-color: black; -fx-text-fill:black; -fx-font-size: 20;");
+                commande[3] = new Label(" ESC : Quitter le jeu ");
+                commande[3].setLayoutX(court.getWidth()/2 - 50);
+                commande[3].setLayoutY(350);
+                commande[3].setStyle("-fx-border-color: black; -fx-text-fill:black; -fx-font-size: 20;");
+                commande[4] = new Label(" INSTRUCTIONS: ");
+                commande[4].setLayoutX(court.getWidth()/2 - 40);
+                commande[4].setLayoutY(120);
+                commande[4].setStyle("-fx-border-color: black; -fx-text-fill:black; -fx-font-size: 20;");
+
+                getRoot().getChildren().addAll(ball,lifePlayerLeft,lifePlayerR, commande[0], commande[1], commande[2], commande[3], commande[4]); // On ajoute le score aux éléments du Pane
 
         }
 
-        public void animate() {
-                if (getRoot().getChildren().contains(continu)) { // si on reprend / commence la partie il faut vérifier
-                                                                 // si le
-                                                                 // button continue existe
-                        getRoot().getChildren().remove(continu); // si oui , on enleve les boutons
-                        getRoot().getChildren().remove(menu);
-                        pauseORcontinue(); // et on met aussi le champs boolean pause en false pour préparer à la
-                                           // prochaine
-                                           // demande de pause
+    public void animate() {
+        new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                opacity -= 0.002;
+                commande[0].opacityProperty().set(opacity);
+                commande[1].opacityProperty().set(opacity);
+                commande[2].opacityProperty().set(opacity);
+                commande[3].opacityProperty().set(opacity);
+                commande[4].opacityProperty().set(opacity);
+
+                if (opacity <= 0) {
+                    stop();
                 }
-                timer.start(); // on lance le timer
-
+            }
+        }.start();
+        timer.start();
+        if (getRoot().getChildren().contains(continu)) {  // si on reprend / commence la partie il faut vérifier si le button continue existe
+            getRoot().getChildren().remove(continu); // si oui , on enleve les boutons
+            getRoot().getChildren().remove(menu);
+            pauseORcontinue();
         }
+    }
 
 
 }

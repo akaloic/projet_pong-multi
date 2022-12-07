@@ -177,6 +177,7 @@ public class PlayerNumber extends View {
 		getRoot().getChildren().addAll(AI1,AI2,AI3,AI4,HUMAIN1,HUMAIN2,HUMAIN3,HUMAIN4);
 		
 	}
+
 	private void incrementer() {
 		if(this.nbre<4) {
 			this.nbre++;

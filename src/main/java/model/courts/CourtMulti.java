@@ -27,7 +27,6 @@ public class CourtMulti extends Court{
         this.AI=AI;
         super.setNbrejoueur(p.length);
         reset();
-
     }
 
 
@@ -63,19 +62,25 @@ public class CourtMulti extends Court{
 
             }
         } else {
-            setCoefA(0.7);
-            if (getBallY() > getRacketA()) {
-                setRacketA(getRacketA() + getRacketSpeed() * deltaT * getCoefA());
-                if (getRacketA() + getRacketSpeed() * deltaT * getCoefA() > getHeight()) {
-                    setRacketA(getHeight() - 100);
+            setCoefB(0.8);
+
+            int xDirection = sensX(deltaT);
+
+            if (xDirection == 1 && getWidth()/2 < getBallX()){
+                if (getBallY() - 20 > getRacketB()) {
+                    setRacketB(getRacketB() + getRacketSpeed() * deltaT * getCoefB());
                 }
-            } else if (getBallY() < getRacketA()) {
-                setRacketA(getRacketA() - getRacketSpeed() * deltaT * getCoefA());
-                if (getRacketA() < 0.0) {
-                    setRacketA(0.0);
+                if (getBallY() - 60 < getRacketB()) {
+                    setRacketB(getRacketB() - getRacketSpeed() * deltaT * getCoefB());
+                }
+            }else{
+                if (getRacketB() > getHeight()/2){                                              //racketB dessus de milieuY
+                    setRacketB(getRacketB() - getRacketSpeed() * deltaT * getCoefB());
+                }
+                if (getRacketB() < getHeight()/2){                                              //racketB dessous de milieuY
+                    setRacketB(getRacketB() + getRacketSpeed() * deltaT * getCoefB());
                 }
             }
-
         }
 
         if (!AI[1] && getNbrej()>=2) {
@@ -108,16 +113,23 @@ public class CourtMulti extends Court{
             }
 
         } else {
-            setCoefB(0.7);
-            if (getBallY() > getRacketB()) {
-                setRacketB(getRacketB() + getRacketSpeed() * deltaT * getCoefB());
-                if (getRacketB() + getRacketSpeed() * deltaT * getCoefB() > getHeight()) {
-                    setRacketB(getHeight() - 100);
+            setCoefB(0.8);
+
+            int xDirection = sensX(deltaT);
+
+            if (xDirection == 1 && getWidth()/2 < getBallX()){
+                if (getBallY() - 20 > getRacketB()) {
+                    setRacketB(getRacketB() + getRacketSpeed() * deltaT * getCoefB());
                 }
-            } else if (getBallY() < getRacketB()) {
-                setRacketB(getRacketB() - getRacketSpeed() * deltaT * getCoefB());
-                if (getRacketB() < 0.0) {
-                    setRacketB(0.0);
+                if (getBallY() - 60 < getRacketB()) {
+                    setRacketB(getRacketB() - getRacketSpeed() * deltaT * getCoefB());
+                }
+            }else{
+                if (getRacketB() > getHeight()/2){                                              //racketB dessus de milieuY
+                    setRacketB(getRacketB() - getRacketSpeed() * deltaT * getCoefB());
+                }
+                if (getRacketB() < getHeight()/2){                                              //racketB dessous de milieuY
+                    setRacketB(getRacketB() + getRacketSpeed() * deltaT * getCoefB());
                 }
             }
 
@@ -201,8 +213,13 @@ public class CourtMulti extends Court{
       
        if (updateBall(deltaT))
             reset();
-        }   
+        }
 
+    private int sensX(double deltaT) {
+        if ( (getBallX() + deltaT * (-getBallSpeedX() + 100)) > getBallX() ) return -1;
+        if ( (getBallX() + deltaT * (-getBallSpeedX() + 100)) < getBallX() ) return 1;
+        return 0;
+    }
 
 
 }

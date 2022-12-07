@@ -31,6 +31,7 @@ public class Court {
     private double coeffSpeedC = 0.3;
     private double coeffSpeedD = 0.3;
     private double coeefSpeedBall = 1;
+    //private double nextBallX, nextBallY;
 
     public Court(double width, double height) {
         this.width = width;
@@ -65,43 +66,23 @@ public class Court {
 
     public boolean updateBall(double deltaT) {
         // first, compute possible next position if nothing stands in the way
-       double nextBallX = ballX + deltaT * ballSpeedX;
+        double nextBallX = ballX + deltaT * ballSpeedX;
         double nextBallY = ballY + deltaT * ballSpeedY;
         // next, see if the ball would meet some obstacle
         if (UPDowndevientMur(nextBallY) || DowndevientMur(nextBallY)) { // Rebonds plafond / sol
             ballSpeedY = -ballSpeedY;
             nextBallY = ballY + deltaT * ballSpeedY;
         }
-        if(LeftdevientMur(nextBallX)|| RightdevientMur(nextBallX)) {  //Rebonds gauche/droite
-        	ballSpeedX = -ballSpeedX;
+        if (nextBallX<racketXA && nextBallX>racketXA-30.0 && nextBallY > racketYA && nextBallY < racketYA + racketSize){
+            ballSpeedX = -ballSpeedX*this.coeefSpeedBall + 100;
+            nextBallX = ballX + deltaT * ballSpeedX;
+        }
+        if (nextBallX>racketXB+width && nextBallX<racketXB+width+30.0 && nextBallY > racketYB && nextBallY < racketYB + racketSize){
+            ballSpeedX = -ballSpeedX*this.coeefSpeedBall - 100;
             nextBallX = ballX + deltaT * ballSpeedX;
         }
 
-        if ((nextBallX < racketXA && nextBallX > racketXA - 30.0 && nextBallY > racketYA
-                && nextBallY < racketYA + racketSize) // Rebond raquette gauche
-                || (nextBallX > racketXB + width && nextBallX < racketXB + width + 30.0 && nextBallY > racketYB
-                        && nextBallY < racketYB + racketSize)) // Rebond raquette droite
-        {
-            ballSpeedX = -ballSpeedX * this.coeefSpeedBall;
-            nextBallX = ballX + deltaT * ballSpeedX;
-        }if ((nextBallX < racketXA && nextBallX > racketXA - 30.0 && nextBallY > racketYA
-                && nextBallY < racketYA + racketSize) // Rebond raquette gauche
-                || (nextBallX > racketXB + width && nextBallX < racketXB + width + 30.0 && nextBallY > racketYB
-                        && nextBallY < racketYB + racketSize)) // Rebond raquette droite
-        {
-            ballSpeedX = -ballSpeedX * this.coeefSpeedBall;
-            nextBallX = ballX + deltaT * ballSpeedX;
-        } else if ((nextBallY < 55.0 + 20.0 && nextBallX > width / 2 + racketXC - 55
-                && nextBallX < width / 2 + racketXC + racketSize - 55) // rebond de raquette haut ,//55.0 c'est la
-                                                                       // valeur de la marge + epaisseur de bordure.
-                || (nextBallY > height - 25.00 && nextBallX > width / 2 + racketXD - 55
-                        && nextBallX < width / 2 + racketXD + racketSize - 55)) {
 
-            ballSpeedY = -ballSpeedY * this.coeefSpeedBall;
-            nextBallY = ballY + deltaT * ballSpeedY;
-        }else if(perdUnPoint(nextBallX,nextBallY,this.nbrejoueur)) {
-        	return true;
-        }
         ballX = nextBallX;
         ballY = nextBallY;
         return false;
@@ -245,6 +226,13 @@ public class Court {
         return scoreB;
     }
 
+    public double getBallSpeedY() {
+        return ballSpeedY;
+    }
+
+    public double getBallSpeedX() {
+        return ballSpeedX;
+    }
     public double getRacketSpeed() {
         return racketSpeed;
     }
