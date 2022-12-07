@@ -1,10 +1,11 @@
 package gui;
 
 import gui.entities.Player;
-import gui.views.GameView;
-import gui.views.MenuView;
-import gui.views.PlayerNumber;
-import gui.views.SettingsView;
+
+import gui.views.*;
+import javafx.animation.AnimationTimer;
+import javafx.geometry.Insets;
+
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -114,6 +115,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         stage.show();
         ((GameView) view).animate();
     }
+
 
 
     public void switchToSettings(Pane menuRoot) { // Méthode permettant de passer de menu à Settings
