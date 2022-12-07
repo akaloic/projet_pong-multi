@@ -23,12 +23,11 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
 
 
     public SceneHandler(Stage stage) { 
-                                     
+
         this.root = new Pane();
         this.scene = new Scene(root);
         this.stage = stage;
-       
-    
+           
     }
 
     public Scene getScene() {
@@ -120,7 +119,27 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         stage.setScene(scene);
         stage.show();
         gameView.animate();
-    }    
+    }
+
+    public void switchToOnlineMenu(Pane menuRoot) {
+        menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
+                                        // afficher le jeu sans problèmes.
+        court = new Court(1000, 600);
+        var gameView = new OnlineMenuView(court, root, 1.0, this);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToOnlineGame(String ip, String port, Pane menuRoot, boolean isCreating) {
+        menuRoot.getChildren().clear();
+        court = new Court(1000, 600);
+        var gameView = new OnlineGameView(court, root, 1.0, this, ip, port, false);
+        stage.setScene(scene);
+        stage.show();
+        gameView.animate();
+    
+
+    }
 
     public void switchToSettings(Pane menuRoot) { // Méthode permettant de passer de menu à Settings
         menuRoot.getChildren().clear();

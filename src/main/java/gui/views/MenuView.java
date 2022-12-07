@@ -15,6 +15,7 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
     // children of the game main node
     private final Text title;
     private final Button start;
+    private final Button online;
     private final Button settings;
     private final Button shutdown;
 
@@ -55,6 +56,16 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
         start.setOnMouseEntered(event-> start.setTextFill(Color.RED));
         start.setOnMouseExited(event-> start.setTextFill(Color.BLACK));
         start.setBackground(null);
+
+        online = new Button("Online");
+        online.setLayoutX(((court.getWidth() / 2) * scale) - 80);
+        online.setLayoutY(court.getHeight() / 2 + 200);
+        online.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 50));
+        online.setOnMouseClicked(event -> sceneHandler.switchToOnlineMenu(getRoot())); // Lorsqu'on appuie sur le bouton,
+                                                                                      // cela
+        online.setOnMouseEntered(event -> online.setTextFill(Color.RED));
+        online.setOnMouseExited(event -> online.setTextFill(Color.BLACK));
+        online.setBackground(null);
         
       /*                                                                  // enclanche la méthode switchToGame()
         start.setLayoutY(((court.getHeight() / 2) * scale) - 60);
@@ -80,7 +91,7 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
         // enclanche la méthode switchToGame()
         shutdown = new Button("Quitter");
         shutdown.setLayoutX(((court.getWidth() / 2) * scale) - 80);
-        shutdown.setLayoutY(court.getHeight()/2+200);
+        shutdown.setLayoutY(court.getHeight()/2+300);
         shutdown.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 50));
         shutdown.setBackground(null);
         shutdown.setOnMouseEntered(event-> shutdown.setTextFill(Color.RED));
@@ -89,7 +100,7 @@ public class MenuView extends View{ // Classe similaire à GameView.java avec de
         
         
 
-        getRoot().getChildren().addAll(backg, start, settings,shutdown); // On ajoute le title
+        getRoot().getChildren().addAll(backg, start, settings, online, shutdown); // On ajoute le title
        
 
         // et les boutons aux éléments du Pane

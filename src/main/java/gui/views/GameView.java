@@ -31,7 +31,7 @@ public class GameView extends View{
     private Button menu;
     private final Label[] commande = new Label[5];
     private static double opacity = 1;
-    private final AnimationTimer timer=new AnimationTimer() {
+    private final AnimationTimer timer = new AnimationTimer() {
         long last = 0;
         @Override
         public void handle(long now) {

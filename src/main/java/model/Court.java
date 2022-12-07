@@ -344,7 +344,4 @@ public class Court {
         this.racketSize = size;
     }
 
-
-
-
 }
