@@ -73,20 +73,35 @@ public class Court {
             ballSpeedY = -ballSpeedY;
             nextBallY = ballY + deltaT * ballSpeedY;
         }
-        if (nextBallX<racketXA && nextBallX>racketXA-30.0 && nextBallY > racketYA && nextBallY < racketYA + racketSize){
-            ballSpeedX = -ballSpeedX*this.coeefSpeedBall + 100;
-            nextBallX = ballX + deltaT * ballSpeedX;
-        }
-        if (nextBallX>racketXB+width && nextBallX<racketXB+width+30.0 && nextBallY > racketYB && nextBallY < racketYB + racketSize){
-            ballSpeedX = -ballSpeedX*this.coeefSpeedBall - 100;
+        if(LeftdevientMur(nextBallX)|| RightdevientMur(nextBallX)) {  //Rebonds gauche/droite
+        	ballSpeedX = -ballSpeedX;
             nextBallX = ballX + deltaT * ballSpeedX;
         }
 
+        if ((nextBallX < racketXA && nextBallX > racketXA - 30.0 && nextBallY > racketYA
+                && nextBallY < racketYA + racketSize) // Rebond raquette gauche
+                || (nextBallX > racketXB + width && nextBallX < racketXB + width + 30.0 && nextBallY > racketYB
+                        && nextBallY < racketYB + racketSize)) // Rebond raquette droite
+        {
+            ballSpeedX = -ballSpeedX * this.coeefSpeedBall;
+            nextBallX = ballX + deltaT * ballSpeedX;
+        
+        } else if ((nextBallY < 55.0 + 20.0 && nextBallX > width / 2 + racketXC - 55
+                && nextBallX < width / 2 + racketXC + racketSize - 55) // rebond de raquette haut ,//55.0 c'est la
+                                                                       // valeur de la marge + epaisseur de bordure.
+                || (nextBallY > height - 25.00 && nextBallX > width / 2 + racketXD - 55
+                        && nextBallX < width / 2 + racketXD + racketSize - 55)) {
 
+            ballSpeedY = -ballSpeedY * this.coeefSpeedBall;
+            nextBallY = ballY + deltaT * ballSpeedY;
+        }else if(perdUnPoint(nextBallX,nextBallY,this.nbrejoueur)) {
+        	return true;
+        }
         ballX = nextBallX;
         ballY = nextBallY;
         return false;
     }
+
 
     public boolean perdUnPoint(double nextBallX,double nextBallY,int nbrejoueur) {
     	 if (nextBallX < -20) {

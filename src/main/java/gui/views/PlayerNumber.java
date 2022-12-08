@@ -105,11 +105,11 @@ public class PlayerNumber extends View {
 		AI1.setLayoutX(centerX+160);
 		AI1.setLayoutY(centerY+spacey-20);
 		AI1.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
-		AI1.setOnAction(event->{this.AI[0]=true;AI1.setDisable(true);HUMAIN1.setDisable(false);});
+		AI1.setDisable(true);
+		AI1.setOnAction(event->{this.AI[0]=false;AI1.setDisable(true);HUMAIN1.setDisable(false);});
 		HUMAIN1.setLayoutX(centerX+160+40);
-		HUMAIN1.setDisable(true);
 		HUMAIN1.setLayoutY(centerY+spacey-20);
-		HUMAIN1.setOnAction(event->{this.AI[0]=false;HUMAIN1.setDisable(true);AI1.setDisable(false);});
+		HUMAIN1.setOnAction(event->{this.AI[0]=true;HUMAIN1.setDisable(true);AI1.setDisable(false);});
 		HUMAIN1.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
 
 		spacey+=30;
@@ -118,12 +118,12 @@ public class PlayerNumber extends View {
 		text4.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
 		AI2.setLayoutX(centerX+160);    //on  met insivible les button AI et HUMAIN et les déactiver au départ pour qu'ils n'affichent que lorsque le joueur choisit i joueurs au terrain
 		AI2.setLayoutY(centerY+spacey-20);
+		AI2.setDisable(true);
 		AI2.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
-		AI2.setOnAction(event->{this.AI[1]=true;AI2.setDisable(true);HUMAIN2.setDisable(false);});
+		AI2.setOnAction(event->{this.AI[1]=false;AI2.setDisable(true);HUMAIN2.setDisable(false);});
 		HUMAIN2.setLayoutX(centerX+160+40);
-		HUMAIN2.setDisable(true);
 		HUMAIN2.setLayoutY(centerY+spacey-20);
-		HUMAIN2.setOnAction(event->{this.AI[1]=false;HUMAIN2.setDisable(true);AI2.setDisable(false);});
+		HUMAIN2.setOnAction(event->{this.AI[1]=true;HUMAIN2.setDisable(true);AI2.setDisable(false);});
 		HUMAIN2.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
 
 
@@ -134,12 +134,13 @@ public class PlayerNumber extends View {
 		text5.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
 		AI3.setLayoutX(centerX+160);     //on  met insivible les button AI et HUMAIN et les déactiver au départ pour qu'ils n'affichent que lorsque le joueur choisit i joueurs au terrain
 		AI3.setLayoutY(centerY+spacey-20);
+		AI3.setDisable(true);
 		AI3.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
-		AI3.setOnAction(event->{this.AI[2]=true;AI3.setDisable(true);HUMAIN3.setDisable(false);});
+		AI3.setOnAction(event->{this.AI[2]=false;AI3.setDisable(true);HUMAIN3.setDisable(false);});
 		HUMAIN3.setLayoutX(centerX+160+40);
 		HUMAIN3.setDisable(true);
 		HUMAIN3.setLayoutY(centerY+spacey-20);
-		HUMAIN3.setOnAction(event->{this.AI[2]=false;HUMAIN3.setDisable(true);AI3.setDisable(false);});
+		HUMAIN3.setOnAction(event->{this.AI[2]=true;HUMAIN3.setDisable(true);AI3.setDisable(false);});
 		HUMAIN3.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
 		
 		
@@ -151,11 +152,11 @@ public class PlayerNumber extends View {
 		AI4.setLayoutX(centerX+160);                   // bouton AI pour joueur 4
 		AI4.setLayoutY(centerY+spacey-20);
 		AI4.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
-		AI4.setOnAction(event->{this.AI[3]=true;AI4.setDisable(true);HUMAIN4.setDisable(false);});
+		AI4.setDisable(true);
+		AI4.setOnAction(event->{this.AI[3]=false;AI4.setDisable(true);HUMAIN4.setDisable(false);});
 		HUMAIN4.setLayoutX(centerX+160+40); //bouton HUMAIN pour joueur 4
-		HUMAIN4.setDisable(true);
 		HUMAIN4.setLayoutY(centerY+spacey-20);
-		HUMAIN4.setOnAction(event->{this.AI[3]=false;HUMAIN4.setDisable(true);AI4.setDisable(false);});
+		HUMAIN4.setOnAction(event->{this.AI[3]=true;HUMAIN4.setDisable(true);AI4.setDisable(false);});
 		HUMAIN4.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
 		
 		
@@ -181,16 +182,18 @@ public class PlayerNumber extends View {
 	private void incrementer() {
 		if(this.nbre<4) {
 			this.nbre++;
+			this.showbutton(nbre);
 		}
-		this.showbutton(nbre);
+		
 		
 
 	}
 	private void decrementer() {
 		if(this.nbre>1) {
 			this.nbre--;
+			this.hidebutton(nbre);
 		}
-		this.hidebutton(nbre);
+		
 	}
 
 	public void animate() {
