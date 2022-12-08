@@ -12,8 +12,8 @@ import model.Court;
 
 public class WinView extends View{
 
-    private final Text gagnant;
-    private final Button again;
+    public final Text gagnant;
+    public final Button again;
     private final Button menu;
 
     public WinView(Court court, Pane root, double scale, SceneHandler sceneHandler, String joueur, String typePartie) {

@@ -31,6 +31,10 @@ public class GameView extends View {
         private final Text lifePlayerR;
         private final Text lifePlayerU;
         private final Text lifePlayerD;
+        private final Text timeDisplay;
+        private final Text timeOut;
+        private static int timeLeft = 5;
+        private Timer temps;
         private Button continu;
         private Line separateur;
         private Region border;
@@ -143,9 +147,12 @@ public class GameView extends View {
                                                    // pour qu'il soit réinitialisé par la valeur de now pour que le jeu repart au moment que là où on arrete
                                     getRoot().getChildren().add(continu); // une fois le jeu arreter on fait afficher sur la scene un bouton qui permet de relancer le jeu
                                     getRoot().getChildren().add(menu);
-
                         }
-
+                        
+                        else if(timeLeft == (-1)) { //Si le temps est 0, on affiche les boutons Restart et Menu
+                        	this.stop();
+                        	this.last = 0;
+                        }
                 }
 
         };
@@ -155,6 +162,23 @@ public class GameView extends View {
 
         public GameView(Court court, Pane root, double scale, SceneHandler sceneHandler, int nbreracket,boolean[]AI) {
                 super(court, root, scale, sceneHandler);
+                this.timeDisplay = new Text();
+                this.timeOut = new Text();
+                this.temps = new Timer(); 	//Initialiser le timer
+
+                final TimerTask task = new TimerTask() {
+                    public void run() {
+                        if(timeLeft >= 0) {	//Tant qu'on a un temps positif : on décrémente ce temps
+                            timeDisplay.setText(String.valueOf(timeLeft));
+                            timeLeft--;
+                        }
+                        else {
+                        	timeOut.setText("TIME OUT"); //Arrivant à zéro, le temps s'arrête
+                        	temps.cancel();
+                        }
+                    }
+                };
+                
                 this.nbreRacket=nbreracket;
                 this.AI=AI;  // initialiser l'attribut avec le tab qui est passée par PlayerNumberView
                 Image image = new Image(MenuView.class.getResourceAsStream("./onepicebg.jpg"));
@@ -254,6 +278,21 @@ public class GameView extends View {
                 menu.setLayoutY(((court.getHeight() / 2) * scale) - 60);
                 menu.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
                 menu.setOnAction(event -> sceneHandler.switchToMenu(getRoot()));
+                
+                timeDisplay.setX((court.getWidth() / 3) * scale + getMargin());
+                timeDisplay.setY(35);
+                timeDisplay.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 40));
+                timeDisplay.setFill(Color.BLACK);
+                timeDisplay.setStrokeWidth(2); 
+                timeDisplay.setStroke(Color.CYAN);
+                
+                timeOut.setLayoutX(((court.getWidth() / 2) * scale) - 80 );
+                timeOut.setLayoutY(((court.getHeight() / 2) * scale) - 60);
+                timeOut.setFont(Font.font("verdana", FontWeight.EXTRA_BOLD, FontPosture.REGULAR, 40));
+                timeOut.setFill(Color.BLACK);
+                timeOut.setStrokeWidth(2); 
+                timeOut.setStroke(Color.CYAN);
+
 
                 commande[0] = new Label(" z : Monter pour joueur gauche ");
                 commande[0].setLayoutX(court.getWidth()/2 - 85);
@@ -275,10 +314,17 @@ public class GameView extends View {
                 commande[4].setLayoutX(court.getWidth()/2 - 40);
                 commande[4].setLayoutY(120);
                 commande[4].setStyle("-fx-border-color: black; -fx-text-fill:black; -fx-font-size: 20;");
+                
+                
 
-                getRoot().getChildren().addAll(ball,lifePlayerLeft,lifePlayerR, commande[0], commande[1], commande[2], commande[3], commande[4]); // On ajoute le score aux éléments du Pane
-
+                getRoot().getChildren().addAll(ball,lifePlayerLeft,lifePlayerR, timeDisplay, timeOut, commande[0], commande[1], commande[2], commande[3], commande[4]); // On ajoute le score aux éléments du Pane
+                compteARebour(task);
         }
+        
+        public void compteARebour(TimerTask task) {
+            temps.scheduleAtFixedRate(task, 1000, 1000); // used to schedule the task for execution at the given time
+       }
+
 
     public void animate() {
         new AnimationTimer() {
