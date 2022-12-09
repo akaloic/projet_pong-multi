@@ -262,7 +262,7 @@ public class GameView extends View {
                 menu.setLayoutX(((court.getWidth() / 2) * scale) + 120);
                 menu.setLayoutY(((court.getHeight() / 2) * scale) - 60);
                 menu.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
-                menu.setOnAction(event -> sceneHandler.switchToMenu(getRoot()));
+                menu.setOnAction(event -> {pauseORcontinue();sceneHandler.switchToMenu(getRoot());});
 
                 commande[0] = new Label(" z : Monter pour joueur gauche ");
                 commande[0].setLayoutX(court.getWidth()/2 - 85);
