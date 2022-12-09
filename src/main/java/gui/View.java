@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.Color;
 
+import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Border;
@@ -35,7 +36,6 @@ public abstract class View {
         
 
     }
-
 
     public Court getCourt() {
         return court;

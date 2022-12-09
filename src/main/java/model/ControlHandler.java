@@ -24,11 +24,10 @@ public class ControlHandler {
                     players[0].state = RacketController.State.GOING_DOWN;
                     break;
                 case Q:
-                    if (players.length > 2) {
+                    if (players.length > 2 ) {
                         players[2].state = RacketController.State.GOING_LEFT;
                         break;
                     }
-
                     players[0].state = RacketController.State.GOING_LEFT;
                     break;
                 case D:
@@ -45,7 +44,7 @@ public class ControlHandler {
                     players[1].state = RacketController.State.GOING_DOWN;
                     break;
                 case RIGHT:
-                    if (players.length > 2) {
+                    if (players.length > 2 ) {
                         if (players.length == 4) {
                             players[3].state = RacketController.State.GOING_RIGHT;
                         }
@@ -68,7 +67,6 @@ public class ControlHandler {
                 default:
                     ;
             }
-
         });
         sceneHandler.getScene().setOnKeyReleased(ev -> {
             switch (ev.getCode()) {
