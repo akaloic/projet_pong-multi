@@ -246,6 +246,8 @@ public class PlayerNumber extends View {
         return racketLarge;
     }
 	
- 
+    public int getNb() {
+    	return nbre;
+    }
     
 }

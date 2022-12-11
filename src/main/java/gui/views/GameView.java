@@ -39,8 +39,11 @@ public class GameView extends View {
         private Line separateur;
         private Region border;
         private Button menu;
+        private Button replay;
         private final Label[] commande = new Label[5];
         private static double opacity = 1;
+        
+        //FAIS CA STP : public PlayerNumber(Court court,Pane root,double scale,SceneHandler scenehandler)
         private final AnimationTimer timer = new AnimationTimer() {
                 long last = 0;
                 
@@ -152,6 +155,8 @@ public class GameView extends View {
                         else if(timeLeft == (-1)) { //Si le temps est 0, on affiche les boutons Restart et Menu
                         	this.stop();
                         	this.last = 0;
+                        	getRoot().getChildren().add(replay); // une fois le jeu arreter on fait afficher sur la scene un bouton qui permet de relancer le jeu
+                            getRoot().getChildren().add(menu);
                         }
                 }
         };
@@ -269,14 +274,14 @@ public class GameView extends View {
                 ball.setCenterX(court.getBallX() * scale + getMargin());
                 ball.setCenterY(court.getBallY() * scale);
                 continu = new Button("Continue");
-                continu.setLayoutX(((court.getWidth() / 2) * scale) - 80);
+                continu.setLayoutX(((court.getWidth() / 2) * scale) - 120);
                 continu.setLayoutY(((court.getHeight() / 2) * scale) - 60);
                 continu.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
                 continu.setOnAction(event -> animate());
 
                 menu = new Button("Menu");
                 menu.setLayoutX(((court.getWidth() / 2) * scale) + 120);
-                menu.setLayoutY(((court.getHeight() / 2) * scale) - 60);
+                menu.setLayoutY(((court.getHeight() / 2) * scale));
                 menu.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
                 menu.setOnAction(event -> sceneHandler.switchToMenu(getRoot()));
                 
@@ -293,6 +298,13 @@ public class GameView extends View {
                 timeOut.setFill(Color.BLACK);
                 timeOut.setStrokeWidth(2); 
                 timeOut.setStroke(Color.CYAN);
+                
+                replay = new Button("Replay");
+                replay.setLayoutX(((court.getWidth() / 2) * scale) - 180);
+                replay.setLayoutY(((court.getHeight() / 2) * scale));
+                replay.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
+                replay.setOnAction(event -> sceneHandler.switchToGame(getRoot()));
+               // replay.setOnAction(event -> animate());
 
 
                 commande[0] = new Label(" z : Monter pour joueur gauche ");
@@ -318,7 +330,7 @@ public class GameView extends View {
                 
                 
 
-                getRoot().getChildren().addAll(ball,lifePlayerLeft,lifePlayerR, timeDisplay, timeOut, commande[0], commande[1], commande[2], commande[3], commande[4]); // On ajoute le score aux éléments du Pane
+                getRoot().getChildren().addAll(ball,lifePlayerLeft,lifePlayerR, timeDisplay, timeOut,  replay, commande[0], commande[1], commande[2], commande[3], commande[4]); // On ajoute le score aux éléments du Pane
                 compteARebour(task);
         }
         
@@ -347,6 +359,10 @@ public class GameView extends View {
             getRoot().getChildren().remove(continu); // si oui , on enleve les boutons
             getRoot().getChildren().remove(menu);
             pauseORcontinue();
+        }
+        if(getRoot().getChildren().contains(replay)) {
+        	getRoot().getChildren().remove(replay);
+        	getRoot().getChildren().remove(menu);
         }
     }
 }
