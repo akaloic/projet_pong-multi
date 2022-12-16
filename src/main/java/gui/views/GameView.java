@@ -274,14 +274,14 @@ public class GameView extends View {
                 ball.setCenterX(court.getBallX() * scale + getMargin());
                 ball.setCenterY(court.getBallY() * scale);
                 continu = new Button("Continue");
-                continu.setLayoutX(((court.getWidth() / 2) * scale) - 120);
+                continu.setLayoutX(((court.getWidth() / 2) * scale) - 80);
                 continu.setLayoutY(((court.getHeight() / 2) * scale) - 60);
                 continu.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
                 continu.setOnAction(event -> animate());
 
                 menu = new Button("Menu");
                 menu.setLayoutX(((court.getWidth() / 2) * scale) + 120);
-                menu.setLayoutY(((court.getHeight() / 2) * scale));
+                menu.setLayoutY(((court.getHeight() / 2) * scale) - 60);
                 menu.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
                 menu.setOnAction(event -> sceneHandler.switchToMenu(getRoot()));
                 
@@ -293,15 +293,15 @@ public class GameView extends View {
                 timeDisplay.setStroke(Color.CYAN);
                 
                 timeOut.setLayoutX(((court.getWidth() / 2) * scale) - 80 );
-                timeOut.setLayoutY(((court.getHeight() / 2) * scale) - 60);
+                timeOut.setLayoutY(((court.getHeight() / 2) * scale) - 120);
                 timeOut.setFont(Font.font("verdana", FontWeight.EXTRA_BOLD, FontPosture.REGULAR, 40));
                 timeOut.setFill(Color.BLACK);
                 timeOut.setStrokeWidth(2); 
                 timeOut.setStroke(Color.CYAN);
                 
                 replay = new Button("Replay");
-                replay.setLayoutX(((court.getWidth() / 2) * scale) - 180);
-                replay.setLayoutY(((court.getHeight() / 2) * scale));
+                replay.setLayoutX(((court.getWidth() / 2) * scale) - 80);
+                replay.setLayoutY(((court.getHeight() / 2) * scale) - 60);
                 replay.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
                 replay.setOnAction(event -> sceneHandler.switchToGame(getRoot()));
                // replay.setOnAction(event -> animate());
