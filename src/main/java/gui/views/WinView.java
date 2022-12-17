@@ -16,7 +16,7 @@ public class WinView extends View{
     private final Button again;
     private final Button menu;
 
-    public WinView(Court court, Pane root, double scale, SceneHandler sceneHandler, String joueur, String typePartie) {
+    public WinView(Court court, Pane root, double scale, SceneHandler sceneHandler, String joueur, boolean []AI,int n,boolean small,boolean medium,boolean large,boolean SystemdeVie) {
 
         super(court, root, scale, sceneHandler);
         root.setMinWidth(court.getWidth() * scale + 2 * getMargin());
@@ -26,6 +26,8 @@ public class WinView extends View{
         switch (joueur){
             case "A": qui="le joueur A"; break;
             case "B": qui="le joueur B"; break;
+            case "C": qui="le joueur C";break;
+            case "D": qui="le joueur D";break;
             default: qui="le robot";
         }
 
@@ -47,8 +49,8 @@ public class WinView extends View{
         this.again.setLayoutX(((court.getWidth() / 2) * scale) - 20);
         this.again.setLayoutY(((court.getHeight() / 2) * scale) + 200);
         this.again.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
-        if (typePartie.equals("Robot"))  this.again.setOnAction(event -> sceneHandler.switchToGameR(getRoot(), getRacketThickness()));
-        else  this.again.setOnAction(event -> sceneHandler.switchToGame(getRoot()));
+;
+        this.again.setOnAction(event -> sceneHandler.switchToGame(getRoot(),n,small,medium,large,AI,SystemdeVie));
 
         /*Image image=new Image(MenuView.class.getResourceAsStream("./onepicebg.jpg"));
         ImageView backg=new ImageView(image);
