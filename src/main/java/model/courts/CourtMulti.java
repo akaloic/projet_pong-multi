@@ -14,15 +14,15 @@ public class CourtMulti extends Court{
     
     
     
-    public CourtMulti(RacketController[]p, double width, double height) {
+    public CourtMulti(RacketController[]p, double width, double height,boolean S) {
         super(width, height);
         this.players=p;
         super.setNbrejoueur(p.length);
         reset();
     }
 
-    public CourtMulti(RacketController[]p,double width, double height, double racketSize,boolean[]AI) { //nouveau constructeur pour qu'on puisse modifier la taille de la raquette
-        super(width,height,racketSize);
+    public CourtMulti(RacketController[]p,double width, double height, double racketSize,boolean[]AI,boolean S) { //nouveau constructeur pour qu'on puisse modifier la taille de la raquette
+        super(width,height,racketSize,S);
         this.players=p;
         this.AI=AI;
         super.setNbrejoueur(p.length);
