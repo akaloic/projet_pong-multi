@@ -64,6 +64,9 @@ public class ControlHandler {
                 case SPACE:
                     View.pauseORcontinue();
                     break;
+                case ESCAPE:
+                	System.exit(0);
+                	break;
                 default:
                     ;
             }

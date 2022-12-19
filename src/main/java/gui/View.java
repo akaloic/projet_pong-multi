@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.Color;
 
+import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.Border;
@@ -22,17 +23,19 @@ public abstract class View {
     private final double scale, Margin = 50.0, racketThickness = 20.0;
     private static boolean pause=false; //si vrai on met le timer stop sinon le jeu continue de jouer
     // donc false par défaut par conséquent le jeu marche normalement;
+
+
     public View (Court court, Pane root, double scale, SceneHandler sceneHandler) {
         this.court = court;
         this.root = root;
         this.scale = scale;
         this.sceneHandler = sceneHandler;
+
         root.setMinWidth(court.getWidth() * scale+2*Margin );
         root.setMinHeight(court.getHeight() * scale+2*Margin);  
         
 
     }
-
 
     public Court getCourt() {
         return court;
