@@ -20,7 +20,8 @@ import sound.AudioBank;
 public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
-        AudioBank.menuSongPlayer.setAutoPlay(true);
+        AudioBank.menuSongPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        AudioBank.menuSongPlayer.play();
         primaryStage.setTitle("JeuPong");
         Image image = new Image(App.class.getResourceAsStream("./icon.png"));
         primaryStage.getIcons().add(image);
