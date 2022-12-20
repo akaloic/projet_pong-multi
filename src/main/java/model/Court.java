@@ -251,6 +251,14 @@ public class Court {
         this.racketXC = 0;
         this.racketXD = 0;
         this.lastPlayer = 0;
+        if(this.nbrejoueur==2) {
+        	if(ballSpeedX==-200) {
+        		lastPlayer=2;
+        	}else {
+        		lastPlayer=1;
+        	}
+        }
+        
     }
 
     public void setNbrejoueur(int n) {

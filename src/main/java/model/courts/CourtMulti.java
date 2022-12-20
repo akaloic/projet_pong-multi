@@ -17,16 +17,7 @@ public class CourtMulti extends Court {
         reset();
     }
 
-    public CourtMulti(RacketController[] p, double width, double height, double racketSize, boolean[] AI, boolean S) { // nouveau
-                                                                                                                       // constructeur
-                                                                                                                       // pour
-                                                                                                                       // qu'on
-                                                                                                                       // puisse
-                                                                                                                       // modifier
-                                                                                                                       // la
-                                                                                                                       // taille
-                                                                                                                       // de
-                                                                                                                       // la
+    public CourtMulti(RacketController[] p, double width, double height, double racketSize, boolean[] AI, boolean S) { // nouveau                                                                                                    // la
                                                                                                                        // raquette
         super(width, height, racketSize, S);
         this.players = p;
