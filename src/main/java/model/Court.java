@@ -23,7 +23,7 @@ public class Court {
     private double ballSpeedX, ballSpeedY; // m
     private int scoreA, scoreB, scoreC, scoreD;
     private int nbrejoueur;
-    private boolean agetscore = true;// true pour playerA a marqué le point sinon false pour PlayerB a marqué le
+   // private boolean agetscore = true;// true pour playerA a marqué le point sinon false pour PlayerB a marqué le
                                      // point;
     private double coeffSpeedA = 0.3; // variable qui permet ralentir la vitesse de raquetteA avant chaque déplacement
                                       // de raquette;
@@ -86,7 +86,7 @@ public class Court {
             nextBallX = ballX + deltaT * ballSpeedX;
         }
 
-        if (nextBallX < racketXA && nextBallX > racketXA - 30.0 && nextBallY > racketYA && nextBallY < racketYA + racketSize) { // rebond de raquette gauche
+        if (nextBallX < racketXA && nextBallX > racketXA-30.0 && nextBallY > racketYA && nextBallY < racketYA + racketSize) { // rebond de raquette gauche
         	lastPlayer=1;
         	ballSpeedX = -ballSpeedX * this.coeefSpeedBall + 100;
             nextBallX = ballX + deltaT * ballSpeedX;
@@ -133,12 +133,12 @@ public class Court {
     public boolean perdUnVie(double nextBallX,double nextBallY) {
     	 if (nextBallX < -15.00) {
     		 AudioBank.score.play();
-             agetscore = false;
+             //agetscore = false;
              scoreA--;
              return true; // Quand la balle sort du jeu du côté droit, on donne un point au joueur B
          } else if (nextBallX > width+15.00) {
         	 AudioBank.score.play();
-             agetscore = true;
+            // agetscore = true;
              scoreB--;
              return true; // Quand la balle sort du jeu du côté gauche, on donne un point au joueur A
          }else if (nextBallY < 55.00 && nbrejoueur>2) {
@@ -199,9 +199,12 @@ public class Court {
     public void reset() {
         this.racketYA = height / 2;
         this.racketYB = height / 2;
-        this.ballSpeedX = (agetscore) ? -200.0 : 200; // la balle va dirigé vers celui qui a marqué le point
+        
+       // this.ballSpeedX = (agetscore) ? -200.0 : 200; // la balle va dirigé vers celui qui a marqué le point
+        this.ballSpeedX= eitherInt(-200.0, 200.0);
         this.ballSpeedY = eitherInt(-200.0, 200.0); // A chaque reset de la balle, on détermine aléatoirement sa
                                                     // trajectoire entre vers le haut ou vers le bas.
+       
         this.ballX = width / 2;
         this.ballY = height / 2;
         this.racketXB = 0;

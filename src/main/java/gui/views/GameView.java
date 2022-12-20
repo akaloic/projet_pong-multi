@@ -358,7 +358,8 @@ public class GameView extends View {
         			char j=(char) ('A'+joueurVivant);
         			joueur+=j;
         		}
-        		this.getSceneHandler().switchToPageWin(getRoot(), joueur, AI, this.nbrePlayer, false, true, false, SystemDeVie);
+        		timer.stop();
+        		this.getSceneHandler().switchToPageWin(getRoot(), joueur, AI, this.nbrePlayer, false, true, false, true);
         	}
     	}else  {
     		int scoreA=this.getCourt().getScoreA();
@@ -383,7 +384,8 @@ public class GameView extends View {
             			joueur+='D';
             		}
         		}
-        		this.getSceneHandler().switchToPageWin(getRoot(), joueur, AI, this.nbrePlayer, false, true, false, SystemDeVie);
+    			timer.stop();
+        		this.getSceneHandler().switchToPageWin(getRoot(), joueur, AI, this.nbrePlayer, false, true, false, false);
     		}
     		
     	}

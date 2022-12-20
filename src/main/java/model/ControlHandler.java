@@ -38,10 +38,14 @@ public class ControlHandler {
                     players[0].state = RacketController.State.GOING_RIGHT;
                     break;
                 case UP:
-                    players[1].state = RacketController.State.GOING_UP;
+                	if(players.length>1 && players.length<=2) {
+                		players[1].state = RacketController.State.GOING_UP;
+                	}
                     break;
                 case DOWN:
-                    players[1].state = RacketController.State.GOING_DOWN;
+                	if(players.length>1 && players.length<=2) {
+                		players[1].state = RacketController.State.GOING_DOWN;
+                	}
                     break;
                 case RIGHT:
                     if (players.length > 2 ) {
@@ -50,7 +54,10 @@ public class ControlHandler {
                         }
                         break;
                     }
-                    players[1].state = RacketController.State.GOING_RIGHT;
+                    if(players.length>1 && players.length<=2) {
+                    	players[1].state = RacketController.State.GOING_RIGHT;
+                    }
+                    
                     break;
                 case LEFT:
                     if (players.length > 2) {
@@ -59,7 +66,9 @@ public class ControlHandler {
                         }
                         break;
                     }
-                    players[1].state = RacketController.State.GOING_LEFT;
+                    if(players.length>1 && players.length<=2) {
+                    	 players[1].state = RacketController.State.GOING_LEFT;
+                    }
                     break;
                 case SPACE:
                     View.pauseORcontinue();

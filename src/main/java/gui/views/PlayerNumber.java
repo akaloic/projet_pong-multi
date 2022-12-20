@@ -16,7 +16,7 @@ import javafx.scene.text.Text;
 import model.Court;
 
 public class PlayerNumber extends View {
-	private int nbre=1;
+	private int nbre=2;
 	private Button plus;
 	private Button menus;
 	private Button confirmer;
@@ -49,8 +49,8 @@ public class PlayerNumber extends View {
 			switch(nbre) {
 				case 4:text6.setText("Player4 humain/AI ?" );;break;
 				case 3:text5.setText("Player3 humain/AI ?" );text6.setText(null); break;
-				case 2:text4.setText("Player2 humain/AI ?" );text5.setText(null);text6.setText(null);break;
-				case 1:text3.setText("Player1 humain/AI ?" );hidebutton(nbre);text4.setText(null);text5.setText(null);text6.setText(null);break;
+				case 2:text4.setText("Player2 humain/AI ?" );hidebutton(nbre);text3.setText("Player1 humain/AI ?");text5.setText(null);text6.setText(null);break;
+				default:break;
 			}
 
 		}
@@ -193,7 +193,7 @@ public class PlayerNumber extends View {
 
 	}
 	private void decrementer() {
-		if(this.nbre>1) {
+		if(this.nbre>2) {
 			this.nbre--;
 			this.hidebutton(nbre);
 		}
