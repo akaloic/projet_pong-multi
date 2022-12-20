@@ -17,14 +17,14 @@ public class ControlHandler {
     public void getInput() {
         sceneHandler.getScene().setOnKeyPressed(ev -> {
             switch (ev.getCode()) {
-                case Z:
+                case W:
                     players[0].state = RacketController.State.GOING_UP;
                     break;
                 case S:
                     players[0].state = RacketController.State.GOING_DOWN;
                     break;
                 case Q:
-                    if (players.length > 2 ) {
+                    if (players.length > 2) {
                         players[2].state = RacketController.State.GOING_LEFT;
                         break;
                     }
@@ -48,7 +48,7 @@ public class ControlHandler {
                 	}
                     break;
                 case RIGHT:
-                    if (players.length > 2 ) {
+                    if (players.length > 2) {
                         if (players.length == 4) {
                             players[3].state = RacketController.State.GOING_RIGHT;
                         }
@@ -83,7 +83,7 @@ public class ControlHandler {
         sceneHandler.getScene().setOnKeyReleased(ev -> {
             switch (ev.getCode()) {
 
-                case Z:
+                case W:
                     if (players[0].state == RacketController.State.GOING_UP)
                         players[0].state = RacketController.State.IDLE;
                     break;
@@ -91,7 +91,7 @@ public class ControlHandler {
                     if (players[0].state == RacketController.State.GOING_DOWN)
                         players[0].state = RacketController.State.IDLE;
                     break;
-                case Q:
+                case A:
                     if (players.length > 2) { // si y a plus de deux joueur le de placement de raquette de peut faire
                                               // que dans deux sens
                         if (players[2].state == RacketController.State.GOING_LEFT)
