@@ -38,14 +38,10 @@ public class ControlHandler {
                     players[0].state = RacketController.State.GOING_RIGHT;
                     break;
                 case UP:
-                	if(players.length>1 && players.length<=2) {
-                		players[1].state = RacketController.State.GOING_UP;
-                	}
+                	players[1].state = RacketController.State.GOING_UP;
                     break;
                 case DOWN:
-                	if(players.length>1 && players.length<=2) {
-                		players[1].state = RacketController.State.GOING_DOWN;
-                	}
+                	players[1].state = RacketController.State.GOING_DOWN;
                     break;
                 case RIGHT:
                     if (players.length > 2) {
@@ -54,10 +50,8 @@ public class ControlHandler {
                         }
                         break;
                     }
-                    if(players.length>1 && players.length<=2) {
-                    	players[1].state = RacketController.State.GOING_RIGHT;
-                    }
                     
+                    players[1].state = RacketController.State.GOING_RIGHT;
                     break;
                 case LEFT:
                     if (players.length > 2) {
@@ -66,9 +60,7 @@ public class ControlHandler {
                         }
                         break;
                     }
-                    if(players.length>1 && players.length<=2) {
-                    	 players[1].state = RacketController.State.GOING_LEFT;
-                    }
+                    players[1].state = RacketController.State.GOING_LEFT;
                     break;
                 case SPACE:
                     View.pauseORcontinue();
@@ -91,7 +83,7 @@ public class ControlHandler {
                     if (players[0].state == RacketController.State.GOING_DOWN)
                         players[0].state = RacketController.State.IDLE;
                     break;
-                case A:
+                case Q:
                     if (players.length > 2) { // si y a plus de deux joueur le de placement de raquette de peut faire
                                               // que dans deux sens
                         if (players[2].state == RacketController.State.GOING_LEFT)

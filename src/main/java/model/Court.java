@@ -226,10 +226,13 @@ public class Court {
     }
 
     public boolean DowndevientMur(double nextBallY) {
-        if (scoreD <= 0) {
-            this.racketXD = -20 - width;
-            return (nextBallY > height - 5.00);
-        } else if (this.nbrejoueur == 4) {
+    	if(this.SystemdeVie) {
+    		if (scoreD <= 0) {
+                this.racketXD = -20 - width;
+                return (nextBallY > height - 5.00);
+    	}
+        
+        } else if (this.nbrejoueur < 4) {
             return (nextBallY > height - 5.00);
         }
         return false;
@@ -273,6 +276,12 @@ public class Court {
         scoreA = 3;
         scoreB = 3; // par defaut il y a toujour playerA et playerB sur le terrain
                     // chaque joueur a 3 vies
+        if(n>2) {
+        	scoreC=3;
+        }
+        if(n>3) {
+        	scoreD=3;
+        }
 
     }
 

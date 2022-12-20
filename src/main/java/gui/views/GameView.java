@@ -203,7 +203,7 @@ public class GameView extends View {
                racketB.setY(court.getRacketB() * scale);
                this.PlayerVivant[1]=true;
                getRoot().getChildren().addAll(racketA,racketB, separateur);
-                if (nbreracket >= 3) { // creation de racket C lorsque le nobre de joueur est 3 ou plus
+                if (nbreracket >2) { // creation de racket C lorsque le nobre de joueur est 3 ou plus
                         racketC = new Rectangle();
                         racketC.setHeight(super.getRacketThickness());
                         racketC.setWidth(court.getRacketSize() * scale);
@@ -217,7 +217,8 @@ public class GameView extends View {
                         racketC = null;
 
                 }
-                if (nbreracket >= 4) { // creation de racket D lorsque le nobre de joueur est 4
+                System.out.println(nbreracket);
+                if (nbreracket >3) { // creation de racket D lorsque le nobre de joueur est 4
                         racketD = new Rectangle();
                         racketD.setHeight(super.getRacketThickness());
                         racketD.setWidth(court.getRacketSize() * scale);
