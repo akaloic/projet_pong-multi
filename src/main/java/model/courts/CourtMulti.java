@@ -4,36 +4,37 @@ import gui.entities.Player;
 import model.Court;
 import model.RacketController;
 
-public class CourtMulti extends Court{
+public class CourtMulti extends Court {
     // instance parameters
 
-	private final RacketController []players;
-    private boolean[]AI=new boolean[4];
+    private final RacketController[] players;
+    private boolean[] AI = new boolean[4];
 
-
-    
-    
-    
-    public CourtMulti(RacketController[]p, double width, double height) {
+    public CourtMulti(RacketController[] p, double width, double height, boolean S) {
         super(width, height);
-        this.players=p;
+        this.players = p;
         super.setNbrejoueur(p.length);
         reset();
     }
 
-    public CourtMulti(RacketController[]p,double width, double height, double racketSize,boolean[]AI) { //nouveau constructeur pour qu'on puisse modifier la taille de la raquette
-        super(width,height,racketSize);
-        this.players=p;
-        this.AI=AI;
+    public CourtMulti(RacketController[] p, double width, double height, double racketSize, boolean[] AI, boolean S) { // nouveau                                                                                                    // la
+                                                                                                                       // raquette
+        super(width, height, racketSize, S);
+        this.players = p;
+        this.AI = AI;
         super.setNbrejoueur(p.length);
         reset();
     }
-
-
-    
 
     public void update(double deltaT) {
         SpeedUp(deltaT); // fonction qui augmente la coeff de vitesse
+        // SuddenDeath
+        if (getRacketXB() > getRightwall()) {
+            setRacketXB(getRightwall());
+        }
+        if (getRacketXA() < getLeftwall()) {
+            setRacketXA(getLeftwall());
+        }
         if (!AI[0]) {
             switch (this.players[0].getState()) {
                 case GOING_UP:
@@ -62,28 +63,22 @@ public class CourtMulti extends Court{
 
             }
         } else {
-            setCoefB(0.8);
+        	setCoefA(0.7);
+            if (getBallY() > getRacketA()) {
+                setRacketA(getRacketA() + getRacketSpeed() * deltaT * getCoefA());
+                if (getRacketA() + getRacketSpeed() * deltaT * getCoefA() > getHeight()) {
+                    setRacketA(getHeight() - 100);
+                }
+            } else if (getBallY() < getRacketA()) {
+                setRacketA(getRacketA() - getRacketSpeed() * deltaT * getCoefA());
+                if (getRacketA() < 0.0) {
+                    setRacketA(0.0);
 
-            int xDirection = sensX(deltaT);
-
-            if (xDirection == 1 && getWidth()/2 < getBallX()){
-                if (getBallY() - 20 > getRacketB()) {
-                    setRacketB(getRacketB() + getRacketSpeed() * deltaT * getCoefB());
-                }
-                if (getBallY() - 60 < getRacketB()) {
-                    setRacketB(getRacketB() - getRacketSpeed() * deltaT * getCoefB());
-                }
-            }else{
-                if (getRacketB() > getHeight()/2){                                              //racketB dessus de milieuY
-                    setRacketB(getRacketB() - getRacketSpeed() * deltaT * getCoefB());
-                }
-                if (getRacketB() < getHeight()/2){                                              //racketB dessous de milieuY
-                    setRacketB(getRacketB() + getRacketSpeed() * deltaT * getCoefB());
                 }
             }
         }
 
-        if (!AI[1] && getNbrej()>=2) {
+        if (!AI[1] && getNbrej() >= 2) {
             switch (players[1].getState()) {
                 case GOING_UP:
                     setRacketB(getRacketB() - getRacketSpeed() * deltaT * getCoefB());
@@ -113,31 +108,29 @@ public class CourtMulti extends Court{
             }
 
         } else {
-            setCoefB(0.8);
+        	 setCoefB(0.8);
 
-            int xDirection = sensX(deltaT);
+             int xDirection = sensX(deltaT);
 
-            if (xDirection == 1 && getWidth()/2 < getBallX()){
-                if (getBallY() - 20 > getRacketB()) {
-                    setRacketB(getRacketB() + getRacketSpeed() * deltaT * getCoefB());
-                }
-                if (getBallY() - 60 < getRacketB()) {
-                    setRacketB(getRacketB() - getRacketSpeed() * deltaT * getCoefB());
-                }
-            }else{
-                if (getRacketB() > getHeight()/2){                                              //racketB dessus de milieuY
-                    setRacketB(getRacketB() - getRacketSpeed() * deltaT * getCoefB());
-                }
-                if (getRacketB() < getHeight()/2){                                              //racketB dessous de milieuY
-                    setRacketB(getRacketB() + getRacketSpeed() * deltaT * getCoefB());
-                }
-            }
-
-        }
-
+             if (xDirection == 1 && getWidth()/2 < getBallX()){
+                 if (getBallY() - 20 > getRacketB()) {
+                     setRacketB(getRacketB() + getRacketSpeed() * deltaT * getCoefB());
+                 }
+                 if (getBallY() - 60 < getRacketB()) {
+                     setRacketB(getRacketB() - getRacketSpeed() * deltaT * getCoefB());
+                 }
+             }else{
+                 if (getRacketB() > getHeight()/2){                                              //racketB dessus de milieuY
+                     setRacketB(getRacketB() - getRacketSpeed() * deltaT * getCoefB());
+                 }
+                 if (getRacketB() < getHeight()/2){                                              //racketB dessous de milieuY
+                     setRacketB(getRacketB() + getRacketSpeed() * deltaT * getCoefB());
+                 }
+             }
+         }
 
 
-        if(getNbrej()>=3) {
+        if (getNbrej() >= 3) {
             if (!AI[2]) {
                 switch (players[2].getState()) {
                     case GOING_LEFT:
@@ -173,53 +166,51 @@ public class CourtMulti extends Court{
             }
         }
 
+        if (getNbrej() >= 4) {
+            if (!AI[3]) {
+                switch (players[3].getState()) {
+                    case GOING_LEFT:
+                        setRacketXD(getRacketXD() - getRacketSpeed() * deltaT);
+                        if ((getRacketXD() < -(super.getWidth() / 2 - 20.0))) {
+                            setRacketXD(-(super.getWidth() / 2 - 20.0));
+                        }
+                        break;
+                    case GOING_RIGHT:
+                        setRacketXD(getRacketXD() + getRacketSpeed() * deltaT);
+                        if (getRacketXD() > getWidth() / 2 - 20.0) {
+                            setRacketXD(getWidth() / 2 - 20.0);
+                        }
+                    default:
+                        break;
 
-         if(getNbrej()>=4) {
-             if (!AI[3]) {
-                 switch (players[3].getState()) {
-                     case GOING_LEFT:
-                         setRacketXD(getRacketXD() - getRacketSpeed() * deltaT );
-                         if ((getRacketXD() <-(super.getWidth()/2-20.0))) {
-                             setRacketXD(-(super.getWidth()/2-20.0));
-                         }
-                         break;
-                     case GOING_RIGHT:
-                         setRacketXD(getRacketXD() + getRacketSpeed() * deltaT);
-                         if (getRacketXD() > getWidth()/2-20.0) {
-                             setRacketXD(getWidth()/2-20.0);
-                         }
-                     default:
-                         break;
+                }
+            } else {
+                setCoefD(0.7);
+                if (getBallX() > getRacketXD() + getWidth() / 2) {
+                    setRacketXD(getRacketXD() + getRacketSpeed() * deltaT * getCoefD());
+                    if (getRacketXD() + getRacketSpeed() * deltaT * getCoefD() > (getWidth() / 2) - 30.0) {
+                        setRacketXD((getWidth() / 2) - 30.0);
+                    }
+                } else if (getBallX() < getRacketXD() + getWidth()) {
+                    setRacketXD(getRacketXD() - getRacketSpeed() * deltaT * getCoefD());
+                    if (getRacketXD() < (-getWidth() / 2) + 30.0) {
+                        setRacketXD((-getWidth() / 2) + 30.0);
+                    }
+                }
 
-                 }
-             }else {
-                 setCoefD(0.7);
-                 if (getBallX() > getRacketXD() + getWidth() / 2) {
-                     setRacketXD(getRacketXD() + getRacketSpeed() * deltaT * getCoefD());
-                     if (getRacketXD() + getRacketSpeed() * deltaT * getCoefD() > (getWidth() / 2) - 30.0) {
-                         setRacketXD((getWidth() / 2) - 30.0);
-                     }
-                 } else if (getBallX() < getRacketXD() + getWidth()) {
-                     setRacketXD(getRacketXD() - getRacketSpeed() * deltaT * getCoefD());
-                     if (getRacketXD() < (-getWidth() / 2) + 30.0) {
-                         setRacketXD((-getWidth() / 2) + 30.0);
-                     }
-                 }
-
-             }
-
-     
-         }
-      
-       if (updateBall(deltaT))
-            reset();
+            }
         }
 
-    private int sensX(double deltaT) {
-        if ( (getBallX() + deltaT * (-getBallSpeedX() + 100)) > getBallX() ) return -1;
-        if ( (getBallX() + deltaT * (-getBallSpeedX() + 100)) < getBallX() ) return 1;
-        return 0;
+
+        if (updateBall(deltaT)) reset();
     }
 
+    private int sensX(double deltaT) {
+        if ((getBallX() + deltaT * (-getBallSpeedX() + 100)) > getBallX())
+            return -1;
+        if ((getBallX() + deltaT * (-getBallSpeedX() + 100)) < getBallX())
+            return 1;
+        return 0;
+    }
 
 }
