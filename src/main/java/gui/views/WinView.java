@@ -50,7 +50,8 @@ public class WinView extends View{
         this.again.setLayoutY(((court.getHeight() / 2) * scale) + 200);
         this.again.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
 
-        this.again.setOnAction(event -> sceneHandler.switchToGame(getRoot()));
+;
+        this.again.setOnAction(event -> sceneHandler.switchToGame(getRoot(),n,small,medium,large,AI,SystemdeVie));
 
         /*Image image=new Image(MenuView.class.getResourceAsStream("./onepicebg.jpg"));
         ImageView backg=new ImageView(image);

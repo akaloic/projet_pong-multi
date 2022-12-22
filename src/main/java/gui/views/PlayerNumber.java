@@ -302,19 +302,15 @@ public class PlayerNumber extends View {
 		racketMedium = false;
 	}
 
-	public static boolean getRacketMedium() {
-		return racketMedium;
-	}
-
 	public static boolean getRacketSmall() {
 		return racketSmall;
 	}
 
-    public static boolean getRacketLarge(){
-        return racketLarge;
-    }
-	
-    public int getNb() {
-    	return nbre;
-    }
+	public static boolean getRacketMedium() {
+		return racketMedium;
+	}
+
+	public static boolean getRacketLarge() {
+		return racketLarge;
+	}
 }
