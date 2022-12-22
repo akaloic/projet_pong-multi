@@ -32,11 +32,6 @@ public class SettingsView extends View { // Classe similaire à GameView.java & 
 
         //choisir le fond
         private final Text background;
-        private final Button background1;
-
-        private final Button background2;
-
-        private final Button background3;
 
         // Darktheme
         private final Button darktheme;
@@ -141,7 +136,7 @@ public class SettingsView extends View { // Classe similaire à GameView.java & 
                 background.setFill(SceneHandler.itemcolor);
                 background.setText("Background");
 
-                background1 = new Button();
+                /*background1 = new Button();
                 background1.setPrefSize(150,75);
                 background1.setLayoutX(((court.getWidth() / 2) * scale) - 195);
                 background1.setLayoutY(((court.getWidth() / 5) * scale ) + 255);
@@ -169,7 +164,7 @@ public class SettingsView extends View { // Classe similaire à GameView.java & 
                 background3.setOnAction(event -> {GameView.setFond("./bleu.jpg");});
 
 
-
+*/
 
                 // Raquette Taille
                 tailleRaquette = new Text();
@@ -226,7 +221,7 @@ public class SettingsView extends View { // Classe similaire à GameView.java & 
                                 tailleRaquette,
                                 raquetteSmall,
                                 raquetteMedium,
-                                raquetteLarge, background, background1, background2, background3); // On ajoute le title et les boutons aux éléments
+                                raquetteLarge, background); // On ajoute le title et les boutons aux éléments
                 // du Pane
 
         }

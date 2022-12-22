@@ -51,7 +51,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
     public void setGameScene() {
         court = new CourtMulti(players, 1000, 600,this.SystemdeVie); // Extrait du code qu'il y avait dans App.java pour afficher
                                                     // le jeu.
-        var gameView = new GameView(court, root, 1.0, this, players.length,AI,SystemdeVie);
+        var gameView = new GameView(court, root, 1.0, this, players.length,AI);
         stage.setScene(scene);
         stage.show();
         gameView.animate();
@@ -80,7 +80,7 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         court = new CourtMulti(players, 1000, 600,this.SystemdeVie);
         ControlHandler controlHandler = new ControlHandler(players, this);
         controlHandler.getInput();
-        view = new GameView(court, root, 1.0, this, players.length,AI,this.SystemdeVie);
+        view = new GameView(court, root, 1.0, this, players.length,AI);
         stage.setScene(scene);
         stage.show();
         ((GameView) view).animate();
@@ -90,8 +90,8 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
                                                                   // la taille de la raquette
         menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
         // afficher le jeu sans problèmes.
-        court = new CourtMulti(players, 1000, 600, racketSize,AI,this.SystemdeVie);
-        view = new GameView(court, root, 1.0, this, 1,AI,this.SystemdeVie);
+        court = new CourtMulti(players, 1000, 600,this.SystemdeVie);
+        view = new GameView(court, root, 1.0, this, 1,AI);
         ControlHandler controlHandler = new ControlHandler(players, this);
         controlHandler.getInput();
         stage.setScene(scene);
@@ -99,17 +99,24 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         ((GameView) view).animate();
     }
 
+    /**
+     * @param menuRoot
+     * @param small
+     * @param medium
+     * @param large
+     * @param AI
+     */
     public void switchToGameRbis(Pane menuRoot, boolean small, boolean medium, boolean large, boolean[] AI) { // on utilise cette
                                                                          // revient au start
         menuRoot.getChildren().clear(); // On enlève tous les éléments qu'on a pu attribuer au Pane pour pouvoir ensuite
         // afficher le jeu sans problèmes.
         if (small)
-            court = new CourtMulti(players, 1000, 600, 75.0,AI,this.SystemdeVie);
+            court = new CourtMulti(players, 1000, 600,SystemdeVie);
         else if (medium)
-            court = new CourtMulti(players, 1000, 600,100,AI,this.SystemdeVie);
+            court = new CourtMulti(players, 1000, 600,SystemdeVie);
         else if (large)
-            court = new CourtMulti(players, 1000, 600, 150.0,AI,this.SystemdeVie);
-        view = new GameView(court, root, 1.0, this, players.length,AI,this.SystemdeVie);
+            court = new CourtMulti(players, 1000, 600,SystemdeVie);
+        view = new GameView(court, root, 1.0, this, players.length,AI);
         ControlHandler controlHandler = new ControlHandler(players, this);
         controlHandler.getInput();
         stage.setScene(scene);

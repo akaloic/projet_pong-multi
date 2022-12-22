@@ -49,14 +49,8 @@ public class WinView extends View{
         this.again.setLayoutX(((court.getWidth() / 2) * scale) - 20);
         this.again.setLayoutY(((court.getHeight() / 2) * scale) + 200);
         this.again.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
-<<<<<<< HEAD
 
-        if (typePartie.equals("Robot"))  this.again.setOnAction(event -> sceneHandler.switchToGameR(getRoot(), getRacketThickness()));
-        else  this.again.setOnAction(event -> sceneHandler.switchToGame(getRoot()));
-=======
-;
-        this.again.setOnAction(event -> sceneHandler.switchToGame(getRoot(),n,small,medium,large,AI,SystemdeVie));
->>>>>>> develop
+        this.again.setOnAction(event -> sceneHandler.switchToGame(getRoot()));
 
         /*Image image=new Image(MenuView.class.getResourceAsStream("./onepicebg.jpg"));
         ImageView backg=new ImageView(image);
