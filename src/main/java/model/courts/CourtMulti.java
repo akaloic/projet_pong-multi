@@ -63,17 +63,24 @@ public class CourtMulti extends Court {
 
             }
         } else {
-        	setCoefA(0.7);
-            if (getBallY() > getRacketA()) {
-                setRacketA(getRacketA() + getRacketSpeed() * deltaT * getCoefA());
-                if (getRacketA() + getRacketSpeed() * deltaT * getCoefA() > getHeight()) {
-                    setRacketA(getHeight() - 100);
-                }
-            } else if (getBallY() < getRacketA()) {
-                setRacketA(getRacketA() - getRacketSpeed() * deltaT * getCoefA());
-                if (getRacketA() < 0.0) {
-                    setRacketA(0.0);
+            setCoefB(0.8);
 
+            int xDirection = sensX(deltaT);
+
+            if (xDirection == -1 && getWidth()/2 > getBallX()){
+                if (getBallY() - 20 > getRacketA()) {
+                    setRacketA(getRacketA() + getRacketSpeed() * deltaT * getCoefB());
+                }
+                if (getBallY() - 60 < getRacketA()) {
+                    if (getRacketA() < 70.0) setRacketA(70.0);
+                    setRacketA(getRacketA() - getRacketSpeed() * deltaT * getCoefB());
+                }
+            }else{
+                if (getRacketA() > getHeight()/2){                                              //racketA dessus de milieuY
+                    setRacketA(getRacketA() - getRacketSpeed() * deltaT * getCoefB());
+                }
+                if (getRacketA() < getHeight()/2){                                              //racketA dessous de milieuY
+                    setRacketA(getRacketA() + getRacketSpeed() * deltaT * getCoefB());
                 }
             }
         }
@@ -104,9 +111,7 @@ public class CourtMulti extends Court {
                     if (getRacketXB() > 0.0) {
                         setRacketXB(0.0);
                     }
-
             }
-
         } else {
         	 setCoefB(0.8);
 
@@ -117,6 +122,7 @@ public class CourtMulti extends Court {
                      setRacketB(getRacketB() + getRacketSpeed() * deltaT * getCoefB());
                  }
                  if (getBallY() - 60 < getRacketB()) {
+                     if (getRacketB() < 70.0) setRacketB(70.0);
                      setRacketB(getRacketB() - getRacketSpeed() * deltaT * getCoefB());
                  }
              }else{
@@ -150,19 +156,18 @@ public class CourtMulti extends Court {
                 }
 
             } else {
-                setCoefC(0.7);
+                setCoefD(1.0);
                 if (getBallX() > getRacketXC() + getWidth() / 2) {
-                    setRacketXC(getRacketXC() + getRacketSpeed() * deltaT * getCoefC());
+                    setRacketXC(getRacketXC() + getRacketSpeed() * deltaT * getCoefC() * 2);
                     if (getRacketXC() + getRacketSpeed() * deltaT * getCoefC() > (getWidth() / 2) - 30.0) {
                         setRacketXC((getWidth() / 2) - 30.0);
                     }
                 } else if (getBallX() < getRacketXC() + getWidth()) {
-                    setRacketXC(getRacketXC() - getRacketSpeed() * deltaT * getCoefC());
+                    setRacketXC(getRacketXC() - getRacketSpeed() * deltaT * getCoefC() * 2);
                     if (getRacketXC() < (-getWidth() / 2) + 30.0) {
                         setRacketXC((-getWidth() / 2) + 30.0);
                     }
                 }
-
             }
         }
 
@@ -185,7 +190,7 @@ public class CourtMulti extends Court {
 
                 }
             } else {
-                setCoefD(0.7);
+                setCoefD(1.0);
                 if (getBallX() > getRacketXD() + getWidth() / 2) {
                     setRacketXD(getRacketXD() + getRacketSpeed() * deltaT * getCoefD());
                     if (getRacketXD() + getRacketSpeed() * deltaT * getCoefD() > (getWidth() / 2) - 30.0) {
@@ -197,7 +202,6 @@ public class CourtMulti extends Court {
                         setRacketXD((-getWidth() / 2) + 30.0);
                     }
                 }
-
             }
         }
 
@@ -206,9 +210,17 @@ public class CourtMulti extends Court {
     }
 
     private int sensX(double deltaT) {
-        if ((getBallX() + deltaT * (-getBallSpeedX() + 100)) > getBallX())
+        if ((getBallX() + deltaT * (-getBallSpeedX() + 100)) > getBallX())  //si la balle va vers la droite
             return -1;
-        if ((getBallX() + deltaT * (-getBallSpeedX() + 100)) < getBallX())
+        if ((getBallX() + deltaT * (-getBallSpeedX() + 100)) < getBallX())  //si la balle va vers la gauche
+            return 1;
+        return 0;
+    }
+
+    private int sensY(double deltaT) {
+        if ((getBallY() + deltaT * (-getBallSpeedY() + 100)) > getBallY())  //si la balle va vers le haut
+            return -1;
+        if ((getBallY() + deltaT * (-getBallSpeedY() + 100)) < getBallY())  //si la balle va vers le bas
             return 1;
         return 0;
     }
