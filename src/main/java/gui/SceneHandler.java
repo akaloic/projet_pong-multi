@@ -195,3 +195,4 @@ public class SceneHandler { // Cette classe permet de manipuler les scènes cour
         stage.show();
     }
 }
+

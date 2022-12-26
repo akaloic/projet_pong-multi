@@ -309,7 +309,7 @@ public class PlayerNumber extends View {
 	public static boolean getRacketMedium() {
 		return racketMedium;
 	}
-
+	
 	public static boolean getRacketLarge() {
 		return racketLarge;
 	}

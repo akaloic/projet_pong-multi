@@ -35,7 +35,7 @@ public class GameView extends View {
         private final Text lifePlayerD;
         private final Text timeDisplay;
         private final Text timeOut;
-        private static int timeLeft = 5;
+        private static int timeLeft = 20;
         private Timer temps;
         private Button continu;
         private Button replay;
