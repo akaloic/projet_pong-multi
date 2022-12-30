@@ -17,6 +17,9 @@ import model.Court;
 
 public class PlayerNumber extends View {
 	private int nbre=2;
+	private static int secondes = 0;
+	private Button timerPlus;
+	private Button timerMoins;
 	private Button plus;
 	private Button menus;
 	private Button confirmer;
@@ -30,12 +33,16 @@ public class PlayerNumber extends View {
 	private Button HUMAIN2 = new Button("Humain");
 	private Button HUMAIN3 = new Button("Humain");
 	private Button HUMAIN4 = new Button("Humain");
+	private Text reglageTimer;
 	private Text text;
+	private Text textTemps;
 	private Text text2;
 	private Text text3 = new Text();
 	private Text text4 = new Text();
 	private Text text5 = new Text();
 	private Text text6 = new Text();
+	private Text text7 = new Text();
+
 	private Button SystemVie = new Button("System de Vie");
 	private boolean SystemVieActive = false;
 	private AnimationTimer timer = new AnimationTimer() {
@@ -64,7 +71,7 @@ public class PlayerNumber extends View {
 					text6.setText(null);
 					break;
 			}
-
+			textTemps.setText(" " + secondes);
 		}
 	};
 
@@ -83,19 +90,44 @@ public class PlayerNumber extends View {
 		ImageView backg = new ImageView(image);
 		backg.setFitWidth(root.getMinWidth());
 		backg.setFitHeight(root.getMinHeight());
+		reglageTimer = new Text("Reglez votre timer ");
 		text = new Text("Nombre de joueur : ");
-		plus = new Button(" + ");
-		menus = new Button(" - ");
-		int spacey = 60;
-		;
+		plus = new Button("+");
+		menus = new Button("-");
+        timerPlus = new Button("+");
+	    timerMoins = new Button("-");
+		int spacey = 60;	
 		double centerX = court.getWidth() / 2;
 		double centerY = 200;
 
+		//Titre " Reglez votre timer"
+		reglageTimer.setLayoutX(centerX - 250);
+		reglageTimer.setLayoutY(centerY - 120);
+		reglageTimer.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
+
+		//
+		timerPlus.setLayoutX(centerX * scale + 100);
+		timerPlus.setLayoutY(centerY - 80);
+		timerPlus.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
+		timerPlus.setOnAction(event -> incTimer());
+
+        timerMoins.setLayoutX(centerX * scale - 100);
+		timerMoins.setLayoutY(centerY - 80);
+		timerMoins.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
+		timerMoins.setOnAction(event -> decTimer());
+
+		textTemps = new Text();
+		textTemps.setText(" " + this.secondes);
+		textTemps.setLayoutX(centerX * scale - 10);
+		textTemps.setLayoutY(centerY - 50);
+        textTemps.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 40));
+
 		text.setLayoutX(centerX - 250);
-		text.setLayoutY(centerY);
+		text.setLayoutY(centerY + 10);
 		text.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
+
 		// button plus
-		plus.setLayoutX(((centerX) * scale + 100));
+		plus.setLayoutX(centerX * scale + 100);
 		plus.setLayoutY(centerY * scale + spacey);
 		plus.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 20));
 		plus.setOnAction(event -> incrementer());
@@ -224,17 +256,26 @@ public class PlayerNumber extends View {
 			this.SystemVie.setDisable(true);
 			this.SystemVieActive = true;
 		});
-		getRoot().getChildren().addAll(backg, text, plus, text2, menus, confirmer, annuler, text3, text4, text5, text6);
+		getRoot().getChildren().addAll(backg, text, reglageTimer, timerPlus, textTemps, timerMoins, plus, text2, menus, confirmer, annuler, text3, text4, text5, text6);
 		getRoot().getChildren().addAll(AI1, AI2, AI3, AI4, HUMAIN1, HUMAIN2, HUMAIN3, HUMAIN4, SystemVie);
 
 	}
+
+	public void incTimer(){
+        this.secondes++;
+    }
+
+    public void decTimer(){
+        if(this.secondes>0){
+            this.secondes--;
+        }
+    }
 
 	private void incrementer() {
 		if (this.nbre < 4) {
 			this.nbre++;
 			this.showbutton(nbre);
 		}
-
 	}
 
 	private void decrementer() {
@@ -242,7 +283,6 @@ public class PlayerNumber extends View {
 			this.nbre--;
 			this.hidebutton(nbre);
 		}
-
 	}
 
 	public void animate() {
@@ -312,5 +352,9 @@ public class PlayerNumber extends View {
 
 	public static boolean getRacketLarge() {
 		return racketLarge;
+	}
+
+	public static int getTime(){
+		return secondes;
 	}
 }

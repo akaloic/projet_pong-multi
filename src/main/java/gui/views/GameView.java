@@ -35,10 +35,9 @@ public class GameView extends View {
         private final Text lifePlayerD;
         private final Text timeDisplay;
         private final Text timeOut;
-        private static int timeLeft = 5;
+        private static int timeLeft = PlayerNumber.getTime();
         private Timer temps;
         private Button continu;
-        private Button replay;
         private Line separateur;
         private Region border;
         private Button menu;
@@ -135,12 +134,9 @@ public class GameView extends View {
                                     getRoot().getChildren().add(continu); // une fois le jeu arreter on fait afficher sur la scene un bouton qui permet de relancer le jeu
                                     getRoot().getChildren().add(menu);
                         }
-                        
-                        else if(timeLeft == (-1)) { //Si le temps est 0, on affiche les boutons Restart et Menu
+                        else if(timeIsOut()) { //Si le temps est 0, on affiche la page de victoire
                         	this.stop();
                         	this.last = 0;
-                        	getRoot().getChildren().add(replay); // une fois le jeu arreter on fait afficher sur la scene un bouton qui permet de relancer le jeu
-                            getRoot().getChildren().add(menu);
                         }
                 }
         };
@@ -153,7 +149,7 @@ public class GameView extends View {
 
                 final TimerTask task = new TimerTask() {
                     public void run() {
-                        if(timeLeft >= 0) {	//Tant qu'on a un temps positif : on décrémente ce temps
+                        if(timeLeft >= 0) {	//décrémenter le temps
                             timeDisplay.setText(String.valueOf(timeLeft));
                             timeLeft--;
                         }
@@ -286,12 +282,6 @@ public class GameView extends View {
                 timeOut.setFill(Color.BLACK);
                 timeOut.setStrokeWidth(2); 
                 timeOut.setStroke(Color.CYAN);
-                
-                replay = new Button("Replay");
-                replay.setLayoutX(((court.getWidth() / 2) * scale) - 80);
-                replay.setLayoutY(((court.getHeight() / 2) * scale) - 60);
-                replay.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
-                replay.setOnAction(event -> sceneHandler.switchToGame(getRoot()));
 
                 commande[0] = new Label(" z : Monter ");
                 commande[0].setLayoutX(court.getWidth()/2 - 350);
@@ -337,9 +327,10 @@ public class GameView extends View {
                 commande[10].setLayoutX(court.getWidth()/2 );
                 commande[10].setLayoutY(court.getHeight()-150);
                 commande[10].setStyle("-fx-border-color: black; -fx-text-fill:black; -fx-font-size: 20;");
-                getRoot().getChildren().addAll(ball,lifePlayerLeft,lifePlayerR,timeDisplay, timeOut,  replay, commande[0], commande[1], commande[2], commande[3], commande[4],commande[5],commande[6],commande[7],commande[8],commande[9],commande[10],score); // On ajoute le score aux éléments du Pane
+                getRoot().getChildren().addAll(ball,lifePlayerLeft,lifePlayerR,timeDisplay, timeOut, commande[0], commande[1], commande[2], commande[3], commande[4],commande[5],commande[6],commande[7],commande[8],commande[9],commande[10],score); // On ajoute le score aux éléments du Pane
                 compteARebour(task);
         }
+        
     public void setSystemdeVie(boolean v) {
     	if(getRoot().getChildren().contains(score)) {
     		getRoot().getChildren().remove(score);
@@ -380,6 +371,9 @@ public class GameView extends View {
         temps.scheduleAtFixedRate(task, 1000, 1000); // used to schedule the task for execution at the given time
    }
   
+   public boolean timeIsOut(){
+        return (timeLeft < 0);
+   }
 
     public void setSystemdeScore(boolean v) {
     	if(v) {
@@ -396,50 +390,69 @@ public class GameView extends View {
     }
     public void afficherPageVictoire() {
     	String joueur="";
-    	if(this.SystemDeVie) {
-    		if(nbreRacket==1) {
-        		int joueurVivant=0;
-        		for(int i=0;i<4;i++) {
-        			if(PlayerVivant[i]) {
-        				joueurVivant=i;
-        				break;
-        			}
-        		}
-        		if(!AI[joueurVivant]) {
-        			char j=(char) ('A'+joueurVivant);
-        			joueur+=j;
-        		}
-        		timer.stop();
-        		this.getSceneHandler().switchToPageWin(getRoot(), joueur, AI, this.nbrePlayer, false, true, false, true);
-        	}
-    	}else  {
-    		int scoreA=this.getCourt().getScoreA();
-    		int scoreB=this.getCourt().getScoreB();
-    		int scoreC=this.getCourt().getScoreC();
-    		int scoreD=this.getCourt().getScoreD();
-    		if(scoreA==10 || scoreB==10 || scoreC==10 || scoreD==10 ) {
-    			if(scoreA==10) {
-        			if(!AI[0]) {
-            			joueur+='A';
-            		}
-        		}else if(scoreB==10) {
-        			if(!AI[1]) {
-            			joueur+='B';
-            		}
-        		}else if(scoreC==10) {
-        			if(!AI[2]) {
-            			joueur+='C';
-            		}
-        		}else if(scoreD==10) {
-        			if(!AI[3]) {
-            			joueur+='D';
-            		}
-        		}
-    			timer.stop();
-        		this.getSceneHandler().switchToPageWin(getRoot(), joueur, AI, this.nbrePlayer, false, true, false, false);
-    		}	
-    	}	
+        if(!timeIsOut()){
+    	    if(this.SystemDeVie) {
+    		    if(nbreRacket==1) {
+        		    int joueurVivant=0;
+        		    for(int i=0;i<4;i++) {
+        			    if(PlayerVivant[i]) {
+        				    joueurVivant=i;
+        				    break;
+        			    }
+        		    }
+        		    if(!AI[joueurVivant]) {
+        			    char j=(char) ('A'+joueurVivant);
+        			    joueur+=j;
+        		    }
+        		    timer.stop();
+        		    this.getSceneHandler().switchToPageWin(getRoot(), joueur, AI, this.nbrePlayer, false, true, false, true);
+        	    }
+    	    }else  {
+                int scoreA=this.getCourt().getScoreA();
+                int scoreB=this.getCourt().getScoreB();
+                int scoreC=this.getCourt().getScoreC();
+                int scoreD=this.getCourt().getScoreD();
+    		    if(scoreA==10 || scoreB==10 || scoreC==10 || scoreD==10 ) {
+    			    if(scoreA==10) {
+        			    if(!AI[0]) {
+            			    joueur+='A';
+            		    }
+        		    }else if(scoreB==10) {
+        			    if(!AI[1]) {
+            			    joueur+='B';
+            		    }
+        		    }else if(scoreC==10) {
+        			    if(!AI[2]) {
+            			    joueur+='C';
+            		    }
+        		    }else if(scoreD==10) {
+        			    if(!AI[3]) {
+            			    joueur+='D';
+            		    }
+        		    }
+    			    timer.stop();
+        		    this.getSceneHandler().switchToPageWin(getRoot(), joueur, AI, this.nbrePlayer, false, true, false, false);
+    		    }	
+    	    }
+        
+        }
     }
+
+
+    /*public int maxScore4(int scoreA, int scoreB, int scoreC, int scoreD){
+        int[] scores = {scoreA, scoreB, scoreC, scoreD};
+        int max= scores[0];
+        for(int i=0; i<scores.length; i++){
+            if(scores[i]>max){
+                max = scores[i];
+            }
+        }
+        return max;
+    }
+
+    public boolean estLePlusGrand(int score){
+           return score == maxScore4();
+    }*/
 
     public void animate() {
     	instructiontimer.start();
@@ -450,10 +463,7 @@ public class GameView extends View {
             getRoot().getChildren().remove(menu);
             pauseORcontinue();
         }
-        if(getRoot().getChildren().contains(replay)) {
-        	getRoot().getChildren().remove(replay);
-        	getRoot().getChildren().remove(menu);
-        }
+       
     }
 
     public void setInstruction() {
