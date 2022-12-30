@@ -134,7 +134,7 @@ public class GameView extends View {
                                     getRoot().getChildren().add(continu); // une fois le jeu arreter on fait afficher sur la scene un bouton qui permet de relancer le jeu
                                     getRoot().getChildren().add(menu);
                         }
-                        else if(timeIsOut()) { //Si le temps est 0, on affiche la page de victoire
+                        else if(timeLeft == -1) { //Si le temps est 0, on affiche la page de victoire
                         	this.stop();
                         	this.last = 0;
                         }
@@ -370,10 +370,6 @@ public class GameView extends View {
     public void compteARebour(TimerTask task) {
         temps.scheduleAtFixedRate(task, 1000, 1000); // used to schedule the task for execution at the given time
    }
-  
-   public boolean timeIsOut(){
-        return (timeLeft < 0);
-   }
 
     public void setSystemdeScore(boolean v) {
     	if(v) {
@@ -390,7 +386,6 @@ public class GameView extends View {
     }
     public void afficherPageVictoire() {
     	String joueur="";
-        if(!timeIsOut()){
     	    if(this.SystemDeVie) {
     		    if(nbreRacket==1) {
         		    int joueurVivant=0;
@@ -436,7 +431,6 @@ public class GameView extends View {
     	    }
         
         }
-    }
 
 
     /*public int maxScore4(int scoreA, int scoreB, int scoreC, int scoreD){
