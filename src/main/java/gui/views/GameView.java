@@ -427,13 +427,29 @@ public class GameView extends View {
         		    }
     			    timer.stop();
         		    this.getSceneHandler().switchToPageWin(getRoot(), joueur, AI, this.nbrePlayer, false, true, false, false);
-    		    }	
+    		    }
+                else if(timeLeft == -1){
+                    int[] scores = {scoreA, scoreB, scoreC, scoreD};
+                    for(int i=0; i<scores.length; i++){
+                        if(maxScore4(scoreA, scoreB, scoreC, scoreD) == (scores[i])){
+                            switch(scores[i]){
+                                case 0 : joueur += 'A';
+                                case 1 : joueur += 'B';
+                                case 2 : joueur += 'C';
+                                case 3 : joueur += 'D';
+                            }
+
+                            timer.stop();
+        		            this.getSceneHandler().switchToPageWin(getRoot(), joueur, AI, this.nbrePlayer, false, true, false, false);
+                        }
+                    }
+                }
     	    }
         
         }
 
 
-    /*public int maxScore4(int scoreA, int scoreB, int scoreC, int scoreD){
+    public int maxScore4(int scoreA, int scoreB, int scoreC, int scoreD){
         int[] scores = {scoreA, scoreB, scoreC, scoreD};
         int max= scores[0];
         for(int i=0; i<scores.length; i++){
@@ -444,9 +460,6 @@ public class GameView extends View {
         return max;
     }
 
-    public boolean estLePlusGrand(int score){
-           return score == maxScore4();
-    }*/
 
     public void animate() {
     	instructiontimer.start();
@@ -472,7 +485,6 @@ public class GameView extends View {
     		}
     	}
     }
-
 
         //method pour changer le fond
 
