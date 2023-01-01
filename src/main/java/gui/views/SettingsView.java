@@ -32,6 +32,7 @@ public class SettingsView extends View { // Classe similaire à GameView.java & 
 
         //choisir le fond
         private final Text background;
+
         private final Button background1;
 
         private final Button background2;
@@ -167,8 +168,6 @@ public class SettingsView extends View { // Classe similaire à GameView.java & 
                 backg3.setPreserveRatio(true);
                 background3.setGraphic(backg3);
                 background3.setOnAction(event -> {GameView.setFond("./bleu.jpg");});
-
-
 
 
                 // Raquette Taille

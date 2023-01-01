@@ -6,7 +6,7 @@ import sound.AudioBank;
 
 public class Court {
     // instance parameters
-    private final double width, height; // m
+    private double width, height; // m
 
     private final double racketSpeed = 300.0; // m/s
     private double racketSize = 100.0; // m
@@ -23,8 +23,9 @@ public class Court {
     private double ballSpeedX, ballSpeedY; // m
     private int scoreA, scoreB, scoreC, scoreD;
     private int nbrejoueur;
-    private boolean agetscore = true;// true pour playerA a marqué le point sinon false pour PlayerB a marqué le
-                                     // point;
+    // private boolean agetscore = true;// true pour playerA a marqué le point sinon
+    // false pour PlayerB a marqué le
+    // point;
     private double coeffSpeedA = 0.3; // variable qui permet ralentir la vitesse de raquetteA avant chaque déplacement
                                       // de raquette;
     private double coeffSpeedB = 0.3;
@@ -38,6 +39,12 @@ public class Court {
                                 // 3:Rackette C
                                 // 4:Rackette D
     private boolean SystemdeVie;
+
+    // Mort Subite
+    private double leftwall = 0;
+    private double rightwall = 0;
+    private boolean tie = true;
+    private boolean suddenDeath = false;
 
     public Court(double width, double height) {
         this.width = width;
@@ -74,6 +81,14 @@ public class Court {
         // first, compute possible next position if nothing stands in the way
         double nextBallX = ballX + deltaT * ballSpeedX;
         double nextBallY = ballY + deltaT * ballSpeedY;
+        // SuddenDeath
+        if (tie && suddenDeath) {
+            if (leftwall < 300 && rightwall > -300) {
+                leftwall += 0.1;
+                rightwall -= 0.1;
+            }
+        }
+
         // next, see if the ball would meet some obstacle
         if (UPDowndevientMur(nextBallY) || DowndevientMur(nextBallY)) { // Rebonds plafond / sol
             AudioBank.hit.play();
@@ -131,8 +146,8 @@ public class Court {
     }
 
     public boolean marquerUnPoint(double nextBallX, double nextBallY) {
-        if (nextBallX < -15 || nextBallX > width + 15 || (nextBallY < 55.0 && nbrejoueur > 2)
-                || (nextBallY > height - 5.00 && nbrejoueur == 4)) {
+        if (nextBallX < -15 || nextBallX < leftwall - 20 || nextBallX > width + 15 || nextBallX > rightwall + width + 20
+                || (nextBallY < 55.0 && nbrejoueur > 2) || (nextBallY > height - 5.00 && nbrejoueur == 4)) {
             switch (this.lastPlayer) {
                 case 0:
                     break;
@@ -163,12 +178,12 @@ public class Court {
     public boolean perdUnVie(double nextBallX, double nextBallY) {
         if (nextBallX < -15.00) {
             AudioBank.score.play();
-            agetscore = false;
+            // agetscore = false;
             scoreA--;
             return true; // Quand la balle sort du jeu du côté droit, on donne un point au joueur B
         } else if (nextBallX > width + 15.00) {
             AudioBank.score.play();
-            agetscore = true;
+            // agetscore = true;
             scoreB--;
             return true; // Quand la balle sort du jeu du côté gauche, on donne un point au joueur A
         } else if (nextBallY < 55.00 && nbrejoueur > 2) {
@@ -220,10 +235,13 @@ public class Court {
     }
 
     public boolean DowndevientMur(double nextBallY) {
-        if (scoreD <= 0) {
-            this.racketXD = -20 - width;
-            return (nextBallY > height - 5.00);
-        } else if (this.nbrejoueur == 4) {
+        if (this.SystemdeVie) {
+            if (scoreD <= 0) {
+                this.racketXD = -20 - width;
+                return (nextBallY > height - 5.00);
+            }
+
+        } else if (this.nbrejoueur < 4) {
             return (nextBallY > height - 5.00);
         }
         return false;
@@ -234,13 +252,10 @@ public class Court {
         this.racketYB = height / 2;
         Random rd = new Random();
         this.ballSpeedY = rd.nextInt(601) - 300; // ballSpeedY aléatoire entre -300 et 300
-        if (ballSpeedY < 0) { // On fait en sorte que la somme des deux vitesses X et Y soient toujours égale
-                              // à 400
-            this.ballSpeedX = (agetscore) ? -400.0 - ballSpeedY : 400 + ballSpeedY; // la balle va dirigé vers celui qui
-                                                                                    // a marqué le point
-        } else {
-            this.ballSpeedX = (agetscore) ? -400.0 + ballSpeedY : 400 - ballSpeedY;
-        }
+        this.ballSpeedX = (ballSpeedY < 0) ? (400 + ballSpeedY) * eitherInt(-1, 1)
+                : (400 - ballSpeedY) * eitherInt(-1, 1); // On fait en sorte que la somme des deux vitesses X et Y soit
+                                                         // toujours égale
+        // à 400
         // trajectoire entre vers le haut ou vers le bas
         this.ballX = width / 2;
         this.ballY = height / 2;
@@ -249,6 +264,14 @@ public class Court {
         this.racketXC = 0;
         this.racketXD = 0;
         this.lastPlayer = 0;
+        if (this.nbrejoueur == 2) {
+            if (ballSpeedX == -200) {
+                lastPlayer = 2;
+            } else {
+                lastPlayer = 1;
+            }
+        }
+
     }
 
     public void setNbrejoueur(int n) {
@@ -263,13 +286,13 @@ public class Court {
         scoreA = 3;
         scoreB = 3; // par defaut il y a toujour playerA et playerB sur le terrain
                     // chaque joueur a 3 vies
-
         if (n > 2) {
-            this.scoreC = 3;
+            scoreC = 3;
         }
         if (n > 3) {
-            this.scoreD = 3;
+            scoreD = 3;
         }
+
     }
 
     public int getNbrej() {
@@ -334,6 +357,14 @@ public class Court {
 
     public double getRacketSpeed() {
         return racketSpeed;
+    }
+
+    public double getLeftwall() {
+        return this.leftwall;
+    }
+
+    public double getRightwall() {
+        return this.rightwall;
     }
 
     public void setRacketA(double racketA) {
@@ -402,6 +433,14 @@ public class Court {
 
     public void setRacketSize(double size) {
         this.racketSize = size;
+    }
+
+    public void setLeftwall(double leftwall) {
+        this.leftwall = leftwall;
+    }
+
+    public void setRightwall(double rightwall) {
+        this.rightwall = rightwall;
     }
 
     public int getScoreC() {

@@ -11,6 +11,4 @@ public class Player implements RacketController { // Classe qui était dans App.
     public State getState() {
         return state;
     }
-  
-
 }

@@ -420,6 +420,7 @@ public class GameView extends View {
             getRoot().getChildren().remove(menu);
             pauseORcontinue();
         }
+
     }
 
     public void setInstruction() {

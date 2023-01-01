@@ -49,6 +49,7 @@ public class WinView extends View{
         this.again.setLayoutX(((court.getWidth() / 2) * scale) - 20);
         this.again.setLayoutY(((court.getHeight() / 2) * scale) + 200);
         this.again.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 30));
+
 ;
         this.again.setOnAction(event -> sceneHandler.switchToGame(getRoot(),n,small,medium,large,AI,SystemdeVie));
 
