@@ -31,12 +31,12 @@ public class Court {
     private double coeffSpeedC = 0.3;
     private double coeffSpeedD = 0.3;
     private double coeefSpeedBall = 1;
-    //lastPlayer enregistre le dernier joueur qui a touché la balle
-    private int lastPlayer=0;  // 0:aucun raquette touche la balle
-                                 // 1:Rackette A
-                                 // 2:Rackette B
-                                 // 3:Rackette C
-                                 // 4:Rackette D
+    // lastPlayer enregistre le dernier joueur qui a touché la balle
+    private int lastPlayer = 0; // 0:aucun raquette touche la balle
+                                // 1:Rackette A
+                                // 2:Rackette B
+                                // 3:Rackette C
+                                // 4:Rackette D
     private boolean SystemdeVie;
 
     public Court(double width, double height) {
@@ -45,12 +45,13 @@ public class Court {
 
     }
 
-    public Court(double width, double height, double racketSize,boolean S) { // nouveau constructeur pour qu'on puisse modifier la
-                                                                   // taille de la raquette
+    public Court(double width, double height, double racketSize, boolean S) { // nouveau constructeur pour qu'on puisse
+                                                                              // modifier la
+        // taille de la raquette
         this.width = width;
         this.height = height;
         this.racketSize = racketSize;
-        this.SystemdeVie=S;
+        this.SystemdeVie = S;
 
     }
 
@@ -69,44 +70,58 @@ public class Court {
         this.coeffSpeedB += time * 2;
     }
 
-
-
     public boolean updateBall(double deltaT) {
         // first, compute possible next position if nothing stands in the way
         double nextBallX = ballX + deltaT * ballSpeedX;
         double nextBallY = ballY + deltaT * ballSpeedY;
         // next, see if the ball would meet some obstacle
         if (UPDowndevientMur(nextBallY) || DowndevientMur(nextBallY)) { // Rebonds plafond / sol
+            AudioBank.hit.play();
             ballSpeedY = -ballSpeedY;
             nextBallY = ballY + deltaT * ballSpeedY;
         }
 
-        if (LeftdevientMur(nextBallX) || RightdevientMur(nextBallX)) {  //Rebonds gauche/droite
+        if (LeftdevientMur(nextBallX) || RightdevientMur(nextBallX)) { // Rebonds gauche/droite
+            AudioBank.hit.play();
             ballSpeedX = -ballSpeedX;
             nextBallX = ballX + deltaT * ballSpeedX;
         }
 
-        if (nextBallX < racketXA && nextBallX > racketXA - 30.0 && nextBallY > racketYA && nextBallY < racketYA + racketSize) { // rebond de raquette gauche
-        	lastPlayer=1;
-        	ballSpeedX = -ballSpeedX * this.coeefSpeedBall + 100;
+        if (nextBallX < racketXA && nextBallX > racketXA - 30.0 && nextBallY > racketYA
+                && nextBallY < racketYA + racketSize) { // rebond de raquette gauche
+            AudioBank.hit.play();
+            lastPlayer = 1;
+            ballSpeedX = -ballSpeedX * this.coeefSpeedBall + 100;
             nextBallX = ballX + deltaT * ballSpeedX;
-        } else if ( nextBallX > racketXB + width && nextBallX < racketXB + width + 30.0 && nextBallY > racketYB && nextBallY < racketYB + racketSize){ // rebond de raquette droite
-        	lastPlayer=2;
-        	ballSpeedX = -ballSpeedX * this.coeefSpeedBall - 100;
+        } else if (nextBallX > racketXB + width && nextBallX < racketXB + width + 30.0 && nextBallY > racketYB
+                && nextBallY < racketYB + racketSize) { // rebond de raquette droite
+            AudioBank.hit.play();
+            lastPlayer = 2;
+            ballSpeedX = -ballSpeedX * this.coeefSpeedBall - 100;
             nextBallX = ballX + deltaT * ballSpeedX;
-        }else if (nbrejoueur>2 && nextBallY < 55.0 + 20.0 && nextBallX > width / 2 + racketXC - 55 //// rebond de raquette haut ,//55.0 c'est la valeur de la marge + epaisseur de bordure.
+        } else if (nbrejoueur > 2 && nextBallY < 55.0 + 20.0 && nextBallX > width / 2 + racketXC - 55 //// rebond de
+                                                                                                      //// raquette haut
+                                                                                                      //// ,//55.0 c'est
+                                                                                                      //// la valeur de
+                                                                                                      //// la marge +
+                                                                                                      //// epaisseur de
+                                                                                                      //// bordure.
                 && nextBallX < width / 2 + racketXC + racketSize - 55) {
-        	lastPlayer=3;
+            AudioBank.hit.play();
+            lastPlayer = 3;
             ballSpeedY = -ballSpeedY * this.coeefSpeedBall - 100;
             nextBallY = ballY + deltaT * ballSpeedY;
-        }else if(nbrejoueur==4 &&nextBallY > height - 25.00 && nextBallX > width / 2 + racketXD - 55 //rebond de raquette bas
+        } else if (nbrejoueur == 4 && nextBallY > height - 25.00 && nextBallX > width / 2 + racketXD - 55 // rebond de
+                                                                                                          // raquette
+                                                                                                          // bas
                 && nextBallX < width / 2 + racketXD + racketSize - 55) {
-        	lastPlayer=4;
-        	ballSpeedY = -ballSpeedY * this.coeefSpeedBall - 100;
+            AudioBank.hit.play();
+            lastPlayer = 4;
+            ballSpeedY = -ballSpeedY * this.coeefSpeedBall - 100;
             nextBallY = ballY + deltaT * ballSpeedY;
-        }else if(this.SystemdeVie && perdUnVie(nextBallX,nextBallY)) {
+        } else if (this.SystemdeVie && perdUnVie(nextBallX, nextBallY)) {
             return true;
-        }else if(!this.SystemdeVie && marquerUnPoint(nextBallX,nextBallY)){
+        } else if (!this.SystemdeVie && marquerUnPoint(nextBallX, nextBallY)) {
             return true;
         }
         ballX = nextBallX;
@@ -114,124 +129,152 @@ public class Court {
         return false;
 
     }
-    public boolean marquerUnPoint(double nextBallX,double nextBallY) {
-    	if(nextBallX < -15 ||nextBallX > width+15 || (nextBallY < 55.0 && nbrejoueur>2) || (nextBallY > height - 5.00 && nbrejoueur==4) ) {
-    		switch(this.lastPlayer) {
-    		case 0:break;
-    		case 1:scoreA++;break;
-    		case 2:scoreB++;break;
-    		case 3:scoreC++;break;
-    		case 4:scoreD++;break;
-    		default:;
-    		}
-    		return true;
-    	}
-    	return false;
+
+    public boolean marquerUnPoint(double nextBallX, double nextBallY) {
+        if (nextBallX < -15 || nextBallX > width + 15 || (nextBallY < 55.0 && nbrejoueur > 2)
+                || (nextBallY > height - 5.00 && nbrejoueur == 4)) {
+            switch (this.lastPlayer) {
+                case 0:
+                    break;
+                case 1:
+                    AudioBank.score.play();
+                    scoreA++;
+                    break;
+                case 2:
+                    AudioBank.score.play();
+                    scoreB++;
+                    break;
+                case 3:
+                    AudioBank.score.play();
+                    scoreC++;
+                    break;
+                case 4:
+                    AudioBank.score.play();
+                    scoreD++;
+                    break;
+                default:
+                    ;
+            }
+            return true;
+        }
+        return false;
     }
 
-
-    public boolean perdUnVie(double nextBallX,double nextBallY) {
-    	 if (nextBallX < -15.00) {
-    		 AudioBank.score.play();
-             agetscore = false;
-             scoreA--;
-             return true; // Quand la balle sort du jeu du côté droit, on donne un point au joueur B
-         } else if (nextBallX > width+15.00) {
-        	 AudioBank.score.play();
-             agetscore = true;
-             scoreB--;
-             return true; // Quand la balle sort du jeu du côté gauche, on donne un point au joueur A
-         }else if (nextBallY < 55.00 && nbrejoueur>2) {
-        	 AudioBank.score.play();
-        	 scoreC--;
-             return true;
-         } else if (nextBallY > height-5.00 && nbrejoueur==4) {
-        	 AudioBank.score.play();
-        	 scoreD--;
-             return true;
-         }
-    	 return false; 	
+    public boolean perdUnVie(double nextBallX, double nextBallY) {
+        if (nextBallX < -15.00) {
+            AudioBank.score.play();
+            agetscore = false;
+            scoreA--;
+            return true; // Quand la balle sort du jeu du côté droit, on donne un point au joueur B
+        } else if (nextBallX > width + 15.00) {
+            AudioBank.score.play();
+            agetscore = true;
+            scoreB--;
+            return true; // Quand la balle sort du jeu du côté gauche, on donne un point au joueur A
+        } else if (nextBallY < 55.00 && nbrejoueur > 2) {
+            AudioBank.score.play();
+            scoreC--;
+            return true;
+        } else if (nextBallY > height - 5.00 && nbrejoueur == 4) {
+            AudioBank.score.play();
+            scoreD--;
+            return true;
+        }
+        return false;
     }
 
     public boolean LeftdevientMur(double nextBallX) {
-        if(this.SystemdeVie) {
+        if (this.SystemdeVie) {
             if (scoreA <= 0) {
                 this.racketXA = -20;
                 return (nextBallX < -15.00);
 
             }
         }
-        return false;   // Si on n'est pas en System de Vie , le côté gauche devient jamais un mur
+        return false; // Si on n'est pas en System de Vie , le côté gauche devient jamais un mur
 
     }
+
     public boolean RightdevientMur(double nextBallX) {
-        if(this.SystemdeVie){
-            if(scoreB<=0) {
-                this.racketXB=width+20;
-                return(nextBallX>width+15.00);
+        if (this.SystemdeVie) {
+            if (scoreB <= 0) {
+                this.racketXB = width + 20;
+                return (nextBallX > width + 15.00);
             }
         }
         return false; // Si on n'est pas en System de Vie , le côté Droite devient jamais un mur
 
     }
+
     public boolean UPDowndevientMur(double nextBallY) {
-        if(this.SystemdeVie){
-            if(scoreC<=0) {
-                this.racketXC=-20-width;
+        if (this.SystemdeVie) {
+            if (scoreC <= 0) {
+                this.racketXC = -20 - width;
                 return (nextBallY < 55.00);
             }
 
-        }else if(this.nbrejoueur<3){
+        } else if (this.nbrejoueur < 3) {
             return (nextBallY < 55.00);
         }
         return false;
     }
+
     public boolean DowndevientMur(double nextBallY) {
-    	if(scoreD<=0) {
-    		this.racketXD=-20-width;
-     	   return (nextBallY > height-5.00);
-     	}else if(this.nbrejoueur==4){
-            return (nextBallY > height-5.00);
+        if (scoreD <= 0) {
+            this.racketXD = -20 - width;
+            return (nextBallY > height - 5.00);
+        } else if (this.nbrejoueur == 4) {
+            return (nextBallY > height - 5.00);
         }
-     	return false;
+        return false;
     }
 
     public void reset() {
         this.racketYA = height / 2;
         this.racketYB = height / 2;
-        this.ballSpeedX = (agetscore) ? -200.0 : 200; // la balle va dirigé vers celui qui a marqué le point
-        this.ballSpeedY = eitherInt(-200.0, 200.0); // A chaque reset de la balle, on détermine aléatoirement sa
-                                                    // trajectoire entre vers le haut ou vers le bas.
+        Random rd = new Random();
+        this.ballSpeedY = rd.nextInt(601) - 300; // ballSpeedY aléatoire entre -300 et 300
+        if (ballSpeedY < 0) { // On fait en sorte que la somme des deux vitesses X et Y soient toujours égale
+                              // à 400
+            this.ballSpeedX = (agetscore) ? -400.0 - ballSpeedY : 400 + ballSpeedY; // la balle va dirigé vers celui qui
+                                                                                    // a marqué le point
+        } else {
+            this.ballSpeedX = (agetscore) ? -400.0 + ballSpeedY : 400 - ballSpeedY;
+        }
+        // trajectoire entre vers le haut ou vers le bas
         this.ballX = width / 2;
         this.ballY = height / 2;
         this.racketXB = 0;
         this.racketXA = 0;
         this.racketXC = 0;
         this.racketXD = 0;
-        this.lastPlayer=0;
+        this.lastPlayer = 0;
     }
-    public void setNbrejoueur(int n) {  
-    	this.nbrejoueur=n;
-        if(this.SystemdeVie){
+
+    public void setNbrejoueur(int n) {
+        this.nbrejoueur = n;
+        if (this.SystemdeVie) {
             this.setScore(n);
         }
 
     }
-    private  void setScore(int n) {    //methode qui initialise vie de player3 et player4
-    	scoreA=3;scoreB=3;   //par defaut il y a toujour playerA et playerB sur le terrain 
-    	                     // chaque joueur a 3 vies
 
-    	if(n>2) {
-    		this.scoreC=3;
-    	}
-    	if(n>3) {
-    		this.scoreD=3;
-    	}
+    private void setScore(int n) { // methode qui initialise vie de player3 et player4
+        scoreA = 3;
+        scoreB = 3; // par defaut il y a toujour playerA et playerB sur le terrain
+                    // chaque joueur a 3 vies
+
+        if (n > 2) {
+            this.scoreC = 3;
+        }
+        if (n > 3) {
+            this.scoreD = 3;
+        }
     }
+
     public int getNbrej() {
-    	return this.nbrejoueur;
+        return this.nbrejoueur;
     }
-
 
     public double getBallRadius() {
         return ballRadius;
@@ -288,6 +331,7 @@ public class Court {
     public double getBallSpeedX() {
         return ballSpeedX;
     }
+
     public double getRacketSpeed() {
         return racketSpeed;
     }
@@ -323,19 +367,22 @@ public class Court {
     public void setCoefA(double coef) {
         coeffSpeedA = coef;
     }
-    public double getCoefC(){
+
+    public double getCoefC() {
         return this.coeffSpeedC;
     }
-    public double getCoefD(){
+
+    public double getCoefD() {
         return this.coeffSpeedD;
     }
-    public void setCoefC(double coef){
-        this.coeffSpeedC=coef;
-    }
-    public void setCoefD(double coef){
-        this.coeffSpeedD=coef;
+
+    public void setCoefC(double coef) {
+        this.coeffSpeedC = coef;
     }
 
+    public void setCoefD(double coef) {
+        this.coeffSpeedD = coef;
+    }
 
     public double getRacketXC() {
         return racketXC;
@@ -357,12 +404,12 @@ public class Court {
         this.racketSize = size;
     }
 
-	public int getScoreC() {
-		return scoreC;
-	}
+    public int getScoreC() {
+        return scoreC;
+    }
 
-	public int getScoreD() {
-		return scoreD;
-	}
+    public int getScoreD() {
+        return scoreD;
+    }
 
 }
