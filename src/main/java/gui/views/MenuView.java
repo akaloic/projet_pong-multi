@@ -59,8 +59,11 @@ public class MenuView extends View { // Classe similaire à GameView.java avec d
 
         start.setLayoutY(court.getHeight() / 2 * scale);
         start.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 50));
-        start.setOnMouseClicked(event -> sceneHandler.switchtoNbreJoueur(getRoot())); // Lorsqu'on appuie sur le bouton,
-                                                                                      // cela
+        start.setOnMouseClicked(event -> {
+            sceneHandler.switchtoNbreJoueur(getRoot());
+            AudioBank.button.play();
+        }); // Lorsqu'on appuie sur le bouton,
+            // cela
         start.setOnMouseEntered(event -> start.setTextFill(Color.RED));
         start.setOnMouseExited(event -> start.setTextFill(Color.BLACK));
         start.setBackground(null);
@@ -91,8 +94,11 @@ public class MenuView extends View { // Classe similaire à GameView.java avec d
         settings.setLayoutX(((court.getWidth() / 2) * scale) - 80);
         settings.setLayoutY(court.getHeight() / 2 + 100);
         settings.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 50));
-        settings.setOnMouseClicked(event -> sceneHandler.switchToSettings(getRoot())); // Lorsqu'on appuie sur le
-                                                                                       // bouton, cela
+        settings.setOnMouseClicked(event -> {
+            sceneHandler.switchToSettings(getRoot());
+            AudioBank.button.play();
+        }); // Lorsqu'on appuie sur le
+            // bouton, cela
         settings.setOnMouseEntered(event -> settings.setTextFill(Color.RED));
         settings.setOnMouseExited(event -> settings.setTextFill(Color.BLACK));
         settings.setBackground(null);
@@ -104,7 +110,10 @@ public class MenuView extends View { // Classe similaire à GameView.java avec d
         shutdown.setBackground(null);
         shutdown.setOnMouseEntered(event -> shutdown.setTextFill(Color.RED));
         shutdown.setOnMouseExited(event -> shutdown.setTextFill(Color.BLACK));
-        shutdown.setOnMouseClicked(event -> System.exit(0));
+        shutdown.setOnMouseClicked(event -> {
+            System.exit(0);
+            AudioBank.button.play();
+        });
 
         getRoot().getChildren().addAll(backg, start, settings, shutdown); // On ajoute le title
 
