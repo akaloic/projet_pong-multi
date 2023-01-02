@@ -1,6 +1,5 @@
 package model.courts;
 
-import gui.entities.Player;
 import model.Court;
 import model.RacketController;
 
