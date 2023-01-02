@@ -45,6 +45,7 @@ public class PlayerNumber extends View {
 
 	private Button SystemVie = new Button("System de Vie");
 	private boolean SystemVieActive = false;
+	private static boolean setTimer = false;
 	private AnimationTimer timer = new AnimationTimer() {
 		long last = 0;
 
@@ -263,6 +264,7 @@ public class PlayerNumber extends View {
 
 	public void incTimer(){
         this.secondes++;
+		setTimer = true;
     }
 
     public void decTimer(){
@@ -356,5 +358,18 @@ public class PlayerNumber extends View {
 
 	public static int getTime(){
 		return secondes;
+	}
+
+	public static boolean timerSetted(){
+		timerOn();
+		return setTimer == true;
+	}
+
+	public static void timerOff(){
+		setTimer = false;
+	}
+
+	public static void timerOn(){
+		setTimer = true;
 	}
 }

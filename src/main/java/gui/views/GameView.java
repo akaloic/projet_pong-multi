@@ -134,9 +134,8 @@ public class GameView extends View {
                                     getRoot().getChildren().add(continu); // une fois le jeu arreter on fait afficher sur la scene un bouton qui permet de relancer le jeu
                                     getRoot().getChildren().add(menu);
                         }
-                        else if(timeLeft == -1) { //Si le temps est 0, on affiche la page de victoire
-                        	this.stop();
-                        	this.last = 0;
+                        else if(PlayerNumber.timerSetted() && timeLeft == -1) { //Si le temps est 0, on affiche la page de victoire
+                            afficherPageVictoire();
                         }
                 }
         };
@@ -154,8 +153,9 @@ public class GameView extends View {
                             timeLeft--;
                         }
                         else {
-                        	timeOut.setText("TIME OUT"); //Arrivant à zéro, le temps s'arrête
+                            timeDisplay.setText(String.valueOf(" "));
                         	temps.cancel();
+                            timeLeft = PlayerNumber.getTime();;
                         }
                     }
                 };
@@ -275,13 +275,6 @@ public class GameView extends View {
                 timeDisplay.setFill(Color.BLACK);
                 timeDisplay.setStrokeWidth(2); 
                 timeDisplay.setStroke(Color.CYAN);
-                
-                timeOut.setLayoutX(((court.getWidth() / 2) * scale) - 80 );
-                timeOut.setLayoutY(((court.getHeight() / 2) * scale) - 120);
-                timeOut.setFont(Font.font("verdana", FontWeight.EXTRA_BOLD, FontPosture.REGULAR, 40));
-                timeOut.setFill(Color.BLACK);
-                timeOut.setStrokeWidth(2); 
-                timeOut.setStroke(Color.CYAN);
 
                 commande[0] = new Label(" z : Monter ");
                 commande[0].setLayoutX(court.getWidth()/2 - 350);
@@ -376,7 +369,7 @@ public class GameView extends View {
     		if(this.nbreRacket==2) {
     			if(getRoot().getChildren().contains(lifePlayerLeft)) {
     				getRoot().getChildren().removeAll(lifePlayerLeft,lifePlayerR,lifePlayerU,racketC,lifePlayerD,racketD);
-    			}	
+    			}
     		}else {
     			if(getRoot().getChildren().contains(score)) {
     				getRoot().getChildren().remove(score);
@@ -387,70 +380,73 @@ public class GameView extends View {
     public void afficherPageVictoire() {
     	String joueur="";
     	    if(this.SystemDeVie) {
-    		    if(nbreRacket==1) {
-        		    int joueurVivant=0;
-        		    for(int i=0;i<4;i++) {
-        			    if(PlayerVivant[i]) {
-        				    joueurVivant=i;
-        				    break;
-        			    }
-        		    }
-        		    if(!AI[joueurVivant]) {
-        			    char j=(char) ('A'+joueurVivant);
-        			    joueur+=j;
-        		    }
-        		    timer.stop();
-        		    this.getSceneHandler().switchToPageWin(getRoot(), joueur, AI, this.nbrePlayer, false, true, false, true);
-        	    }
+                PlayerNumber.timerOff();
+                timeDisplay.setText("");
+                    if(nbreRacket==1) {
+                        int joueurVivant=0;
+                        for(int i=0;i<4;i++) {
+                            if(PlayerVivant[i]) {
+                                joueurVivant=i;
+                                break;
+                            }
+                        }
+                        if(!AI[joueurVivant]) {
+                            char j=(char) ('A'+joueurVivant);
+                            joueur+=j;
+                        }
+                        timer.stop();
+                        this.getSceneHandler().switchToPageWin(getRoot(), joueur, AI, this.nbrePlayer, false, true, false, true);
+                    }
     	    }else  {
                 int scoreA=this.getCourt().getScoreA();
                 int scoreB=this.getCourt().getScoreB();
                 int scoreC=this.getCourt().getScoreC();
                 int scoreD=this.getCourt().getScoreD();
-    		    if(scoreA==10 || scoreB==10 || scoreC==10 || scoreD==10 ) {
-    			    if(scoreA==10) {
-        			    if(!AI[0]) {
-            			    joueur+='A';
-            		    }
-        		    }else if(scoreB==10) {
-        			    if(!AI[1]) {
-            			    joueur+='B';
-            		    }
-        		    }else if(scoreC==10) {
-        			    if(!AI[2]) {
-            			    joueur+='C';
-            		    }
-        		    }else if(scoreD==10) {
-        			    if(!AI[3]) {
-            			    joueur+='D';
-            		    }
-        		    }
-    			    timer.stop();
-        		    this.getSceneHandler().switchToPageWin(getRoot(), joueur, AI, this.nbrePlayer, false, true, false, false);
-    		    }
-                else if(timeLeft == -1){
-                    int[] scores = {scoreA, scoreB, scoreC, scoreD};
-                    for(int i=0; i<scores.length; i++){
-                        if(maxScore4(scoreA, scoreB, scoreC, scoreD) == (scores[i])){
-                            switch(scores[i]){
-                                case 0 : joueur += 'A';
-                                case 1 : joueur += 'B';
-                                case 2 : joueur += 'C';
-                                case 3 : joueur += 'D';
-                            }
 
-                            timer.stop();
-        		            this.getSceneHandler().switchToPageWin(getRoot(), joueur, AI, this.nbrePlayer, false, true, false, false);
+                if(!PlayerNumber.timerSetted()){ //Si pas de timer lancé, on applique la règle où le joueur à 10 score gagne
+                    if(scoreA==10 || scoreB==10 || scoreC==10 || scoreD==10 ) {
+                        if(scoreA==10) {
+                            if(!AI[0]) {
+                                joueur+='A';
+                            }
+                        }else if(scoreB==10) {
+                            if(!AI[1]) {
+                                joueur+='B';
+                            }
+                        }else if(scoreC==10) {
+                            if(!AI[2]) {
+                                joueur+='C';
+                            }
+                        }else if(scoreD==10) {
+                            if(!AI[3]) {
+                                joueur+='D';
+                            }
                         }
+                        timer.stop();
+                        this.getSceneHandler().switchToPageWin(getRoot(), joueur, AI, this.nbrePlayer, false, true, false, false);
                     }
+                }
+                    else if(timeLeft == -1){    //Si le timer est lancé, le joueur au score maximal gagne
+                        int[] scores = {scoreA, scoreB, scoreC, scoreD};
+                        for(int i=0; i<scores.length; i++){
+                            if((scores[i] == maxScores(scores))){
+                                switch(i){
+                                    case 0 : joueur += 'A'; break;
+                                    case 1 : joueur += 'B'; break;
+                                    case 2 : joueur += 'C'; break;
+                                    case 3 : joueur += 'D'; break;
+                                }
+                                timer.stop();
+                                this.getSceneHandler().switchToPageWin(getRoot(), joueur, AI, this.nbrePlayer, false, true, false, false);
+                            }
+                        }
                 }
     	    }
         
         }
 
 
-    public int maxScore4(int scoreA, int scoreB, int scoreC, int scoreD){
-        int[] scores = {scoreA, scoreB, scoreC, scoreD};
+    public int maxScores(int[] scores){
         int max= scores[0];
         for(int i=0; i<scores.length; i++){
             if(scores[i]>max){
@@ -459,7 +455,6 @@ public class GameView extends View {
         }
         return max;
     }
-
 
     public void animate() {
     	instructiontimer.start();
@@ -485,6 +480,7 @@ public class GameView extends View {
     		}
     	}
     }
+
 
         //method pour changer le fond
 
