@@ -35,7 +35,6 @@ public class GameView extends View {
     private final Text lifePlayerU;
     private final Text lifePlayerD;
     private final Text timeDisplay;
-    private final Text timeOut;
     private static int timeLeft = PlayerNumber.getTime();
     private Timer temps;
     private Button continu;
@@ -138,21 +137,25 @@ public class GameView extends View {
                                // pour qu'il soit réinitialisé par la valeur de now pour que le jeu repart au
                                // moment que là où on arrete
                 getRoot().getChildren().add(continu); // une fois le jeu arreter on fait afficher sur la scene un bouton
-                                                      // qui permet de relancer le jeu
+                                                 // qui permet de relancer le jeu
                 getRoot().getChildren().add(menu);
+                timeDisplay.setText(String.valueOf(timeLeft));
             } else if (timeLeft == -1) { // Si le temps est 0, on affiche la page de victoire
                 this.stop();
                 this.last = 0;
+                afficherPageVictoire();
             }
         }
     };
     
+    public int timeCourant(){
+        return timeLeft;
+    }
 
     public GameView(Court court, Pane root, double scale, SceneHandler sceneHandler, int nbreracket, boolean[] AI,
             boolean SystemdeVie) {
         super(court, root, scale, sceneHandler);
         this.timeDisplay = new Text();
-        this.timeOut = new Text();
         this.temps = new Timer(); // Initialiser le timer
 
         final TimerTask task = new TimerTask() {
@@ -160,10 +163,15 @@ public class GameView extends View {
                 if (timeLeft >= 0) { // décrémenter le temps
                     timeDisplay.setText(String.valueOf(timeLeft));
                     timeLeft--;
+                //}
+                //else if(getPause()){
+                 //   timeLeft = timeCourant();
+                 //   timeDisplay.setText(String.valueOf(timeLeft));
                 } else {
-                    timeOut.setText("TIME OUT"); // Arrivant à zéro, le temps s'arrête
+                    timeDisplay.setText(""); // Arrivant à zéro, le temps s'arrête
                     temps.cancel();
                 }
+                //timeLeft = PlayerNumber.getTime();
             }
         };
 
@@ -290,13 +298,6 @@ public class GameView extends View {
         timeDisplay.setStrokeWidth(2);
         timeDisplay.setStroke(Color.CYAN);
 
-        timeOut.setLayoutX(((court.getWidth() / 2) * scale) - 80);
-        timeOut.setLayoutY(((court.getHeight() / 2) * scale) - 120);
-        timeOut.setFont(Font.font("verdana", FontWeight.EXTRA_BOLD, FontPosture.REGULAR, 40));
-        timeOut.setFill(Color.BLACK);
-        timeOut.setStrokeWidth(2);
-        timeOut.setStroke(Color.CYAN);
-
         commande[0] = new Label(" z : Monter ");
         commande[0].setLayoutX(court.getWidth() / 2 - 350);
         commande[0].setLayoutY(200);
@@ -341,7 +342,7 @@ public class GameView extends View {
         commande[10].setLayoutX(court.getWidth() / 2);
         commande[10].setLayoutY(court.getHeight() - 150);
         commande[10].setStyle("-fx-border-color: black; -fx-text-fill:black; -fx-font-size: 20;");
-        getRoot().getChildren().addAll(ball, lifePlayerLeft, lifePlayerR, timeDisplay, timeOut, commande[0],
+        getRoot().getChildren().addAll(ball, lifePlayerLeft, lifePlayerR, timeDisplay, commande[0],
                 commande[1], commande[2], commande[3], commande[4], commande[5], commande[6], commande[7], commande[8],
                 commande[9], commande[10], score); // On ajoute le score aux éléments du Pane
         compteARebour(task);
