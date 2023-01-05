@@ -139,7 +139,6 @@ public class GameView extends View {
                 getRoot().getChildren().add(continu); // une fois le jeu arreter on fait afficher sur la scene un bouton
                                                  // qui permet de relancer le jeu
                 getRoot().getChildren().add(menu);
-                timeDisplay.setText(String.valueOf(timeLeft));
             } else if (timeLeft == -1) { // Si le temps est 0, on affiche la page de victoire
                 this.stop();
                 this.last = 0;
@@ -162,11 +161,12 @@ public class GameView extends View {
             public void run() {
                 if (timeLeft >= 0) { // décrémenter le temps
                     timeDisplay.setText(String.valueOf(timeLeft));
-                    timeLeft--;
-                //}
-                //else if(getPause()){
-                 //   timeLeft = timeCourant();
-                 //   timeDisplay.setText(String.valueOf(timeLeft));
+                    if(getPause()){
+                        timeDisplay.setText(String.valueOf(timeLeft+1));
+                    }else
+                    {
+                        timeLeft--;
+                    }
                 } else {
                     timeDisplay.setText(""); // Arrivant à zéro, le temps s'arrête
                     temps.cancel();
