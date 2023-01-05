@@ -139,17 +139,11 @@ public class GameView extends View {
                 getRoot().getChildren().add(continu); // une fois le jeu arreter on fait afficher sur la scene un bouton
                                                  // qui permet de relancer le jeu
                 getRoot().getChildren().add(menu);
-            } else if (timeLeft == -1) { // Si le temps est 0, on affiche la page de victoire
-                this.stop();
-                this.last = 0;
+            } else if (PlayerNumber.timerSetted() && timeLeft == -1) { // Si le temps est 0, on affiche la page de victoire
                 afficherPageVictoire();
             }
         }
     };
-    
-    public int timeCourant(){
-        return timeLeft;
-    }
 
     public GameView(Court court, Pane root, double scale, SceneHandler sceneHandler, int nbreracket, boolean[] AI,
             boolean SystemdeVie) {
@@ -170,8 +164,8 @@ public class GameView extends View {
                 } else {
                     timeDisplay.setText(""); // Arrivant à zéro, le temps s'arrête
                     temps.cancel();
+                    timeLeft = PlayerNumber.getTime();
                 }
-                //timeLeft = PlayerNumber.getTime();
             }
         };
 
