@@ -7,7 +7,6 @@ import sound.AudioBank;
 public class Court {
     // instance parameters
     private double width, height; // m
-
     private final double racketSpeed = 300.0; // m/s
     private double racketSize = 100.0; // m
     private final double ballRadius = 10.0; // m

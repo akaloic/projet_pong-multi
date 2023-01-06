@@ -17,6 +17,8 @@ import javafx.stage.StageStyle;
 import model.ControlHandler;
 import sound.AudioBank;
 
+import javax.swing.*;
+
 public class App extends Application {
     @Override
     public void start(Stage primaryStage) {

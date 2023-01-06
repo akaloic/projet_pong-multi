@@ -59,7 +59,6 @@ public class CourtMulti extends Court {
                     if (getRacketXA() > getWidth() / 2 - 20)
                         setRacketXA(getWidth() / 2 - 20);
                     break;
-
             }
         } else {
             setCoefB(0.8);
