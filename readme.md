@@ -9,13 +9,6 @@ Le principe est simple : un terrain (le "*court*") deux raquettes et une balle.
 Pour l'instant, seules les fonctionnalités basiques sont implémentées : 2 raquettes contrôlées par 2 paires de touches sur le clavier ; gestion basique des rebonds de la balle et détection de sortie du terrain par les côtés (but marqué).
 
 
-### Télécharger Pong
-
-Le plus pratique pour télécharger Pong afin de participer à son developpement, c'est de cloner le dépôt. Depuis la console :
-
-```bash
-$ git clone https://gaufre.informatique.univ-paris-diderot.fr/myteam/pong
-```
 
 ## Exécution, compilation
 
