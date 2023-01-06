@@ -65,7 +65,6 @@ public class GameRobotView extends View {
         new AnimationTimer() {
             long last = 0;
 
-            @Override
             public void handle(long now) {
                 if (last == 0) { // ignore the first tick, just compute the first deltaT
                     last = now;
