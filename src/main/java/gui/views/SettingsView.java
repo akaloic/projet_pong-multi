@@ -102,6 +102,7 @@ public class SettingsView extends View { // Classe similaire à GameView.java & 
                 playButton.setLayoutY(((court.getHeight() / 2) * scale) + 300);
                 playButton.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 10));
                 playButton.setOnAction(event -> {
+                        AudioBank.button.play();
                         if (playButton.getText().equals("Pause")) {
                                 AudioBank.menuSongPlayer.pause();
                                 playButton.setText("Play");
@@ -196,6 +197,7 @@ public class SettingsView extends View { // Classe similaire à GameView.java & 
                 raquetteSmall.setLayoutY(250);
                 raquetteSmall.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
                 raquetteSmall.setOnAction(event -> {
+                        AudioBank.button.play();
                         PlayerNumber.activateSmall();
                         makePauseFalse();
                         raquetteSmall.setStyle("-fx-background-color: #FDFCCB");
@@ -208,6 +210,7 @@ public class SettingsView extends View { // Classe similaire à GameView.java & 
                 raquetteMedium.setLayoutY(250);
                 raquetteMedium.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
                 raquetteMedium.setOnAction(event -> {
+                        AudioBank.button.play();
                         PlayerNumber.activateMedium();
                         makePauseFalse();
                         raquetteMedium.setStyle("-fx-background-color: #FDFCCB");
@@ -220,6 +223,7 @@ public class SettingsView extends View { // Classe similaire à GameView.java & 
                 raquetteLarge.setLayoutY(250);
                 raquetteLarge.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15));
                 raquetteLarge.setOnAction(event -> {
+                        AudioBank.button.play();
                         PlayerNumber.activateLarge();
                         makePauseFalse();
                         raquetteLarge.setStyle("-fx-background-color: #FDFCCB");
