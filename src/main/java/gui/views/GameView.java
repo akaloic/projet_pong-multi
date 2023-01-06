@@ -152,6 +152,7 @@ public class GameView extends View {
         this.timeOut = new Text();
         this.temps = new Timer(); // Initialiser le timer
 
+        /*
         final TimerTask task = new TimerTask() {
             public void run() {
                 if (timeLeft >= 0) { // décrémenter le temps
@@ -163,6 +164,8 @@ public class GameView extends View {
                 }
             }
         };
+
+         */
 
         Image image = new Image(MenuView.class.getResourceAsStream(fond));
 
@@ -279,7 +282,7 @@ public class GameView extends View {
             sceneHandler.switchToMenu(getRoot());
             AudioBank.button.play();
         });
-
+/*
         timeDisplay.setX((court.getWidth() / 3) * scale + getMargin());
         timeDisplay.setY(35);
         timeDisplay.setFont(Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 40));
@@ -293,6 +296,8 @@ public class GameView extends View {
         timeOut.setFill(Color.BLACK);
         timeOut.setStrokeWidth(2);
         timeOut.setStroke(Color.CYAN);
+
+ */
 
         commande[0] = new Label(" z : Monter ");
         commande[0].setLayoutX(court.getWidth() / 2 - 350);
@@ -341,7 +346,7 @@ public class GameView extends View {
         getRoot().getChildren().addAll(ball, lifePlayerLeft, lifePlayerR, timeDisplay, timeOut, commande[0],
                 commande[1], commande[2], commande[3], commande[4], commande[5], commande[6], commande[7], commande[8],
                 commande[9], commande[10], score); // On ajoute le score aux éléments du Pane
-        compteARebour(task);
+        //compteARebour(task);
     }
 
     public void setSystemdeVie(boolean v) {
@@ -380,9 +385,11 @@ public class GameView extends View {
         }
     }
 
-    public void compteARebour(TimerTask task) {
+    /*public void compteARebour(TimerTask task) {
         temps.scheduleAtFixedRate(task, 1000, 1000); // used to schedule the task for execution at the given time
     }
+
+     */
 
     public void setSystemdeScore(boolean v) {
         if (v) {
