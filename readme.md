@@ -40,7 +40,9 @@ Joueur 3 (raquette en haut) :  q d
 Joueur 4 (raquette en bas ): LEFT RIGHT
 
 
-## lien pour la video 
+## lien pour la video  :
+
+
 ```
 
 
