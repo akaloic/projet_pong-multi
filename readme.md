@@ -34,6 +34,7 @@ Joueur 4 (raquette en bas ): LEFT RIGHT
 
 
 ## lien pour la video  :
+ https://www.youtube.com/watch?v=D0OmC5YeXB4 
 
 
 ```
