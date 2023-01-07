@@ -35,6 +35,10 @@ Joueur 4 (raquette en bas ): LEFT RIGHT
 
 ## lien pour la video  :
  https://www.youtube.com/watch?v=D0OmC5YeXB4 
+ 
+ ## lien pour le fichier qui contient tous les noms du groupe
+ 
+ https://gaufre.informatique.univ-paris-diderot.fr/preproprojet/pong/blob/master/Membresdugroupepreproprojet.txt
 
 
 ```
